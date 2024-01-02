@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerController.cpp" />
     <ClCompile Include="toffi.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Engine\Animation.h" />
     <ClInclude Include="include\Engine\Character.h" />
     <ClInclude Include="include\Engine\Constants.h" />
     <ClInclude Include="include\Engine\PlayerController.h" />

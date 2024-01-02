@@ -3,9 +3,10 @@
 #include <SFML/Graphics.hpp>
 
 namespace textures {
-    sf::Texture player;
+    std::map<State, sf::Texture> player_textures;
 
     static void setTextures() {
-        player.loadFromFile("./Assets/player/character_idle_1.png");
+        player_textures[State::IDLE].loadFromFile("C:/Users/acvel/source/repos/toffi/toffi/Assets/player/idle.png");
+        player_textures[State::RUN].loadFromFile("C:/Users/acvel/source/repos/toffi/toffi/Assets/player/run.png");
     }
 }

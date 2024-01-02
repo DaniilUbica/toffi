@@ -13,7 +13,7 @@ int main()
 
 	textures::setTextures();
 
-	Player* player = new Player(textures::player, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y));
+	Player* player = new Player(textures::player_textures, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y));
 
 	sf::Clock clock;
 
