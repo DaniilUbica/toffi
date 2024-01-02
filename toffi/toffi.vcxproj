@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\dev\vcpkg\installed\x64-windows\include\SFML;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +144,7 @@
     <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerController.cpp" />
+    <ClCompile Include="src\World.cpp" />
     <ClCompile Include="toffi.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +152,7 @@
     <ClInclude Include="include\Engine\Character.h" />
     <ClInclude Include="include\Engine\Constants.h" />
     <ClInclude Include="include\Engine\PlayerController.h" />
+    <ClInclude Include="include\Engine\World.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Textures.h" />
   </ItemGroup>

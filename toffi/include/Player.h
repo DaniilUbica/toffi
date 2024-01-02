@@ -25,6 +25,8 @@ private:
     Animation*        m_idle_animation;
     Animation*        m_run_animation;
 
+    void checkCollisionWithMapBorders();
+
 public:
     Player() = delete;
     Player(std::map<State, sf::Texture>& textures, sf::Vector2f start_pos);

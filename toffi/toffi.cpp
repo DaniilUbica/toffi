@@ -1,11 +1,9 @@
 ﻿#include <SFML/Graphics.hpp>
 
 #include "include/Engine/Constants.h"
+#include "include/Engine/World.h"
 #include "include/Player.h"
 #include "include/Textures.h"
-
-constexpr float PLAYER_START_X = WINDOW_WIDTH / 2.0 - SPRITE_SIZE;
-constexpr float PLAYER_START_Y = WINDOW_HEIGHT / 2.0 - SPRITE_SIZE;
 
 int main()
 {
@@ -14,6 +12,9 @@ int main()
 	textures::setTextures();
 
 	Player* player = new Player(textures::player_textures, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y));
+
+	World* world = World::getWorld();
+	world->initWorld(textures::lvl1_border_texture);
 
 	sf::Clock clock;
 
@@ -32,7 +33,12 @@ int main()
 		player->Update(time);
 
 		window.clear(sf::Color::White);
+
+		for (int i = 0; i < world->getBorderVecSize(); i++) {
+			window.draw(world->getBorderSprites()[i]);
+		}
 		window.draw(player->getSprite());
+		
 		window.display();
 	}
 
