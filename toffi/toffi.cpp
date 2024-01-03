@@ -2,6 +2,7 @@
 
 #include "include/Engine/Constants.h"
 #include "include/Engine/World.h"
+#include "include/Engine/ViewController.h"
 #include "include/Player.h"
 #include "include/Textures.h"
 
@@ -15,6 +16,8 @@ int main()
 
 	World* world = World::getWorld();
 	world->initWorld(textures::lvl1_border_texture);
+
+	ViewController view_controller(player);
 
 	sf::Clock clock;
 
@@ -31,9 +34,9 @@ int main()
 		}
 
 		player->Update(time);
+		view_controller.Update(time, window);
 
 		window.clear(sf::Color::White);
-
 		for (int i = 0; i < world->getBorderVecSize(); i++) {
 			window.draw(world->getBorderSprites()[i]);
 		}
