@@ -51,7 +51,3 @@ void Player::checkCollisionWithMapBorders() {
 void Player::setState(State state) {
     m_state = state;
 }
-
-void Player::setDirection(Direction direction) {
-    m_direction = direction;
-}

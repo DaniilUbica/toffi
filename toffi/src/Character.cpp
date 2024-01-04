@@ -1,11 +1,19 @@
 #include "..\include\Engine\Character.h"
 
+Character::~Character() {
+    delete m_run_animation;
+}
+
 void Character::takeDamage(float damage) {
     m_health -= damage;
 }
 
 void Character::setPosition(sf::Vector2f& pos) {
     m_pos = pos;
+}
+
+void Character::setDirection(Direction direction) {
+    m_direction = direction;
 }
 
 float Character::getHP() {
@@ -22,4 +30,9 @@ sf::Vector2f Character::getPosition() {
 
 sf::Sprite Character::getSprite() {
     return m_sprite;
+}
+
+Direction Character::getDirection()
+{
+    return m_direction;
 }

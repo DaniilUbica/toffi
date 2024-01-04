@@ -16,3 +16,13 @@ constexpr float PLAYER_START_X = WORLD_WIDTH / 2.0 - SPRITE_SIZE;
 constexpr float PLAYER_START_Y = WORLD_HEIGHT / 2.0 - SPRITE_SIZE;
 
 constexpr float ANIMATION_SPEED = 0.002;
+
+constexpr float ENEMY_SPEED               = 0.05;
+constexpr float ENEMY_ATTACK_COOLDOWN     = 1.5;
+constexpr float ENEMY_DAMAGE              = 1.0;
+constexpr float ENEMY_RESPAWN_TIMER       = 5.0;
+constexpr float ENEMY_MINIMAL_SPAWN_POS_X = 120.0;
+constexpr float ENEMY_MINIMAL_SPAWN_POS_Y = 120.0;
+constexpr float ENEMY_MAXIMAL_SPAWN_POS_X = WORLD_WIDTH - 120.0;
+constexpr float ENEMY_MAXIMAL_SPAWN_POS_Y = WORLD_HEIGHT - 120.0;
+constexpr float ENEMY_SPAWN_RANGE         = 100.0;
