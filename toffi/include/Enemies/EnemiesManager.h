@@ -6,6 +6,7 @@
 class Enemy;
 class Timer;
 class Player;
+class Character;
 
 class EnemiesManager {
 private:
@@ -24,5 +25,6 @@ public:
     void addTexture(sf::Texture& texture);
 
     std::vector<Enemy*> getEnemies();
+    std::vector<Character*> getCharacters();
 };
 

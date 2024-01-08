@@ -18,8 +18,9 @@ protected:
 	sf::Sprite   m_sprite;
 	Animation*   m_run_animation;
 	Direction    m_direction = Direction::RIGHT;
+
 public:
-	~Character();
+	virtual ~Character();
 
 	virtual void Update(float time) = 0;
 	virtual void takeDamage(float damage);

@@ -26,3 +26,7 @@ constexpr float ENEMY_MINIMAL_SPAWN_POS_Y = 120.0;
 constexpr float ENEMY_MAXIMAL_SPAWN_POS_X = WORLD_WIDTH - 120.0;
 constexpr float ENEMY_MAXIMAL_SPAWN_POS_Y = WORLD_HEIGHT - 120.0;
 constexpr float ENEMY_SPAWN_RANGE         = 100.0;
+
+constexpr float BULLET_DEFAULT_SIZE   = 24.0;
+constexpr float BULLET_DEFAULT_SPEED  = 0.2;
+constexpr float BULLET_DEFAULT_DAMAGE = 20.0;

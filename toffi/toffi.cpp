@@ -16,10 +16,11 @@ int main() {
 	textures::setTextures();
 
 	Player* player = new Player(textures::player_textures, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y));
+	player->initWeapon(textures::bullet_texture, 1.0);
 
-	EnemiesManager enemies_manager;
-	enemies_manager.setPlayer(player);
-	enemies_manager.addTexture(textures::flying_eye_texture);
+	EnemiesManager* enemies_manager = new EnemiesManager();
+	enemies_manager->setPlayer(player);
+	enemies_manager->addTexture(textures::flying_eye_texture);
 
 	World* world = World::getWorld();
 	world->initWorld(textures::lvl1_border_texture);
@@ -40,8 +41,10 @@ int main() {
 			}
 		}
 
+		auto c = enemies_manager->getCharacters();
 		player->Update(time);
-		enemies_manager.Update(time);
+		player->attackEnemies(time, c);
+		enemies_manager->Update(time);
 		view_controller.Update(time, window);
 
 		window.clear(sf::Color::White);
@@ -50,7 +53,7 @@ int main() {
 			window.draw(world->getBorderSprites()[i]);
 		}
 		window.draw(player->getSprite());
-		for (auto e : enemies_manager.getEnemies()) {
+		for (auto e : enemies_manager->getEnemies()) {
 			window.draw(e->getSprite());
 		}
 		
@@ -58,5 +61,6 @@ int main() {
 	}
 
 	delete player;
+	delete enemies_manager;
 	return 0;
 }

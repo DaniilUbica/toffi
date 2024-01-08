@@ -7,6 +7,7 @@ namespace textures {
 
     sf::Texture lvl1_border_texture;
     sf::Texture flying_eye_texture;
+    sf::Texture bullet_texture;
 
     static void setTextures() {
         player_textures[State::IDLE].loadFromFile("./Assets/player/idle.png");
@@ -15,5 +16,7 @@ namespace textures {
         lvl1_border_texture.loadFromFile("./Assets/level_1/border.png");
 
         flying_eye_texture.loadFromFile("./Assets/enemies/eye_flight.png");
+
+        bullet_texture.loadFromFile("./Assets/bullet.png");
     }
 }

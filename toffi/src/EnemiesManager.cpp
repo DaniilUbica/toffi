@@ -51,3 +51,14 @@ void EnemiesManager::addTexture(sf::Texture& texture) {
 std::vector<Enemy*> EnemiesManager::getEnemies() {
     return m_enemies;
 }
+
+std::vector<Character*> EnemiesManager::getCharacters() {
+    std::vector<Character*> chars;
+    //std::transform(m_enemies.begin(), m_enemies.end(), chars.begin(), [](Enemy* e) {
+    //    return dynamic_cast<Character*>(e);
+    //});
+    for (auto e : m_enemies) {
+        chars.push_back(dynamic_cast<Character*>(e));
+    }
+    return chars;
+}
