@@ -14,6 +14,7 @@ private:
     Timer*                   m_respawn_timer;
     Player*                  m_player;
     std::vector<sf::Texture> m_enemies_textures;
+    float                    m_enemies_hp_scale = 1.0;
 
     void spawnEnemy();
 public:

@@ -36,3 +36,7 @@ Direction Character::getDirection()
 {
     return m_direction;
 }
+
+HealthBar* Character::getHealthBar() {
+    return m_health_bar;
+}

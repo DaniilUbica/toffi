@@ -13,6 +13,9 @@ Bullet::Bullet(sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
 void Bullet::Update(float time) {
     m_pos.x += m_direction.x * BULLET_DEFAULT_SPEED * time;
     m_pos.y += m_direction.y * BULLET_DEFAULT_SPEED * time;
+
+    m_sprite.setPosition(m_pos);
+    m_sprite.setScale(0.5, 0.5);
 }
 
 bool Bullet::checkCollisionWithMapBorders() {

@@ -5,8 +5,11 @@
 #include "include/Engine/ViewController.h"
 #include "include/Enemies/EnemiesManager.h"
 #include "include/Enemies/Enemy.h"
+#include "include/UI/HealthBar.h"
 #include "include/Player.h"
 #include "include/Textures.h"
+#include "include/Weapon.h"
+#include "include/Bullet.h"
 
 int main() {
 	srand(time(NULL));
@@ -15,7 +18,7 @@ int main() {
 
 	textures::setTextures();
 
-	Player* player = new Player(textures::player_textures, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y));
+	Player* player = new Player(textures::player_textures, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
 	player->initWeapon(textures::bullet_texture, 1.0);
 
 	EnemiesManager* enemies_manager = new EnemiesManager();
@@ -41,13 +44,18 @@ int main() {
 			}
 		}
 
-		auto c = enemies_manager->getCharacters();
+		auto characters = enemies_manager->getCharacters();
 		player->Update(time);
-		player->attackEnemies(time, c);
+		player->attackEnemies(time, characters);
 		enemies_manager->Update(time);
 		view_controller.Update(time, window);
 
 		window.clear(sf::Color::White);
+
+		auto bullets = player->getWeapon()->getBullets();
+		for (auto b : bullets) {
+			window.draw(b->getSprite());
+		}
 
 		for (int i = 0; i < world->getBorderVecSize(); i++) {
 			window.draw(world->getBorderSprites()[i]);
@@ -56,6 +64,8 @@ int main() {
 		for (auto e : enemies_manager->getEnemies()) {
 			window.draw(e->getSprite());
 		}
+
+		player->getHealthBar()->Draw(window);
 		
 		window.display();
 	}

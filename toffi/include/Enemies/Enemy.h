@@ -16,7 +16,7 @@ private:
     void updateDirection();
     void attackIfCanAttack();
 public:
-    Enemy(sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage);
+    Enemy(sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health);
     ~Enemy();
 
     void Update(float time);

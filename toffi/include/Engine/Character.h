@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 class Animation;
+class HealthBar;
 
 enum class Direction : bool {
 	LEFT = 0,
@@ -17,6 +18,7 @@ protected:
 	sf::Vector2f m_pos;
 	sf::Sprite   m_sprite;
 	Animation*   m_run_animation;
+	HealthBar*   m_health_bar;
 	Direction    m_direction = Direction::RIGHT;
 
 public:
@@ -33,4 +35,5 @@ public:
 	sf::Vector2f getPosition();
 	sf::Sprite getSprite();
 	Direction getDirection();
+	HealthBar* getHealthBar();
 };

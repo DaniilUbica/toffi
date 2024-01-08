@@ -20,6 +20,9 @@ void EnemiesManager::Update(float time) {
 
     for (auto e : m_enemies) {
         e->Update(time);
+        if (e->getHP() <= 0) {
+            m_enemies.erase(std::find(m_enemies.begin(), m_enemies.end(), e));
+        }
     }
 }
 
@@ -30,7 +33,7 @@ void EnemiesManager::spawnEnemy() {
     if ((abs(start_x - m_player->getPosition().x) > ENEMY_SPAWN_RANGE ||
         abs(start_y - m_player->getPosition().y) > ENEMY_SPAWN_RANGE) && !m_respawn_timer->isRunning()) {
         Enemy* enemy = new Enemy(m_enemies_textures[texture_index], sf::Vector2f(start_x, start_y),
-            ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE);
+            ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE, ENEMY_START_HP * m_enemies_hp_scale);
         enemy->setPlayer(m_player);
         m_enemies.push_back(enemy);
         m_respawn_timer->Start();
@@ -54,11 +57,9 @@ std::vector<Enemy*> EnemiesManager::getEnemies() {
 
 std::vector<Character*> EnemiesManager::getCharacters() {
     std::vector<Character*> chars;
-    //std::transform(m_enemies.begin(), m_enemies.end(), chars.begin(), [](Enemy* e) {
-    //    return dynamic_cast<Character*>(e);
-    //});
     for (auto e : m_enemies) {
         chars.push_back(dynamic_cast<Character*>(e));
     }
+
     return chars;
 }
