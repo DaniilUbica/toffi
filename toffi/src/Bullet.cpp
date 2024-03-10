@@ -2,7 +2,7 @@
 #include "../include/Engine/Constants.h"
 #include "../include/Engine/Character.h"
 
-Bullet::Bullet(sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
+Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
     m_sprite.setTexture(texture);
     m_pos = pos;
     m_size = sf::Vector2f(BULLET_DEFAULT_SIZE, BULLET_DEFAULT_SIZE);

@@ -57,6 +57,9 @@
     <ClCompile Include="src\HealthBar.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\RangeWeapon.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Engine\Constants.h">
@@ -92,9 +95,6 @@
     <ClInclude Include="include\Enemies\EnemiesManager.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="include\Weapon.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="include\Bullet.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
@@ -102,6 +102,12 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="include\UI\HealthBar.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Weapon\RangeWeapon.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Weapon\Weapon.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

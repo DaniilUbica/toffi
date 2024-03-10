@@ -5,6 +5,8 @@
 class PlayerController;
 class Weapon;
 
+enum class WeaponType;
+
 enum class State {
     IDLE,
     RUN
@@ -25,14 +27,14 @@ private:
 
 public:
     Player() = delete;
-    Player(std::map<State, sf::Texture>& textures, sf::Vector2f start_pos, float health);
+    Player(textures_t& textures, sf::Vector2f start_pos, float health);
     ~Player();
 
     void Update(float time) override;
     void attackEnemies(float time, std::vector<Character*>& characters);
-    void initWeapon(sf::Texture& bullet_texture, float damage_scale);
+    void initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& bullet_texture = sf::Texture());
 
     void setState(State state);
 
-    Weapon* getWeapon();
+    Weapon* getWeapon() const;
 };

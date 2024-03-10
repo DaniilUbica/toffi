@@ -17,15 +17,17 @@ private:
     float                    m_enemies_hp_scale = 1.0;
 
     void spawnEnemy();
+    void removeEnemy();
+
 public:
     EnemiesManager();
     ~EnemiesManager();
 
     void Update(float time);
     void setPlayer(Player* player);
-    void addTexture(sf::Texture& texture);
+    void addTexture(const sf::Texture& texture);
 
-    std::vector<Enemy*> getEnemies();
-    std::vector<Character*> getCharacters();
+    std::vector<Enemy*> getEnemies() const;
+    std::vector<Character*> getCharacters() const;
 };
 

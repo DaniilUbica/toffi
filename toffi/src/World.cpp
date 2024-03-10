@@ -15,8 +15,8 @@ World* World::getWorld() {
     return m_world;
 }
 
-void World::initWorld(/*sf::Texture& background,*/ sf::Texture& border) {
-    //m_background_texture = background;
+void World::initWorld(const sf::Texture& background, sf::Texture& border) {
+    m_background_texture = background;
     m_border_texture = border;
 
     int tiles_amount_width = static_cast<int>(WORLD_WIDTH / SPRITE_SIZE) + 1;
@@ -47,16 +47,18 @@ void World::initWorld(/*sf::Texture& background,*/ sf::Texture& border) {
         tile_sprite.setPosition(WORLD_WIDTH, i * sprite_size_int);
         m_border_sprites.push_back(tile_sprite);
     }
+
+    m_background_sprite.setTexture(m_background_texture);
 }
 
-std::vector<sf::Sprite> World::getBorderSprites() {
+std::vector<sf::Sprite> World::getBorderSprites() const {
     return m_border_sprites;
 }
 
-sf::Sprite World::getBackgroundSprite() {
+sf::Sprite World::getBackgroundSprite() const {
     return m_background_sprite;
 }
 
-size_t World::getBorderVecSize() {
+size_t World::getBorderVecSize() const {
     return m_border_sprites.size();
 }

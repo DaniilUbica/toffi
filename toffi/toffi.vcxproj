@@ -116,11 +116,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>D:\dev\vcpkg\installed\x64-windows\include\SFML;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\dev\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\dev\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,6 +150,7 @@
     <ClCompile Include="src\HealthBar.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\PlayerController.cpp" />
+    <ClCompile Include="src\RangeWeapon.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\ViewController.cpp" />
     <ClCompile Include="src\Weapon.cpp" />
@@ -170,7 +172,8 @@
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Textures.h" />
     <ClInclude Include="include\UI\HealthBar.h" />
-    <ClInclude Include="include\Weapon.h" />
+    <ClInclude Include="include\Weapon\RangeWeapon.h" />
+    <ClInclude Include="include\Weapon\Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

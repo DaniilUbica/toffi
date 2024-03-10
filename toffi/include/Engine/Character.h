@@ -30,10 +30,10 @@ public:
 	void setPosition(sf::Vector2f& pos);
 	void setDirection(Direction direction);
 
-	float getHP();
-	sf::Vector2f getSize();
-	sf::Vector2f getPosition();
-	sf::Sprite getSprite();
-	Direction getDirection();
-	HealthBar* getHealthBar();
+	float getHP() const;
+	sf::Vector2f getSize() const;
+	sf::Vector2f getPosition() const;
+	sf::Sprite getSprite() const;
+	Direction getDirection() const;
+	HealthBar* getHealthBar() const;
 };

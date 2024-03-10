@@ -14,7 +14,8 @@ public:
 	Animation() = delete;
 
 	/// x and y is positions of texture in tileset
-	Animation(sf::Texture& texture, int x, int y, int width, int height, int frames_count, float animation_speed, int step);
+	Animation(const sf::Texture& texture, int x, int y, int width, int height, int frames_count, float animation_speed, int step);
+	~Animation() = default;
 
 	sf::Sprite Tick(float time, bool rotate);
 };

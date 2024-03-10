@@ -1,7 +1,9 @@
 #include "..\include\Engine\Character.h"
 
 Character::~Character() {
-    delete m_run_animation;
+    if (m_run_animation) {
+        delete m_run_animation;
+    }
 }
 
 void Character::takeDamage(float damage) {
@@ -16,27 +18,26 @@ void Character::setDirection(Direction direction) {
     m_direction = direction;
 }
 
-float Character::getHP() {
+float Character::getHP() const {
     return m_health;
 }
 
-sf::Vector2f Character::getSize() {
+sf::Vector2f Character::getSize() const {
     return m_size;
 }
 
-sf::Vector2f Character::getPosition() {
+sf::Vector2f Character::getPosition() const {
     return m_pos;
 }
 
-sf::Sprite Character::getSprite() {
+sf::Sprite Character::getSprite() const {
     return m_sprite;
 }
 
-Direction Character::getDirection()
-{
+Direction Character::getDirection() const {
     return m_direction;
 }
 
-HealthBar* Character::getHealthBar() {
+HealthBar* Character::getHealthBar() const {
     return m_health_bar;
 }

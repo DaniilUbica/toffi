@@ -19,9 +19,9 @@ public:
 
     static World* getWorld();
 
-    void initWorld(/*sf::Texture& background,*/ sf::Texture& border);
+    void initWorld(const sf::Texture& background, sf::Texture& border);
 
-    std::vector<sf::Sprite> getBorderSprites();
-    sf::Sprite getBackgroundSprite();
-    size_t getBorderVecSize();
+    std::vector<sf::Sprite> getBorderSprites() const;
+    sf::Sprite getBackgroundSprite() const;
+    size_t getBorderVecSize() const;
 };

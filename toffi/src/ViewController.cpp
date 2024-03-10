@@ -14,6 +14,7 @@ ViewController::~ViewController() {
 void ViewController::Update(float time, sf::RenderWindow& window) {
     sf::Vector2f player_pos = m_player->getPosition();
     sf::Vector2f view_pos = { player_pos.x - VIEW_WIDTH / 2, player_pos.y - VIEW_HEIGHT / 2 };
+
     if (player_pos.x - VIEW_WIDTH / 2 <= 0) {
         view_pos.x = 0;
     }

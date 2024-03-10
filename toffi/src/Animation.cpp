@@ -1,6 +1,6 @@
 #include "..\include\Engine\Animation.h"
 
-Animation::Animation(sf::Texture& texture, int x, int y, int width, int height, int frames_count, float animation_speed, int step) {
+Animation::Animation(const sf::Texture& texture, int x, int y, int width, int height, int frames_count, float animation_speed, int step) {
     m_animation_speed = animation_speed;
     m_sprite.setTexture(texture);
     m_current_frame = 0;

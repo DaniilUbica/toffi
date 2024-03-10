@@ -30,7 +30,7 @@ void Enemy::attackIfCanAttack() {
     }
 }
 
-Enemy::Enemy(sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health) {
+Enemy::Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health) {
     m_pos = pos;
     m_speed = speed;
     m_damage = damage;
@@ -41,7 +41,6 @@ Enemy::Enemy(sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, flo
 }
 
 Enemy::~Enemy() {
-    delete m_run_animation;
     delete m_attack_cooldown;
 }
 

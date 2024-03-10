@@ -10,7 +10,7 @@ private:
     float        m_damage;
 
 public:
-    Bullet(sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction);
+    Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction);
 
     void Update(float time);
     bool checkCollisionWithCharacters(std::vector<Character*>& characters);

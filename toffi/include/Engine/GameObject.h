@@ -12,8 +12,8 @@ protected:
 
 public:
 
-	sf::Sprite getSprite();
-	sf::Vector2f getPosition();
-	sf::Vector2f getSize();
+	sf::Sprite getSprite() const;
+	sf::Vector2f getPosition() const;
+	sf::Vector2f getSize() const;
 };
 

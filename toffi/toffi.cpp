@@ -8,7 +8,7 @@
 #include "include/UI/HealthBar.h"
 #include "include/Player.h"
 #include "include/Textures.h"
-#include "include/Weapon.h"
+#include "include/Weapon/RangeWeapon.h"
 #include "include/Bullet.h"
 
 int main() {
@@ -19,14 +19,14 @@ int main() {
 	textures::setTextures();
 
 	Player* player = new Player(textures::player_textures, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
-	player->initWeapon(textures::bullet_texture, 1.0);
+	player->initWeapon(WeaponType::RANGE, 1.0, textures::bullet_texture);
 
 	EnemiesManager* enemies_manager = new EnemiesManager();
 	enemies_manager->setPlayer(player);
 	enemies_manager->addTexture(textures::flying_eye_texture);
 
 	World* world = World::getWorld();
-	world->initWorld(textures::lvl1_border_texture);
+	world->initWorld(textures::lvl1_background_texture, textures::lvl1_border_texture);
 
 	ViewController view_controller(player);
 
@@ -52,14 +52,21 @@ int main() {
 
 		window.clear(sf::Color::White);
 
-		auto bullets = player->getWeapon()->getBullets();
-		for (auto b : bullets) {
-			window.draw(b->getSprite());
-		}
-
+		window.draw(world->getBackgroundSprite());
 		for (int i = 0; i < world->getBorderVecSize(); i++) {
 			window.draw(world->getBorderSprites()[i]);
 		}
+
+		if (player->getWeapon()->getWeaponType() == WeaponType::RANGE) {
+			auto weapon = dynamic_cast<RangeWeapon*>(player->getWeapon());
+			if (weapon) {
+				auto bullets = weapon->getBullets();
+				for (auto b : bullets) {
+					window.draw(b->getSprite());
+				}
+			}
+		}
+
 		window.draw(player->getSprite());
 		for (auto e : enemies_manager->getEnemies()) {
 			window.draw(e->getSprite());
