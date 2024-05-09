@@ -1,4 +1,4 @@
-#include "..\include\Engine\Character.h"
+#include "../include/Engine/Character.h"
 
 Character::~Character() {
     if (m_run_animation) {

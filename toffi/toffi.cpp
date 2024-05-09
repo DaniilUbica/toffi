@@ -1,4 +1,4 @@
-﻿#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 
 #include "include/Engine/Constants.h"
 #include "include/Engine/World.h"
@@ -6,7 +6,6 @@
 #include "include/Enemies/EnemiesManager.h"
 #include "include/Enemies/Enemy.h"
 #include "include/UI/HealthBar.h"
-#include "include/Player.h"
 #include "include/Textures.h"
 #include "include/Weapon/RangeWeapon.h"
 #include "include/Bullet.h"
@@ -16,17 +15,18 @@ int main() {
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Toffi Adventure");
 
-	textures::setTextures();
+	auto texture_holder = TextureHolder::instance();
+	texture_holder->setTextures();
 
-	Player* player = new Player(textures::player_textures, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
-	player->initWeapon(WeaponType::RANGE, 1.0, textures::bullet_texture);
+	Player* player = new Player(texture_holder->player_textures(), sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
+	player->initWeapon(WeaponType::RANGE, 1.0, texture_holder->bullet_texture());
 
 	EnemiesManager* enemies_manager = new EnemiesManager();
 	enemies_manager->setPlayer(player);
-	enemies_manager->addTexture(textures::flying_eye_texture);
+	enemies_manager->addTexture(texture_holder->flying_eye_texture());
 
 	World* world = World::getWorld();
-	world->initWorld(textures::lvl1_background_texture, textures::lvl1_border_texture);
+	world->initWorld(texture_holder->lvl1_background_texture(), texture_holder->lvl1_border_texture());
 
 	ViewController view_controller(player);
 
@@ -79,5 +79,6 @@ int main() {
 
 	delete player;
 	delete enemies_manager;
+	delete texture_holder;
 	return 0;
 }

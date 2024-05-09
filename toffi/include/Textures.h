@@ -2,23 +2,29 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace textures {
-    std::map<State, sf::Texture> player_textures;
+#include "Player.h"
 
-    sf::Texture lvl1_border_texture;
-    sf::Texture lvl1_background_texture;
-    sf::Texture flying_eye_texture;
-    sf::Texture bullet_texture;
+class TextureHolder {
 
-    static void setTextures() {
-        player_textures[State::IDLE].loadFromFile("./Assets/player/idle.png");
-        player_textures[State::RUN].loadFromFile("./Assets/player/run.png");
+private:
+	std::map<State, sf::Texture> m_player_textures;
+	sf::Texture m_lvl1_border_texture;
+	sf::Texture m_lvl1_background_texture;
+	sf::Texture m_flying_eye_texture;
+	sf::Texture m_bullet_texture;
+	static TextureHolder* m_texture_holder;
 
-        lvl1_border_texture.loadFromFile("./Assets/level_1/border.png");
-        lvl1_background_texture.loadFromFile("./Assets/level_1/background.png");
+	TextureHolder() = default;
+	TextureHolder(const TextureHolder&);
 
-        flying_eye_texture.loadFromFile("./Assets/enemies/eye_flight.png");
+public:
+	static TextureHolder* instance();
 
-        bullet_texture.loadFromFile("./Assets/bullet.png");
-    }
-}
+	void setTextures();
+
+	std::map<State, sf::Texture> player_textures() const { return m_player_textures; };
+	sf::Texture lvl1_border_texture() const { return m_lvl1_border_texture; };
+	sf::Texture lvl1_background_texture() const { return m_lvl1_background_texture; };
+	sf::Texture flying_eye_texture() const { return m_flying_eye_texture; };
+	sf::Texture bullet_texture() const { return m_bullet_texture; };
+};

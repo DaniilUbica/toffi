@@ -1,4 +1,4 @@
-#include "..\include\Engine\Animation.h"
+#include "../include/Engine/Animation.h"
 
 Animation::Animation(const sf::Texture& texture, int x, int y, int width, int height, int frames_count, float animation_speed, int step) {
     m_animation_speed = animation_speed;

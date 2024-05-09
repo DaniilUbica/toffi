@@ -15,7 +15,7 @@ World* World::getWorld() {
     return m_world;
 }
 
-void World::initWorld(const sf::Texture& background, sf::Texture& border) {
+void World::initWorld(const sf::Texture& background, const sf::Texture& border) {
     m_background_texture = background;
     m_border_texture = border;
 

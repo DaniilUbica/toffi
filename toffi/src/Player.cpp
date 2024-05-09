@@ -23,13 +23,13 @@ inline bool isInAttackRange(sf::Vector2f pos, Character* character, float range)
     return false;
 }
 
-Player::Player(textures_t& texture, sf::Vector2f start_pos, float health) {
+Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) {
     m_pos = start_pos;
     m_health = health;
 
     m_controller = new PlayerController();
-    m_idle_animation = new Animation(texture[State::IDLE], 66, 0, 58, 53, 6, ANIMATION_SPEED, 192);
-    m_run_animation = new Animation(texture[State::RUN], 66, 0, 58, 53, 6, ANIMATION_SPEED, 193);
+    m_idle_animation = new Animation(texture.at(State::IDLE), 66, 0, 58, 53, 6, ANIMATION_SPEED, 192);
+    m_run_animation = new Animation(texture.at(State::RUN), 66, 0, 58, 53, 6, ANIMATION_SPEED, 193);
 
     m_sprite = m_idle_animation->Tick(1, m_direction != Direction::RIGHT);
     m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);

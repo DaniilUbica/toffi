@@ -27,7 +27,7 @@ private:
 
 public:
     Player() = delete;
-    Player(textures_t& textures, sf::Vector2f start_pos, float health);
+    Player(const textures_t& textures, sf::Vector2f start_pos, float health);
     ~Player();
 
     void Update(float time) override;
