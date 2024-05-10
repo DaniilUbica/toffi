@@ -13,7 +13,7 @@ inline bool compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f targe
     return distance(v1, target) < distance(v2, target);
 }
 
-inline bool isInAttackRange(sf::Vector2f pos, Character* character, float range) {
+inline bool isInAttackRange(sf::Vector2f pos, std::shared_ptr<Character> character, float range) {
     sf::Vector2f char_pos = character->getPosition();
 
     if (abs(char_pos.x - pos.x) <= range || abs(char_pos.y - pos.y) <= range) {
@@ -27,9 +27,9 @@ Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) 
     m_pos = start_pos;
     m_health = health;
 
-    m_controller = new PlayerController();
-    m_idle_animation = new Animation(texture.at(State::IDLE), 66, 0, 58, 53, 6, ANIMATION_SPEED, 192);
-    m_run_animation = new Animation(texture.at(State::RUN), 66, 0, 58, 53, 6, ANIMATION_SPEED, 193);
+    m_controller = std::make_unique<PlayerController>();
+    m_idle_animation = std::make_unique<Animation>(texture.at(State::IDLE), 66, 0, 58, 53, 6, ANIMATION_SPEED, 192);
+    m_run_animation = std::make_unique<Animation>(texture.at(State::RUN), 66, 0, 58, 53, 6, ANIMATION_SPEED, 193);
 
     m_sprite = m_idle_animation->Tick(1, m_direction != Direction::RIGHT);
     m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
@@ -37,14 +37,7 @@ Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) 
     sf::Color health_color(103, 191, 109);
     sf::Color border_color(96, 127, 97);
     sf::Color background_color(196, 97, 86);
-    m_health_bar = new HealthBar(sf::Vector2f(30.0, 9.0), m_pos, m_health, border_color, background_color, health_color, false, m_size);
-}
-
-Player::~Player() {
-    delete m_controller;
-    delete m_idle_animation;
-    delete m_weapon;
-    delete m_health_bar;
+    m_health_bar = std::make_unique<HealthBar>(sf::Vector2f(30.0, 9.0), m_pos, m_health, border_color, background_color, health_color, false, m_size);
 }
 
 void Player::Update(float time) {
@@ -66,16 +59,16 @@ void Player::Update(float time) {
     m_sprite.setPosition(m_pos);
 }
 
-void Player::attackEnemies(float time, std::vector<Character*>& characters) {
+void Player::attackEnemies(float time, std::vector<std::shared_ptr<Character>>& characters) {
     if (m_weapon) {
         m_weapon->updateAttackSpeed(m_attack_speed_scale);
 
         if (!characters.empty()) {
-            auto nearest = std::min_element(characters.begin(), characters.end(), [this](Character* c1, Character* c2) {
+            auto nearest = std::min_element(characters.begin(), characters.end(), [this](std::shared_ptr<Character> c1, std::shared_ptr<Character> c2) {
                 return compareDistance(c1->getPosition(), c2->getPosition(), m_pos);
             });
 
-            if (nearest != characters.end()) {
+            if (nearest != characters.end() && *nearest) {
                 sf::Vector2f nearest_character_pos = (*nearest)->getPosition();
                 sf::Vector2f direction = nearest_character_pos - m_pos;
 
@@ -95,7 +88,7 @@ void Player::attackEnemies(float time, std::vector<Character*>& characters) {
 
 void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& bullet_texture) {
     if (weapon_type == WeaponType::RANGE) {
-        m_weapon = new RangeWeapon(bullet_texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
+        m_weapon = std::make_shared<RangeWeapon>(bullet_texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
     }
     else {
         // release later
@@ -121,6 +114,6 @@ void Player::setState(State state) {
     m_state = state;
 }
 
-Weapon* Player::getWeapon() const {
+std::shared_ptr<Weapon> Player::getWeapon() const {
     return m_weapon;
 }

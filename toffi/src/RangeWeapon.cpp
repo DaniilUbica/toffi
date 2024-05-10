@@ -9,16 +9,10 @@ RangeWeapon::RangeWeapon(const sf::Texture& bullet_texture, sf::Vector2f pos, fl
     m_reload_time = reload_time;
     m_weapon_type = WeaponType::RANGE;
 
-    m_reload_timer = new Timer(m_reload_time);
+    m_reload_timer = std::make_unique<Timer>(m_reload_time);
 }
 
-RangeWeapon::~RangeWeapon() {
-    for (auto b : m_bullets) {
-        delete b;
-    }
-}
-
-void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<Character*>& characters) {
+void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<Character>>& characters) {
     m_pos = pos;
 
     if (!m_bullets.empty()) {
@@ -28,7 +22,7 @@ void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<Character*>& 
             if (bullet) {
                 bullet->Update(time);
                 if (bullet->checkCollisionWithCharacters(characters) || bullet->checkCollisionWithMapBorders()) {
-                    delete bullet;
+					bullet = nullptr;
                     m_bullets.erase(iter);
                     break;
                 }
@@ -39,13 +33,13 @@ void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<Character*>& 
 
 void RangeWeapon::Attack(sf::Vector2f direction) {
     if (!m_reload_timer->isRunning()) {
-        Bullet* new_bullet = new Bullet(m_bullet_texture, m_pos, direction);
+        auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, direction);
         new_bullet->updateDamage(m_damage_scale);
         m_bullets.push_back(new_bullet);
         m_reload_timer->Start();
     }
 }
 
-std::vector<Bullet*> RangeWeapon::getBullets() const {
+std::vector<std::shared_ptr<Bullet>> RangeWeapon::getBullets() const {
     return m_bullets;
 }

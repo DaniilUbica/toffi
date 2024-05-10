@@ -6,11 +6,11 @@ class Player;
 
 class ViewController {
 private:
-    Player*   m_player{ nullptr };
-    sf::View* m_view{ nullptr };
+    std::shared_ptr<Player>   m_player;
+	std::unique_ptr<sf::View> m_view;
 public:
-    ViewController(Player* player);
-    ~ViewController();
+    ViewController(std::shared_ptr<Player> player);
+    ~ViewController() = default;
 
     void Update(float time, sf::RenderWindow& window);
 };

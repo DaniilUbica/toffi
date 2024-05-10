@@ -17,11 +17,12 @@ int main() {
 
 	auto texture_holder = TextureHolder::instance();
 	texture_holder->setTextures();
+	auto player_texture = texture_holder->player_textures();
 
-	Player* player = new Player(texture_holder->player_textures(), sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
+	auto player = std::make_shared<Player>(player_texture, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
 	player->initWeapon(WeaponType::RANGE, 1.0, texture_holder->bullet_texture());
 
-	EnemiesManager* enemies_manager = new EnemiesManager();
+	auto enemies_manager = std::make_unique<EnemiesManager>();
 	enemies_manager->setPlayer(player);
 	enemies_manager->addTexture(texture_holder->flying_eye_texture());
 
@@ -58,7 +59,7 @@ int main() {
 		}
 
 		if (player->getWeapon()->getWeaponType() == WeaponType::RANGE) {
-			auto weapon = dynamic_cast<RangeWeapon*>(player->getWeapon());
+			auto weapon = std::dynamic_pointer_cast<RangeWeapon>(player->getWeapon());
 			if (weapon) {
 				auto bullets = weapon->getBullets();
 				for (auto b : bullets) {
@@ -77,8 +78,7 @@ int main() {
 		window.display();
 	}
 
-	delete player;
-	delete enemies_manager;
 	delete texture_holder;
+	delete world;
 	return 0;
 }

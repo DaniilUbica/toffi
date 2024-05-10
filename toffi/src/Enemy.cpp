@@ -36,12 +36,8 @@ Enemy::Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldow
     m_damage = damage;
     m_health = health;
 
-    m_attack_cooldown = new Timer(attack_cooldown);
-    m_run_animation = new Animation(textures, 57, 61, 42, 31, 8, ANIMATION_SPEED, 150);
-}
-
-Enemy::~Enemy() {
-    delete m_attack_cooldown;
+    m_attack_cooldown = std::make_unique<Timer>(attack_cooldown);
+    m_run_animation = std::make_unique<Animation>(textures, 57, 61, 42, 31, 8, ANIMATION_SPEED, 150);
 }
 
 void Enemy::Update(float time) {
@@ -57,6 +53,6 @@ void Enemy::Update(float time) {
     m_sprite.setPosition(m_pos);
 }
 
-void Enemy::setPlayer(Player* player) {
+void Enemy::setPlayer(std::shared_ptr<Player> player) {
     m_player = player;
 }

@@ -1,11 +1,5 @@
 #include "../include/Engine/Character.h"
 
-Character::~Character() {
-    if (m_run_animation) {
-        delete m_run_animation;
-    }
-}
-
 void Character::takeDamage(float damage) {
     m_health -= damage;
 }
@@ -38,6 +32,6 @@ Direction Character::getDirection() const {
     return m_direction;
 }
 
-HealthBar* Character::getHealthBar() const {
+std::shared_ptr<HealthBar> Character::getHealthBar() const {
     return m_health_bar;
 }

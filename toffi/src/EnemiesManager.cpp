@@ -5,20 +5,13 @@
 #include "../include/Player.h"
 
 EnemiesManager::EnemiesManager() {
-    m_respawn_timer = new Timer(ENEMY_RESPAWN_TIMER);
-}
-
-EnemiesManager::~EnemiesManager() {
-    for (auto e : m_enemies) {
-        delete e;
-    }
-    delete m_respawn_timer;
+    m_respawn_timer = std::make_unique<Timer>(ENEMY_RESPAWN_TIMER);
 }
 
 void EnemiesManager::Update(float time) {
     spawnEnemy();
 
-    for (auto e : m_enemies) {
+    for (auto& e : m_enemies) {
         e->Update(time);
     }
 
@@ -32,7 +25,7 @@ void EnemiesManager::spawnEnemy() {
 
     if ((abs(start_x - m_player->getPosition().x) > ENEMY_SPAWN_RANGE ||
         abs(start_y - m_player->getPosition().y) > ENEMY_SPAWN_RANGE) && !m_respawn_timer->isRunning()) {
-        Enemy* enemy = new Enemy(m_enemies_textures[texture_index], sf::Vector2f(start_x, start_y),
+		auto enemy = std::make_shared<Enemy>(m_enemies_textures[texture_index], sf::Vector2f(start_x, start_y),
             ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE, ENEMY_START_HP * m_enemies_hp_scale);
         enemy->setPlayer(m_player);
         m_enemies.push_back(enemy);
@@ -44,17 +37,17 @@ void EnemiesManager::spawnEnemy() {
 }
 
 void EnemiesManager::removeEnemy() {
-    auto dead_enemy_iter = std::find_if(m_enemies.begin(), m_enemies.end(), [](Enemy* enemy) {
+    auto dead_enemy_iter = std::find_if(m_enemies.begin(), m_enemies.end(), [](std::shared_ptr<Enemy> enemy) {
         return enemy->getHP() <= 0;
     });
 
     if (dead_enemy_iter != m_enemies.end()) {
-        delete *dead_enemy_iter;
+		*dead_enemy_iter = nullptr;
         m_enemies.erase(dead_enemy_iter);
     }
 }
 
-void EnemiesManager::setPlayer(Player* player) {
+void EnemiesManager::setPlayer(std::shared_ptr<Player> player) {
     m_player = player;
 }
 
@@ -62,15 +55,15 @@ void EnemiesManager::addTexture(const sf::Texture& texture) {
     m_enemies_textures.push_back(texture);
 }
 
-std::vector<Enemy*> EnemiesManager::getEnemies() const {
+std::vector<std::shared_ptr<Enemy>> EnemiesManager::getEnemies() const {
     return m_enemies;
 }
 
-std::vector<Character*> EnemiesManager::getCharacters() const {
-    std::vector<Character*> chars;
+std::vector<std::shared_ptr<Character>> EnemiesManager::getCharacters() const {
+	std::vector<std::shared_ptr<Character>> chars;
 
-    for (auto e : m_enemies) {
-        chars.push_back(dynamic_cast<Character*>(e));
+    for (auto& e : m_enemies) {
+        chars.push_back(std::dynamic_pointer_cast<Character>(e));
     }
 
     return chars;

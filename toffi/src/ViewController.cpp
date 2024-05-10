@@ -2,13 +2,9 @@
 #include "../include/Engine/Constants.h"
 #include "../include/Player.h"
 
-ViewController::ViewController(Player* player) {
+ViewController::ViewController(std::shared_ptr<Player> player) {
     m_player = player;
-    m_view = new sf::View(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
-}
-
-ViewController::~ViewController() {
-    delete m_view;
+    m_view = std::make_unique<sf::View>(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
 }
 
 void ViewController::Update(float time, sf::RenderWindow& window) {

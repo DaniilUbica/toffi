@@ -13,7 +13,7 @@ public:
     Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction);
 
     void Update(float time);
-    bool checkCollisionWithCharacters(std::vector<Character*>& characters);
+    bool checkCollisionWithCharacters(std::vector<std::shared_ptr<Character>>& characters);
     bool checkCollisionWithMapBorders();
     void updateDamage(float scale);
 };

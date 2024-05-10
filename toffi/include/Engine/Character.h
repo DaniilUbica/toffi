@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
+#include "Animation.h"
 class Animation;
 class HealthBar;
 
@@ -12,17 +12,17 @@ enum class Direction : bool {
 
 class Character {
 protected:
-	float		 m_health;
-	float		 m_speed;
-	sf::Vector2f m_size;
-	sf::Vector2f m_pos;
-	sf::Sprite   m_sprite;
-	Animation*   m_run_animation;
-	HealthBar*   m_health_bar;
-	Direction    m_direction = Direction::RIGHT;
+	float		                 m_health;
+	float		                 m_speed;
+	sf::Vector2f                 m_size;
+	sf::Vector2f                 m_pos;
+	sf::Sprite                   m_sprite;
+	std::unique_ptr<Animation>   m_run_animation;
+	std::shared_ptr<HealthBar>   m_health_bar;
+	Direction                    m_direction = Direction::RIGHT;
 
 public:
-	virtual ~Character();
+	virtual ~Character() = default;
 
 	virtual void Update(float time) = 0;
 	virtual void takeDamage(float damage);
@@ -35,5 +35,5 @@ public:
 	sf::Vector2f getPosition() const;
 	sf::Sprite getSprite() const;
 	Direction getDirection() const;
-	HealthBar* getHealthBar() const;
+	std::shared_ptr<HealthBar> getHealthBar() const;
 };

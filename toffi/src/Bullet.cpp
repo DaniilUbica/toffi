@@ -31,7 +31,7 @@ void Bullet::updateDamage(float scale) {
     m_damage *= scale;
 }
 
-bool Bullet::checkCollisionWithCharacters(std::vector<Character*>& characters) {
+bool Bullet::checkCollisionWithCharacters(std::vector<std::shared_ptr<Character>>& characters) {
     for (auto c : characters) {
         if (m_sprite.getGlobalBounds().intersects(c->getSprite().getGlobalBounds())) {
             c->takeDamage(m_damage);
