@@ -4,7 +4,7 @@
 World* World::m_world = nullptr;
 
 World::~World() {
-    delete m_world;
+    m_world = nullptr;
 }
 
 World* World::getWorld() {

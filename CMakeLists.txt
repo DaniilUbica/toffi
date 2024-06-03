@@ -10,7 +10,7 @@ FetchContent_Declare(SFML
     GIT_TAG 2.5.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(${CMAKE_PROJECT_NAME} 
+add_executable(${CMAKE_PROJECT_NAME}
     toffi/toffi.cpp
     toffi/src/Animation.cpp
     toffi/src/Bullet.cpp
@@ -51,6 +51,25 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-window)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-system)
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/include)
+
+set(RESOURCES
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/enemies/eye_flight.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/level_1/border.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/level_1/background.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/player/idle.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/player/run.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/bullet.png
+)
+
+foreach(Assets ${RESOURCES})
+    add_custom_command(
+        TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${Assets}
+        bin
+        $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
+    )
+endforeach()
 
 if(WIN32)
     add_custom_command(

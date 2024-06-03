@@ -18,6 +18,7 @@ private:
 	TextureHolder(const TextureHolder&);
 
 public:
+	~TextureHolder();
 	static TextureHolder* instance();
 
 	void setTextures();
