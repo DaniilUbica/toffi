@@ -1,14 +1,15 @@
 #include <SFML/Graphics.hpp>
 
-#include "include/Engine/Constants.h"
-#include "include/Engine/World.h"
-#include "include/Engine/ViewController.h"
-#include "include/Enemies/EnemiesManager.h"
-#include "include/Enemies/Enemy.h"
-#include "include/UI/HealthBar.h"
-#include "include/Textures.h"
-#include "include/Weapon/RangeWeapon.h"
-#include "include/Bullet.h"
+#include "Engine/Constants.h"
+#include "Engine/World.h"
+#include "Engine/ViewController.h"
+#include "Enemies/EnemiesManager.h"
+#include "Enemies/Enemy.h"
+#include "UI/HealthBar.h"
+#include "Textures.h"
+#include "Weapon/RangeWeapon.h"
+#include "Weapon/MeleeWeapon.h"
+#include "Bullet.h"
 
 int main() {
 	srand(time(NULL));
@@ -20,7 +21,7 @@ int main() {
 	auto player_texture = texture_holder->player_textures();
 
 	auto player = std::make_shared<Player>(player_texture, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
-	player->initWeapon(WeaponType::RANGE, 1.0, texture_holder->bullet_texture());
+	player->initWeapon(WeaponType::MELEE, 1.0, texture_holder->bullet_texture());
 
 	auto enemies_manager = std::make_unique<EnemiesManager>();
 	enemies_manager->setPlayer(player);
@@ -66,6 +67,10 @@ int main() {
 					window.draw(b->getSprite());
 				}
 			}
+		}
+		else {
+			auto weapon = std::dynamic_pointer_cast<MeleeWeapon>(player->getWeapon());
+			window.draw(weapon->getWeapon());
 		}
 
 		window.draw(player->getSprite());

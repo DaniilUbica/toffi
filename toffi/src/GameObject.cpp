@@ -1,4 +1,4 @@
-#include "../include/Engine/GameObject.h"
+#include "Engine/GameObject.h"
 
 sf::Sprite GameObject::getSprite() const {
     return m_sprite;

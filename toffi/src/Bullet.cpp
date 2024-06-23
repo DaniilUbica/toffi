@@ -1,6 +1,6 @@
-#include "../include/Bullet.h"
-#include "../include/Engine/Constants.h"
-#include "../include/Engine/Character.h"
+#include "Bullet.h"
+#include "Engine/Constants.h"
+#include "Engine/Character.h"
 
 Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
     m_sprite.setTexture(texture);

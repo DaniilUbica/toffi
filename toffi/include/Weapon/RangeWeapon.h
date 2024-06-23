@@ -9,8 +9,8 @@ public:
 	RangeWeapon(const sf::Texture& bullet_texture, sf::Vector2f pos, float damage_scale, float reload_time);
 	~RangeWeapon() = default;
 
-	void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<Character>>& characters) override;
-	void Attack(sf::Vector2f direction) override;
+	void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<Character>>& characters, float attack_range) override;
+	void Attack() override;
 
 	std::vector<std::shared_ptr<Bullet>> getBullets() const;
 };

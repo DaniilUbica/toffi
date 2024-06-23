@@ -22,6 +22,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Player.cpp
     toffi/src/PlayerController.cpp
     toffi/src/RangeWeapon.cpp
+	toffi/src/MeleeWeapon.cpp
     toffi/src/Textures.cpp
     toffi/src/Timer.cpp
     toffi/src/ViewController.cpp
@@ -43,6 +44,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/include/Engine/World.h
     toffi/include/UI/HealthBar.h
     toffi/include/Weapon/RangeWeapon.h
+	toffi/include/Weapon/MeleeWeapon.h
     toffi/include/Weapon/Weapon.h
 )
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-graphics)

@@ -1,8 +1,8 @@
-#include "../include/Enemies/Enemy.h"
-#include "../include/Engine/Animation.h"
-#include "../include/Engine/Constants.h"
-#include "../include/Engine/Timer.h"
-#include "../include/Player.h"
+#include "Enemies/Enemy.h"
+#include "Engine/Animation.h"
+#include "Engine/Constants.h"
+#include "Engine/Timer.h"
+#include "Player.h"
 
 void Enemy::followPlayer(float time) {
     if (!m_sprite.getGlobalBounds().intersects(m_player->getSprite().getGlobalBounds())) {

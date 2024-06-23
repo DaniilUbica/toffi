@@ -1,5 +1,5 @@
-#include "../include/Engine/World.h"
-#include "../include/Engine/Constants.h"
+#include "Engine/World.h"
+#include "Engine/Constants.h"
 
 World* World::m_world = nullptr;
 

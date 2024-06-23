@@ -1,6 +1,6 @@
-#include "../include/Engine/ViewController.h"
-#include "../include/Engine/Constants.h"
-#include "../include/Player.h"
+#include "Engine/ViewController.h"
+#include "Engine/Constants.h"
+#include "Player.h"
 
 ViewController::ViewController(std::shared_ptr<Player> player) {
     m_player = player;

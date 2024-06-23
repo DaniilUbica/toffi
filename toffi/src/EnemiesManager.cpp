@@ -1,8 +1,8 @@
-#include "../include/Enemies/EnemiesManager.h"
-#include "../include/Enemies/Enemy.h"
-#include "../include/Engine/Constants.h"
-#include "../include/Engine/Timer.h"
-#include "../include/Player.h"
+#include "Enemies/EnemiesManager.h"
+#include "Enemies/Enemy.h"
+#include "Engine/Constants.h"
+#include "Engine/Timer.h"
+#include "Player.h"
 
 EnemiesManager::EnemiesManager() {
     m_respawn_timer = std::make_unique<Timer>(ENEMY_RESPAWN_TIMER);

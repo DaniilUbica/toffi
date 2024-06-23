@@ -1,4 +1,4 @@
-#include "../include/Engine/Timer.h"
+#include "Engine/Timer.h"
 
 Timer::Timer(float time) {
     m_time = time;

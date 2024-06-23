@@ -1,9 +1,10 @@
-#include "../include/Player.h"
-#include "../include/Engine/PlayerController.h"
-#include "../include/Engine/Animation.h"
-#include "../include/Engine/Constants.h"
-#include "../include/UI/HealthBar.h"
-#include "../include/Weapon/RangeWeapon.h"
+#include "Player.h"
+#include "Engine/PlayerController.h"
+#include "Engine/Animation.h"
+#include "Engine/Constants.h"
+#include "UI/HealthBar.h"
+#include "Weapon/RangeWeapon.h"
+#include "Weapon/MeleeWeapon.h"
 
 inline float distance(sf::Vector2f v1, sf::Vector2f v2) {
     return std::sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
@@ -62,24 +63,8 @@ void Player::Update(float time) {
 void Player::attackEnemies(float time, std::vector<std::shared_ptr<Character>>& characters) {
     if (m_weapon) {
         m_weapon->updateAttackSpeed(m_attack_speed_scale);
-
-        if (!characters.empty()) {
-            auto nearest = std::min_element(characters.begin(), characters.end(), [this](std::shared_ptr<Character> c1, std::shared_ptr<Character> c2) {
-                return compareDistance(c1->getPosition(), c2->getPosition(), m_pos);
-            });
-
-            if (nearest != characters.end() && *nearest) {
-                sf::Vector2f nearest_character_pos = (*nearest)->getPosition();
-                sf::Vector2f direction = nearest_character_pos - m_pos;
-
-                direction /= sqrt(direction.x * direction.x + direction.y * direction.y);
-                m_weapon->Update(time, m_pos, characters);
-
-                if (isInAttackRange(m_pos, *nearest, PLAYER_START_ATTACK_RANGE * m_attack_range_scale)) {
-                    m_weapon->Attack(direction);
-                }
-            }
-        }
+		m_weapon->Update(time, m_pos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
+		m_weapon->Attack();
     }
     else {
         throw std::logic_error("m_weapon is NULL, maybe you didn't call 'initWeapon()'?");
@@ -91,7 +76,7 @@ void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Te
         m_weapon = std::make_shared<RangeWeapon>(bullet_texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
     }
     else {
-        // release later
+		m_weapon = std::make_shared<MeleeWeapon>(bullet_texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
     }
 }
 

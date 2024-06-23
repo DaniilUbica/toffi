@@ -1,6 +1,7 @@
-#include "../include/Weapon/RangeWeapon.h"
-#include "../include/Engine/Timer.h"
-#include "../include/Bullet.h"
+#include "Weapon/RangeWeapon.h"
+#include "Engine/Timer.h"
+#include "Engine/Character.h"
+#include "Bullet.h"
 
 RangeWeapon::RangeWeapon(const sf::Texture& bullet_texture, sf::Vector2f pos, float damage_scale, float reload_time) {
     m_bullet_texture = bullet_texture;
@@ -12,7 +13,9 @@ RangeWeapon::RangeWeapon(const sf::Texture& bullet_texture, sf::Vector2f pos, fl
     m_reload_timer = std::make_unique<Timer>(m_reload_time);
 }
 
-void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<Character>>& characters) {
+void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<Character>>& characters, float attack_range) {
+	Weapon::commonUpdate(pos, characters, attack_range);
+	
     m_pos = pos;
 
     if (!m_bullets.empty()) {
@@ -22,7 +25,6 @@ void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_p
             if (bullet) {
                 bullet->Update(time);
                 if (bullet->checkCollisionWithCharacters(characters) || bullet->checkCollisionWithMapBorders()) {
-					bullet = nullptr;
                     m_bullets.erase(iter);
                     break;
                 }
@@ -31,9 +33,9 @@ void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_p
     }
 }
 
-void RangeWeapon::Attack(sf::Vector2f direction) {
-    if (!m_reload_timer->isRunning()) {
-        auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, direction);
+void RangeWeapon::Attack() {
+    if (m_gotEnemyInAttackRange && !m_reload_timer->isRunning()) {
+        auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, m_direction);
         new_bullet->updateDamage(m_damage_scale);
         m_bullets.push_back(new_bullet);
         m_reload_timer->Start();

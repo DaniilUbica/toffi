@@ -1,7 +1,6 @@
-#include "../include/Engine/PlayerController.h"
-
-#include "../include/Player.h"
-#include "../include/Engine/Constants.h"
+#include "Engine/PlayerController.h"
+#include "Engine/Constants.h"
+#include "Player.h"
 
 bool PlayerController::controller_created = false;
 

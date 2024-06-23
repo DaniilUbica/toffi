@@ -1,4 +1,4 @@
-#include "../include/Engine/Character.h"
+#include "Engine/Character.h"
 
 void Character::takeDamage(float damage) {
     m_health -= damage;
