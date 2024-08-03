@@ -28,6 +28,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/ViewController.cpp
     toffi/src/Weapon.cpp
     toffi/src/World.cpp
+    toffi/src/Pickable.cpp
+    toffi/src/Heal.cpp
+    toffi/src/PickableSpawner.cpp
 
     toffi/include/Bullet.h
     toffi/include/Player.h
@@ -42,10 +45,13 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/include/Engine/Timer.h
     toffi/include/Engine/ViewController.h
     toffi/include/Engine/World.h
+    toffi/include/Engine/Pickable.h
+	toffi/include/Engine/PickableSpawner.h
     toffi/include/UI/HealthBar.h
     toffi/include/Weapon/RangeWeapon.h
 	toffi/include/Weapon/MeleeWeapon.h
     toffi/include/Weapon/Weapon.h
+    toffi/include/Pickables/Heal.h
 )
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-graphics)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-audio)
@@ -61,6 +67,8 @@ set(RESOURCES
     ${CMAKE_SOURCE_DIR}/toffi/Assets/player/idle.png
     ${CMAKE_SOURCE_DIR}/toffi/Assets/player/run.png
     ${CMAKE_SOURCE_DIR}/toffi/Assets/bullet.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/sword.png
+	${CMAKE_SOURCE_DIR}/toffi/Assets/heart.png
 )
 
 foreach(Assets ${RESOURCES})

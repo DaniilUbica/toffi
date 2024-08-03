@@ -24,4 +24,7 @@ void TextureHolder::setTextures() {
 	m_flying_eye_texture.loadFromFile("eye_flight.png");
 
 	m_bullet_texture.loadFromFile("bullet.png");
+    m_sword_texture.loadFromFile("sword.png");
+
+	m_heal_texture.loadFromFile("heart.png");
 }

@@ -12,6 +12,8 @@ private:
 	sf::Texture m_lvl1_background_texture;
 	sf::Texture m_flying_eye_texture;
 	sf::Texture m_bullet_texture;
+    sf::Texture m_sword_texture;
+	sf::Texture m_heal_texture;
 	static TextureHolder* m_texture_holder;
 
 	TextureHolder() = default;
@@ -28,4 +30,6 @@ public:
 	sf::Texture lvl1_background_texture() const { return m_lvl1_background_texture; };
 	sf::Texture flying_eye_texture() const { return m_flying_eye_texture; };
 	sf::Texture bullet_texture() const { return m_bullet_texture; };
+    sf::Texture sword_texture() const { return m_sword_texture; };
+	sf::Texture heal_texture() const { return m_heal_texture; };
 };

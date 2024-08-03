@@ -60,6 +60,10 @@ void Player::Update(float time) {
     m_sprite.setPosition(m_pos);
 }
 
+void Player::addHP(float health) {
+    m_health += health * m_heal_scale;
+}
+
 void Player::attackEnemies(float time, std::vector<std::shared_ptr<Character>>& characters) {
     if (m_weapon) {
         m_weapon->updateAttackSpeed(m_attack_speed_scale);
@@ -71,12 +75,12 @@ void Player::attackEnemies(float time, std::vector<std::shared_ptr<Character>>& 
     }
 }
 
-void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& bullet_texture) {
+void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& texture) {
     if (weapon_type == WeaponType::RANGE) {
-        m_weapon = std::make_shared<RangeWeapon>(bullet_texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
+        m_weapon = std::make_shared<RangeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
     }
     else {
-		m_weapon = std::make_shared<MeleeWeapon>(bullet_texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
+		m_weapon = std::make_shared<MeleeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
     }
 }
 

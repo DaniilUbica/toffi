@@ -36,3 +36,5 @@ constexpr float ENEMY_SPAWN_RANGE         = 100.0;
 constexpr float BULLET_DEFAULT_SIZE   = 24.0;
 constexpr float BULLET_DEFAULT_SPEED  = 0.2;
 constexpr float BULLET_DEFAULT_DAMAGE = 20.0;
+
+constexpr float HEAL_DEFAULT_VALUE = 1.0;

@@ -26,6 +26,7 @@ public:
 
 	virtual void Update(float time) = 0;
 	virtual void takeDamage(float damage);
+    virtual void addHP(float health);
 
 	void setPosition(sf::Vector2f& pos);
 	void setDirection(Direction direction);

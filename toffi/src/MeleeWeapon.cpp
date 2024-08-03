@@ -9,8 +9,8 @@ MeleeWeapon::MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float dam
 	m_weapon_type = WeaponType::MELEE;
 	m_reload_timer = std::make_unique<Timer>(m_reload_time);
 
-	m_weapon.setSize(sf::Vector2f(20.f, 10.f));
-	m_weapon.setFillColor(sf::Color::Green);
+    m_sprite.setTexture(m_texture);
+    m_sprite.setScale(0.1, 0.1);
 }
 
 void MeleeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<Character>>& characters, float attack_range) {
@@ -18,14 +18,27 @@ void MeleeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_p
 
 	m_pos = pos;
 
-	m_weapon.setPosition(m_pos);
-	m_weapon.setRotation(m_angle);
+	int attack_progress_coeff = m_attack_state == AttackState::Attack ? 1 : -1;
+	if (m_attack_state == AttackState::Attack && m_attack_progress < m_attack_distance) {
+		m_attack_progress += m_attack_speed * time;
+	}
+	else if (m_attack_state == AttackState::Return) {
+		m_attack_progress += m_return_speed * time;
+	}
+
+    m_sprite.setPosition(m_pos.x, m_pos.y);
+    m_sprite.setRotation(m_angle);
 }
 
 void MeleeWeapon::Attack() {
-
+	if (m_gotEnemyInAttackRange) {
+		m_attack_state = AttackState::Attack;
+	}
+	else {
+		m_attack_state = AttackState::None;
+	}
 }
 
-sf::RectangleShape MeleeWeapon::getWeapon() const {
-	return m_weapon;
+sf::Sprite MeleeWeapon::getWeapon() const {
+	return m_sprite;
 }

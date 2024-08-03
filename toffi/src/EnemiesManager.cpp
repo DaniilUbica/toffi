@@ -2,6 +2,7 @@
 #include "Enemies/Enemy.h"
 #include "Engine/Constants.h"
 #include "Engine/Timer.h"
+#include "Engine/PickableSpawner.h"
 #include "Player.h"
 
 EnemiesManager::EnemiesManager() {
@@ -42,6 +43,7 @@ void EnemiesManager::removeEnemy() {
     });
 
     if (dead_enemy_iter != m_enemies.end()) {
+		PickableSpawner::instance()->spawnPickable(dead_enemy_iter->get()->getPosition(), PickableType::HEAL);
 		*dead_enemy_iter = nullptr;
         m_enemies.erase(dead_enemy_iter);
     }

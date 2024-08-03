@@ -9,9 +9,9 @@ protected:
 	sf::Sprite   m_sprite;
 
 	GameObject() = default;
+    virtual ~GameObject() = default;
 
 public:
-
 	sf::Sprite getSprite() const;
 	sf::Vector2f getPosition() const;
 	sf::Vector2f getSize() const;

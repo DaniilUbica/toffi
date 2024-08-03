@@ -23,6 +23,7 @@ private:
     State                             m_state;
     float                             m_attack_speed_scale = 1.0;
     float                             m_attack_range_scale = 1.0;
+    float                             m_heal_scale = 1.0;
 
     void checkCollisionWithMapBorders();
 
@@ -32,8 +33,9 @@ public:
     ~Player() = default;
 
     void Update(float time) override;
+    void addHP(float health) override;
     void attackEnemies(float time, std::vector<std::shared_ptr<Character>>& characters);
-    void initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& bullet_texture = sf::Texture());
+    void initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& texture = sf::Texture());
 
     void setState(State state);
 
