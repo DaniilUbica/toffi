@@ -38,3 +38,9 @@ constexpr float BULLET_DEFAULT_SPEED  = 0.2;
 constexpr float BULLET_DEFAULT_DAMAGE = 20.0;
 
 constexpr float HEAL_DEFAULT_VALUE = 1.0;
+constexpr float HEAL_SPAWN_CHANCE  = 20.0;
+
+constexpr float PARTICLE_RADIUS = 2.0;
+constexpr float PARTICLE_SPEED  = 5.0;
+
+constexpr int BURSTING_BUBBLE_PARTICLES_COUNT = 100;

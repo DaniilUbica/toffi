@@ -31,6 +31,8 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Pickable.cpp
     toffi/src/Heal.cpp
     toffi/src/PickableSpawner.cpp
+    toffi/src/ParticleSystem.cpp
+    toffi/include/Engine/Helpers.hpp
 
     toffi/include/Bullet.h
     toffi/include/Player.h
@@ -47,6 +49,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/include/Engine/World.h
     toffi/include/Engine/Pickable.h
 	toffi/include/Engine/PickableSpawner.h
+    toffi/include/Engine/ParticleSystem.h
     toffi/include/UI/HealthBar.h
     toffi/include/Weapon/RangeWeapon.h
 	toffi/include/Weapon/MeleeWeapon.h
@@ -62,6 +65,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/include)
 
 set(RESOURCES
     ${CMAKE_SOURCE_DIR}/toffi/Assets/enemies/eye_flight.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/enemies/spider.png
     ${CMAKE_SOURCE_DIR}/toffi/Assets/level_1/border.png
     ${CMAKE_SOURCE_DIR}/toffi/Assets/level_1/background.png
     ${CMAKE_SOURCE_DIR}/toffi/Assets/player/idle.png

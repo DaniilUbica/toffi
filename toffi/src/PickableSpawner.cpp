@@ -1,6 +1,7 @@
 #include "Engine/PickableSpawner.h"
 #include "Engine/Pickable.h"
 #include "Engine/Character.h"
+#include "Engine/Constants.h"
 #include "Pickables/Heal.h"
 #include "Player.h"
 
@@ -42,12 +43,17 @@ void PickableSpawner::checkCollisionsWithPlayer() {
 }
 
 void PickableSpawner::spawnPickable(sf::Vector2f pos, PickableType type) {
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
+	int value = std::rand() % 100;
+
 	switch (type) {
 		case PickableType::HEAL:
 		{
-			auto newPickable = std::make_shared<Heal>(m_pickable_textures[PickableType::HEAL], pos);
-			newPickable->setPlayer(m_player);
-			m_pickables.push_back(std::dynamic_pointer_cast<Pickable>(newPickable));
+			if (value < HEAL_SPAWN_CHANCE) {
+				auto newPickable = std::make_shared<Heal>(m_pickable_textures[PickableType::HEAL], pos);
+				newPickable->setPlayer(m_player);
+				m_pickables.push_back(std::dynamic_pointer_cast<Pickable>(newPickable));
+			}
 			break;
 		}
 		default:

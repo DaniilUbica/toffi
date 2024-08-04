@@ -3,6 +3,7 @@
 #include "Engine/Constants.h"
 #include "Engine/Timer.h"
 #include "Engine/PickableSpawner.h"
+#include "Engine/ParticleSystem.h"
 #include "Player.h"
 
 EnemiesManager::EnemiesManager() {
@@ -44,6 +45,10 @@ void EnemiesManager::removeEnemy() {
 
     if (dead_enemy_iter != m_enemies.end()) {
 		PickableSpawner::instance()->spawnPickable(dead_enemy_iter->get()->getPosition(), PickableType::HEAL);
+		auto pos = dead_enemy_iter->get()->getPosition();
+		pos.x += SPRITE_SIZE / 2;
+		pos.y += SPRITE_SIZE / 2;
+		ParticleSystem::instance()->burstingBubble(pos, *(dead_enemy_iter->get()->getSprite().getTexture()));
 		*dead_enemy_iter = nullptr;
         m_enemies.erase(dead_enemy_iter);
     }

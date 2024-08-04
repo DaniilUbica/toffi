@@ -22,6 +22,7 @@ void TextureHolder::setTextures() {
 	m_lvl1_background_texture.loadFromFile("background.png");
 
 	m_flying_eye_texture.loadFromFile("eye_flight.png");
+	m_spider_texture.loadFromFile("spider.png");
 
 	m_bullet_texture.loadFromFile("bullet.png");
     m_sword_texture.loadFromFile("sword.png");

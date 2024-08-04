@@ -5,11 +5,16 @@
 
 class Timer {
 private:
-    std::atomic<float>  m_time{ 0.0 };
-    std::atomic<bool> m_running{ false };
+	float m_time;
+	std::atomic<bool> m_running{false};
+	std::atomic<bool> m_stop{false};
+	std::thread m_thread;
+	std::condition_variable m_cv;
+	std::mutex m_mutex;
 
 public:
     Timer(float time);
+	~Timer();
 
     void Start();
 

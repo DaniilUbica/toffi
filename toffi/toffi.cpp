@@ -5,6 +5,7 @@
 #include "Engine/ViewController.h"
 #include "Engine/PickableSpawner.h"
 #include "Engine/Pickable.h"
+#include "Engine/ParticleSystem.h"
 #include "Enemies/EnemiesManager.h"
 #include "Enemies/Enemy.h"
 #include "UI/HealthBar.h"
@@ -24,6 +25,8 @@ int main() {
 
 	auto pickable_spawner = PickableSpawner::instance();
 	pickable_spawner->addPickableTexture(PickableType::HEAL, texture_holder->heal_texture());
+
+	auto particle_system = ParticleSystem::instance();
 
 	auto player = std::make_shared<Player>(player_texture, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
 	player->initWeapon(WeaponType::RANGE, 1.0, texture_holder->bullet_texture());
@@ -55,6 +58,7 @@ int main() {
 
 		auto characters = enemies_manager->getCharacters();
 		pickable_spawner->Update();
+		particle_system->Update(time / 1000);
 		player->Update(time);
 		player->attackEnemies(time, characters);
 		enemies_manager->Update(time);
@@ -70,6 +74,8 @@ int main() {
 		for (auto pickable : pickable_spawner->getPickables()) {
 			window.draw(pickable->getSprite());
 		}
+
+		particle_system->drawParticles(window);
 
 		if (player->getWeapon()->getWeaponType() == WeaponType::RANGE) {
 			auto weapon = std::dynamic_pointer_cast<RangeWeapon>(player->getWeapon());
@@ -97,6 +103,7 @@ int main() {
 
 	delete texture_holder;
 	delete pickable_spawner;
+	delete particle_system;
 	delete world;
 	return 0;
 }
