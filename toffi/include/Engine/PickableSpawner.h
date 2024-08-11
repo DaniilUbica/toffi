@@ -7,7 +7,8 @@ class Pickable;
 class Player;
 
 enum class PickableType {
-	HEAL
+	HEAL,
+	BULLET_WAVE
 };
 
 class PickableSpawner {

@@ -41,3 +41,10 @@ bool Bullet::checkCollisionWithCharacters(std::vector<std::shared_ptr<Character>
 
     return false;
 }
+
+bool Bullet::checkCollisionWithCharacter(std::shared_ptr<Character> character) {
+	if (m_sprite.getGlobalBounds().intersects(character->getSprite().getGlobalBounds())) {
+		character->takeDamage(m_damage);
+		return true;
+	}
+}

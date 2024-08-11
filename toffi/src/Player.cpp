@@ -76,6 +76,8 @@ void Player::attackEnemies(float time, std::vector<std::shared_ptr<Character>>& 
 }
 
 void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& texture) {
+	// todo: mulptiple weapons
+	
     if (weapon_type == WeaponType::RANGE) {
         m_weapon = std::make_shared<RangeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
     }

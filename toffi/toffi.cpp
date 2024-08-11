@@ -25,6 +25,7 @@ int main() {
 
 	auto pickable_spawner = PickableSpawner::instance();
 	pickable_spawner->addPickableTexture(PickableType::HEAL, texture_holder->heal_texture());
+	pickable_spawner->addPickableTexture(PickableType::BULLET_WAVE, texture_holder->bullet_texture());
 
 	auto particle_system = ParticleSystem::instance();
 
@@ -35,6 +36,7 @@ int main() {
 
 	auto enemies_manager = std::make_unique<EnemiesManager>();
 	enemies_manager->setPlayer(player);
+	enemies_manager->setBulletTexture(texture_holder->bullet_texture());
 	enemies_manager->addTexture(texture_holder->flying_eye_texture());
 
 	World* world = World::getWorld();
@@ -76,6 +78,7 @@ int main() {
 		}
 
 		particle_system->drawParticles(window);
+		enemies_manager->drawBullets(window);
 
 		if (player->getWeapon()->getWeaponType() == WeaponType::RANGE) {
 			auto weapon = std::dynamic_pointer_cast<RangeWeapon>(player->getWeapon());

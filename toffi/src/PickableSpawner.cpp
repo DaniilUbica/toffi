@@ -3,7 +3,9 @@
 #include "Engine/Character.h"
 #include "Engine/Constants.h"
 #include "Pickables/Heal.h"
+#include "Pickables/BulletWave.h"
 #include "Player.h"
+#include "Textures.h"
 
 PickableSpawner* PickableSpawner::m_instance = nullptr;
 
@@ -44,17 +46,27 @@ void PickableSpawner::checkCollisionsWithPlayer() {
 
 void PickableSpawner::spawnPickable(sf::Vector2f pos, PickableType type) {
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
-	int value = std::rand() % 100;
 
 	switch (type) {
 		case PickableType::HEAL:
 		{
+			int value = std::rand() % 100;
 			if (value < HEAL_SPAWN_CHANCE) {
-				auto newPickable = std::make_shared<Heal>(m_pickable_textures[PickableType::HEAL], pos);
-				newPickable->setPlayer(m_player);
-				m_pickables.push_back(std::dynamic_pointer_cast<Pickable>(newPickable));
+				auto new_pickable = std::make_shared<Heal>(m_pickable_textures[PickableType::HEAL], pos);
+				new_pickable->setPlayer(m_player);
+				m_pickables.push_back(std::dynamic_pointer_cast<Pickable>(new_pickable));
 			}
 			break;
+		}
+		case PickableType::BULLET_WAVE:
+		{
+			int value = std::rand() % 100;
+			if (value < BULLET_WAVE_SPAWN_CHANCE) {
+				auto new_pickable = std::make_shared<BulletWave>(m_pickable_textures[PickableType::BULLET_WAVE], pos);
+				new_pickable->setBulletTexture(TextureHolder::instance()->bullet_texture());
+				new_pickable->setPlayer(m_player);
+				m_pickables.push_back(std::dynamic_pointer_cast<Pickable>(new_pickable));
+			}
 		}
 		default:
 			break;

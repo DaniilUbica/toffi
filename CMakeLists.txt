@@ -17,6 +17,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Character.cpp
     toffi/src/EnemiesManager.cpp
     toffi/src/Enemy.cpp
+    toffi/src/RangeEnemy.cpp
     toffi/src/GameObject.cpp
     toffi/src/HealthBar.cpp
     toffi/src/Player.cpp
@@ -30,6 +31,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/World.cpp
     toffi/src/Pickable.cpp
     toffi/src/Heal.cpp
+    toffi/src/BulletWave.cpp
     toffi/src/PickableSpawner.cpp
     toffi/src/ParticleSystem.cpp
     toffi/include/Engine/Helpers.hpp
@@ -39,6 +41,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/include/Textures.h
     toffi/include/Enemies/EnemiesManager.h
     toffi/include/Enemies/Enemy.h
+    toffi/include/Enemies/RangeEnemy.h
     toffi/include/Engine/Animation.h
     toffi/include/Engine/Character.h
     toffi/include/Engine/Constants.h
@@ -55,6 +58,7 @@ add_executable(${CMAKE_PROJECT_NAME}
 	toffi/include/Weapon/MeleeWeapon.h
     toffi/include/Weapon/Weapon.h
     toffi/include/Pickables/Heal.h
+    toffi/include/Pickables/BulletWave.h
 )
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-graphics)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-audio)

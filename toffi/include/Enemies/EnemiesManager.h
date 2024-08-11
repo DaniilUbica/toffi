@@ -14,6 +14,7 @@ private:
 	std::unique_ptr<Timer>              m_respawn_timer;
 	std::shared_ptr<Player>             m_player;
     std::vector<sf::Texture>            m_enemies_textures;
+	sf::Texture                         m_bullet_texture;
     float                               m_enemies_hp_scale = 1.0;
 
     void spawnEnemy();
@@ -24,8 +25,11 @@ public:
     ~EnemiesManager() = default;
 
     void Update(float time);
-    void setPlayer(std::shared_ptr<Player> player);
     void addTexture(const sf::Texture& texture);
+	void drawBullets(sf::RenderWindow& window);
+
+	void setPlayer(std::shared_ptr<Player> player);
+	void setBulletTexture(const sf::Texture& bullet_texture);
 
     std::vector<std::shared_ptr<Enemy>> getEnemies() const;
     std::vector<std::shared_ptr<Character>> getCharacters() const;

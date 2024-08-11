@@ -42,6 +42,10 @@ void RangeWeapon::Attack() {
     }
 }
 
+void RangeWeapon::shootConcreteBullet(std::shared_ptr<Bullet> bullet) {
+	m_bullets.push_back(bullet);
+}
+
 std::vector<std::shared_ptr<Bullet>> RangeWeapon::getBullets() const {
     return m_bullets;
 }

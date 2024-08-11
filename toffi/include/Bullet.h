@@ -14,6 +14,7 @@ public:
 
     void Update(float time);
     bool checkCollisionWithCharacters(std::vector<std::shared_ptr<Character>>& characters);
+	bool checkCollisionWithCharacter(std::shared_ptr<Character> character);
     bool checkCollisionWithMapBorders();
     void updateDamage(float scale);
 };

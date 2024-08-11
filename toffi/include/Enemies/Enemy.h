@@ -7,15 +7,18 @@ class Player;
 class Timer;
 
 class Enemy : public Character {
-private:
+protected:
 	std::shared_ptr<Player> m_player;
 	std::unique_ptr<Timer>  m_attack_cooldown;
     float                   m_speed;
     float                   m_damage;
 
-    void followPlayer(float time);
-    void updateDirection();
-    void attackIfCanAttack();
+	Enemy() = default;
+	
+    virtual void followPlayer(float time);
+	virtual void updateDirection();
+	virtual void attackIfCanAttack();
+
 public:
     Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health);
     ~Enemy() = default;

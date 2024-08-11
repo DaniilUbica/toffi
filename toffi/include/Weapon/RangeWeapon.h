@@ -11,6 +11,7 @@ public:
 
 	void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<Character>>& characters, float attack_range) override;
 	void Attack() override;
+	void shootConcreteBullet(std::shared_ptr<Bullet> bullet);
 
 	std::vector<std::shared_ptr<Bullet>> getBullets() const;
 };
