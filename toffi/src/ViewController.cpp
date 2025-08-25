@@ -1,5 +1,5 @@
-#include "Engine/ViewController.h"
-#include "Engine/Constants.h"
+#include "ViewController.h"
+#include "Constants.h"
 #include "Player.h"
 
 ViewController::ViewController(std::shared_ptr<Player> player) {

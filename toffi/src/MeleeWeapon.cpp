@@ -1,5 +1,5 @@
 #include "Weapon/MeleeWeapon.h"
-#include "Engine/Character.h"
+#include "Character.h"
 
 MeleeWeapon::MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float damage_scale, float reload_time) {
 	m_texture = texture;

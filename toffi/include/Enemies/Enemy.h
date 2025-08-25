@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../Engine/Character.h"
-#include "../Engine/Timer.h"
+#include "Character.h"
+#include "Timer.h"
 
 class Player;
 class Timer;

@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Engine/Timer.h"
+#include "Timer.h"
 
 class Bullet;
 class Character;

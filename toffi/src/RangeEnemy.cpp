@@ -1,7 +1,7 @@
 #include "Enemies/RangeEnemy.h"
-#include "Engine/Animation.h"
-#include "Engine/Constants.h"
-#include "Engine/Timer.h"
+#include "Animation.h"
+#include "Constants.h"
+#include "Timer.h"
 #include "Bullet.h"
 #include "Player.h"
 

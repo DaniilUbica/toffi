@@ -1,6 +1,8 @@
-#include "Engine/PlayerController.h"
-#include "Engine/Constants.h"
+#include "PlayerController.h"
+#include "Constants.h"
 #include "Player.h"
+
+#include <SFML/Graphics.hpp>
 
 bool PlayerController::controller_created = false;
 

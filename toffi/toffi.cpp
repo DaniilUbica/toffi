@@ -1,11 +1,11 @@
 #include <SFML/Graphics.hpp>
 
-#include "Engine/Constants.h"
-#include "Engine/World.h"
-#include "Engine/ViewController.h"
-#include "Engine/PickableSpawner.h"
-#include "Engine/Pickable.h"
-#include "Engine/ParticleSystem.h"
+#include "Constants.h"
+#include "World.h"
+#include "ViewController.h"
+#include "PickableSpawner.h"
+#include "Pickable.h"
+#include "ParticleSystem.h"
 #include "Enemies/EnemiesManager.h"
 #include "Enemies/Enemy.h"
 #include "UI/HealthBar.h"

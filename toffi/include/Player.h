@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Engine/Character.h"
-#include "Engine/PlayerController.h"
+#include "Character.h"
+#include "PlayerController.h"
 
 class PlayerController;
 class Weapon;

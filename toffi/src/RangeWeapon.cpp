@@ -1,6 +1,6 @@
 #include "Weapon/RangeWeapon.h"
-#include "Engine/Timer.h"
-#include "Engine/Character.h"
+#include "Timer.h"
+#include "Character.h"
 #include "Bullet.h"
 
 RangeWeapon::RangeWeapon(const sf::Texture& bullet_texture, sf::Vector2f pos, float damage_scale, float reload_time) {

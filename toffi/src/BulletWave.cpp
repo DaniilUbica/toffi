@@ -2,7 +2,7 @@
 #include "Pickables/Heal.h"
 #include "Player.h"
 #include "Bullet.h"
-#include "Engine/Constants.h"
+#include "Constants.h"
 #include "Weapon/RangeWeapon.h"
 
 BulletWave::BulletWave(const sf::Texture& texture, sf::Vector2f pos) {

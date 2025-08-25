@@ -1,6 +1,6 @@
 #include "Bullet.h"
-#include "Engine/Constants.h"
-#include "Engine/Character.h"
+#include "Constants.h"
+#include "Character.h"
 
 Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
     m_sprite = std::make_shared<sf::Sprite>(texture);

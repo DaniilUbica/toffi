@@ -1,7 +1,7 @@
 #include "Enemies/Enemy.h"
-#include "Engine/Animation.h"
-#include "Engine/Constants.h"
-#include "Engine/Timer.h"
+#include "Animation.h"
+#include "Constants.h"
+#include "Timer.h"
 #include "Player.h"
 
 void Enemy::followPlayer(float time) {
