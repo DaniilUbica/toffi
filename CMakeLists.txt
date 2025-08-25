@@ -10,6 +10,8 @@ FetchContent_Declare(SFML
     GIT_TAG 3.0.x)
 FetchContent_MakeAvailable(SFML)
 
+add_subdirectory(ubica_engine)
+
 add_executable(${CMAKE_PROJECT_NAME}
     toffi/toffi.cpp
     toffi/src/Animation.cpp
@@ -65,7 +67,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-audio)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-window)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE sfml-system)
 target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_17)
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/include)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/include ubica_engine/include)
 
 set(RESOURCES
     ${CMAKE_SOURCE_DIR}/toffi/Assets/enemies/eye_flight.png

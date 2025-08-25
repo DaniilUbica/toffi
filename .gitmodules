@@ -1,0 +1,3 @@
+[submodule "ubica_engine"]
+	path = ubica_engine
+	url = git@github.com:DaniilUbica/ubica_engine.git
