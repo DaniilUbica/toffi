@@ -21,41 +21,36 @@ void World::initWorld(const sf::Texture& background, const sf::Texture& border) 
 
     int tiles_amount_width = static_cast<int>(WORLD_WIDTH / SPRITE_SIZE) + 1;
     int tiles_amount_height = static_cast<int>(WORLD_HEIGHT / SPRITE_SIZE) + 1;
-    int sprite_size_int = static_cast<int>(SPRITE_SIZE);
 
     for (int i = 0; i < tiles_amount_width; i++) {
-        sf::Sprite tile_sprite;
-        tile_sprite.setTexture(m_border_texture);
-        tile_sprite.setPosition(i * sprite_size_int, 0);
+        sf::Sprite tile_sprite(m_border_texture);
+        tile_sprite.setPosition({ i * SPRITE_SIZE, 0.0 });
         m_border_sprites.push_back(tile_sprite);
     }
     for (int i = 0; i < tiles_amount_width; i++) {
-        sf::Sprite tile_sprite;
-        tile_sprite.setTexture(m_border_texture);
-        tile_sprite.setPosition(i * sprite_size_int, WORLD_HEIGHT);
+        sf::Sprite tile_sprite(m_border_texture);
+        tile_sprite.setPosition({ i * SPRITE_SIZE, WORLD_HEIGHT });
         m_border_sprites.push_back(tile_sprite);
     }
     for (int i = 0; i < tiles_amount_height; i++) {
-        sf::Sprite tile_sprite;
-        tile_sprite.setTexture(m_border_texture);
-        tile_sprite.setPosition(0, i * sprite_size_int);
+        sf::Sprite tile_sprite(m_border_texture);
+        tile_sprite.setPosition({ 0.0, i * SPRITE_SIZE });
         m_border_sprites.push_back(tile_sprite);
     }
     for (int i = 0; i < tiles_amount_height; i++) {
-        sf::Sprite tile_sprite;
-        tile_sprite.setTexture(m_border_texture);
-        tile_sprite.setPosition(WORLD_WIDTH, i * sprite_size_int);
+        sf::Sprite tile_sprite(m_border_texture);
+        tile_sprite.setPosition({ WORLD_WIDTH, i * SPRITE_SIZE });
         m_border_sprites.push_back(tile_sprite);
     }
 
-    m_background_sprite.setTexture(m_background_texture);
+    m_background_sprite = std::make_shared<sf::Sprite>(m_background_texture);
 }
 
 std::vector<sf::Sprite> World::getBorderSprites() const {
     return m_border_sprites;
 }
 
-sf::Sprite World::getBackgroundSprite() const {
+std::shared_ptr<sf::Sprite> World::getBackgroundSprite() const {
     return m_background_sprite;
 }
 

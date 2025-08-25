@@ -1,6 +1,6 @@
 #include "Engine/GameObject.h"
 
-sf::Sprite GameObject::getSprite() const {
+std::shared_ptr<sf::Sprite> GameObject::getSprite() const {
     return m_sprite;
 }
 

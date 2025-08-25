@@ -2,8 +2,8 @@
 
 constexpr float PI = 3.14159265;
 
-constexpr float WINDOW_HEIGHT = 720.0;
-constexpr float WINDOW_WIDTH  = 1280.0;
+constexpr unsigned int WINDOW_HEIGHT = 720;
+constexpr unsigned int WINDOW_WIDTH  = 1280;
 
 constexpr float VIEW_HEIGHT = 720.0;
 constexpr float VIEW_WIDTH  = 1280.0;

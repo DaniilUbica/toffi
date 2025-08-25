@@ -4,12 +4,12 @@
 
 class World {
 private:
-    static World*           m_world;
+    static World*              m_world;
 
-    sf::Texture             m_border_texture;
-    sf::Texture             m_background_texture;
-    sf::Sprite              m_background_sprite;
-    std::vector<sf::Sprite> m_border_sprites;
+    sf::Texture                 m_border_texture;
+    sf::Texture                 m_background_texture;
+    std::shared_ptr<sf::Sprite> m_background_sprite;
+    std::vector<sf::Sprite>     m_border_sprites;
 
     World() = default;
 public:
@@ -22,6 +22,6 @@ public:
     void initWorld(const sf::Texture& background, const sf::Texture& border);
 
     std::vector<sf::Sprite> getBorderSprites() const;
-    sf::Sprite getBackgroundSprite() const;
+    std::shared_ptr<sf::Sprite> getBackgroundSprite() const;
     size_t getBorderVecSize() const;
 };

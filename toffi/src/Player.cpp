@@ -33,7 +33,7 @@ Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) 
     m_run_animation = std::make_unique<Animation>(texture.at(State::RUN), 66, 0, 58, 53, 6, ANIMATION_SPEED, 193);
 
     m_sprite = m_idle_animation->Tick(1, m_direction != Direction::RIGHT);
-    m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
+    m_size = sf::Vector2f(m_sprite->getTextureRect().size.x, m_sprite->getTextureRect().size.y);
 
     sf::Color health_color(103, 191, 109);
     sf::Color border_color(96, 127, 97);
@@ -56,8 +56,8 @@ void Player::Update(float time) {
         m_sprite = m_idle_animation->Tick(time, m_direction != Direction::RIGHT);
     }
 
-    m_size = sf::Vector2f(m_sprite.getTextureRect().width, m_sprite.getTextureRect().height);
-    m_sprite.setPosition(m_pos);
+    m_size = sf::Vector2f(m_sprite->getTextureRect().size.x, m_sprite->getTextureRect().size.y);
+    m_sprite->setPosition(m_pos);
 }
 
 void Player::addHP(float health) {

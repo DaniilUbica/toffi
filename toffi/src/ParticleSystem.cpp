@@ -5,7 +5,7 @@
 ParticleSystem* ParticleSystem::m_instance = nullptr;
 
 Particle::Particle(sf::Vector2f pos, sf::Color& color) {
-	m_shape.setPosition(pos.x, pos.y);
+    m_shape.setPosition({ pos.x, pos.y });
 	m_shape.setRadius(PARTICLE_RADIUS);
 	m_shape.setFillColor(color);
 
@@ -21,7 +21,7 @@ void Particle::Update(float time) {
 	m_lifetime -= time;
 
 	sf::Color color = m_shape.getFillColor();
-	color.a = static_cast<sf::Uint8>(255 * (m_lifetime / 1.0f));
+	color.a = static_cast<uint8_t>(255 * (m_lifetime / 1.0f));
 	m_shape.setFillColor(color);
 }
 

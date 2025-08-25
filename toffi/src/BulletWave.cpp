@@ -5,10 +5,11 @@
 #include "Engine/Constants.h"
 #include "Weapon/RangeWeapon.h"
 
-BulletWave::BulletWave(const sf::Texture &texture, sf::Vector2f pos) {
+BulletWave::BulletWave(const sf::Texture& texture, sf::Vector2f pos) {
 	m_pos = pos;
-	m_sprite.setTexture(texture);
-	m_sprite.setPosition(m_pos);
+    m_sprite = std::make_shared<sf::Sprite>(texture);
+
+	m_sprite->setPosition(m_pos);
 }
 
 void BulletWave::onPicked() {

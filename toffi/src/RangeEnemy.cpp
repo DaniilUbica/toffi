@@ -53,7 +53,7 @@ RangeEnemy::RangeEnemy(const sf::Texture& textures, const sf::Texture& bullet_te
 void RangeEnemy::Update(float time) {
 	Enemy::Update(time);
 
-	m_sprite.setColor(sf::Color::Green);
+	m_sprite->setColor(sf::Color::Green);
 
 	for (auto bullet : m_bullets) {
 		bullet->Update(time);

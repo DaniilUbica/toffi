@@ -3,7 +3,7 @@
 #include "Engine/Character.h"
 
 Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
-    m_sprite.setTexture(texture);
+    m_sprite = std::make_shared<sf::Sprite>(texture);
     m_pos = pos;
     m_size = sf::Vector2f(BULLET_DEFAULT_SIZE, BULLET_DEFAULT_SIZE);
     m_direction = direction;
@@ -14,8 +14,8 @@ void Bullet::Update(float time) {
     m_pos.x += m_direction.x * BULLET_DEFAULT_SPEED * time;
     m_pos.y += m_direction.y * BULLET_DEFAULT_SPEED * time;
 
-    m_sprite.setPosition(m_pos);
-    m_sprite.setScale(0.5, 0.5);
+    m_sprite->setPosition(m_pos);
+    m_sprite->setScale({ 0.5, 0.5 });
 }
 
 bool Bullet::checkCollisionWithMapBorders() {
@@ -33,7 +33,7 @@ void Bullet::updateDamage(float scale) {
 
 bool Bullet::checkCollisionWithCharacters(std::vector<std::shared_ptr<Character>>& characters) {
     for (auto c : characters) {
-        if (m_sprite.getGlobalBounds().intersects(c->getSprite().getGlobalBounds())) {
+        if (m_sprite->getGlobalBounds().findIntersection(c->getSprite()->getGlobalBounds())) {
             c->takeDamage(m_damage);
             return true;
         }
@@ -43,7 +43,7 @@ bool Bullet::checkCollisionWithCharacters(std::vector<std::shared_ptr<Character>
 }
 
 bool Bullet::checkCollisionWithCharacter(std::shared_ptr<Character> character) {
-	if (m_sprite.getGlobalBounds().intersects(character->getSprite().getGlobalBounds())) {
+	if (m_sprite->getGlobalBounds().findIntersection(character->getSprite()->getGlobalBounds())) {
 		character->takeDamage(m_damage);
 		return true;
 	}

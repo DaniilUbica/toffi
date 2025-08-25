@@ -4,7 +4,7 @@
 
 ViewController::ViewController(std::shared_ptr<Player> player) {
     m_player = player;
-    m_view = std::make_unique<sf::View>(sf::FloatRect(0.f, 0.f, 1.f, 1.f));
+    m_view = std::make_unique<sf::View>(sf::FloatRect({0.f, 0.f}, {1.f, 1.f}));
 }
 
 void ViewController::Update(float time, sf::RenderWindow& window) {
@@ -24,6 +24,7 @@ void ViewController::Update(float time, sf::RenderWindow& window) {
         view_pos.y = WORLD_HEIGHT - VIEW_HEIGHT + SPRITE_SIZE;
     }
 
-    m_view->reset(sf::FloatRect(view_pos.x, view_pos.y, VIEW_WIDTH, VIEW_HEIGHT));
+    m_view->setCenter({view_pos.x + VIEW_WIDTH/2.f, view_pos.y + VIEW_HEIGHT/2.f});
+    m_view->setSize({VIEW_WIDTH, VIEW_HEIGHT});
     window.setView(*m_view);
 }

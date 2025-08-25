@@ -18,7 +18,7 @@ sf::Color calculateAverageTextureColor(const sf::Texture& texture) {
 
 	for (unsigned int x = 0; x < width; ++x) {
 		for (unsigned int y = 0; y < height; ++y) {
-			sf::Color color = image.getPixel(x, y);
+            sf::Color color = image.getPixel({ x, y });
 			if (color.a == 0) {
 				pixelCount--;
 				continue;

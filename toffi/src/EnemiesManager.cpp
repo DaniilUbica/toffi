@@ -53,7 +53,7 @@ void EnemiesManager::removeEnemy() {
 		auto pos = dead_enemy_iter->get()->getPosition();
 		pos.x += SPRITE_SIZE / 2;
 		pos.y += SPRITE_SIZE / 2;
-		ParticleSystem::instance()->burstingBubble(pos, *(dead_enemy_iter->get()->getSprite().getTexture()));
+		ParticleSystem::instance()->burstingBubble(pos, dead_enemy_iter->get()->getSprite()->getTexture());
 		*dead_enemy_iter = nullptr;
         m_enemies.erase(dead_enemy_iter);
     }
@@ -75,7 +75,7 @@ void EnemiesManager::drawBullets(sf::RenderWindow& window) {
 	for (auto enemy : m_enemies) {
 		if (auto range_enemy = std::dynamic_pointer_cast<RangeEnemy>(enemy)) {
 			for (auto bullet : range_enemy->getBullets()) {
-				window.draw(bullet->getSprite());
+				window.draw(*bullet->getSprite().get());
 			}
 		}
 	}

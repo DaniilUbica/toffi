@@ -12,14 +12,14 @@ enum class Direction : bool {
 
 class Character {
 protected:
-	float		                 m_health;
-	float		                 m_speed;
-	sf::Vector2f                 m_size;
-	sf::Vector2f                 m_pos;
-	sf::Sprite                   m_sprite;
-	std::unique_ptr<Animation>   m_run_animation;
-	std::shared_ptr<HealthBar>   m_health_bar;
-	Direction                    m_direction = Direction::RIGHT;
+	float		                m_health;
+	float		                m_speed;
+	sf::Vector2f                m_size;
+	sf::Vector2f                m_pos;
+    std::shared_ptr<sf::Sprite> m_sprite;
+	std::unique_ptr<Animation>  m_run_animation;
+	std::shared_ptr<HealthBar>  m_health_bar;
+	Direction                   m_direction = Direction::RIGHT;
 
 public:
 	virtual ~Character() = default;
@@ -34,7 +34,7 @@ public:
 	float getHP() const;
 	sf::Vector2f getSize() const;
 	sf::Vector2f getPosition() const;
-	sf::Sprite getSprite() const;
+    std::shared_ptr<sf::Sprite> getSprite() const;
 	Direction getDirection() const;
 	std::shared_ptr<HealthBar> getHealthBar() const;
 };

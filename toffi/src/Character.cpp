@@ -28,7 +28,7 @@ sf::Vector2f Character::getPosition() const {
     return m_pos;
 }
 
-sf::Sprite Character::getSprite() const {
+std::shared_ptr<sf::Sprite> Character::getSprite() const {
     return m_sprite;
 }
 

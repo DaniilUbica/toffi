@@ -8,7 +8,7 @@ class Animation {
 private:
 	std::vector<sf::IntRect> m_frames, m_rotated_frames;
 	float m_current_frame, m_animation_speed;
-	sf::Sprite m_sprite;
+	std::shared_ptr<sf::Sprite> m_sprite;
 
 public:
 	Animation() = delete;
@@ -17,5 +17,5 @@ public:
 	Animation(const sf::Texture& texture, int x, int y, int width, int height, int frames_count, float animation_speed, int step);
 	~Animation() = default;
 
-	sf::Sprite Tick(float time, bool rotate);
+    std::shared_ptr<sf::Sprite> Tick(float time, bool rotate);
 };

@@ -17,7 +17,7 @@
 int main() {
 	srand(time(NULL));
 
-	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Toffi Adventure");
+    sf::RenderWindow window(sf::VideoMode({ WINDOW_WIDTH, WINDOW_HEIGHT }), "Toffi Adventure");
 
 	auto texture_holder = TextureHolder::instance();
 	texture_holder->setTextures();
@@ -51,12 +51,10 @@ int main() {
 		clock.restart();
 		time /= 300;
 
-		sf::Event event;
-		while (window.pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
-				window.close();
-			}
-		}
+        while (const std::optional event = window.pollEvent()) {
+        if (event->is<sf::Event::Closed>())
+            window.close();
+        }
 
 		auto characters = enemies_manager->getCharacters();
 		pickable_spawner->Update();
@@ -68,13 +66,13 @@ int main() {
 
 		window.clear(sf::Color::White);
 
-		window.draw(world->getBackgroundSprite());
+		window.draw(*world->getBackgroundSprite().get());
 		for (int i = 0; i < world->getBorderVecSize(); i++) {
 			window.draw(world->getBorderSprites()[i]);
 		}
 
 		for (auto pickable : pickable_spawner->getPickables()) {
-			window.draw(pickable->getSprite());
+			window.draw(*pickable->getSprite().get());
 		}
 
 		particle_system->drawParticles(window);
@@ -85,18 +83,18 @@ int main() {
 			if (weapon) {
 				auto bullets = weapon->getBullets();
 				for (auto b : bullets) {
-					window.draw(b->getSprite());
+					window.draw(*b->getSprite().get());
 				}
 			}
 		}
 		else {
 			auto weapon = std::dynamic_pointer_cast<MeleeWeapon>(player->getWeapon());
-			window.draw(weapon->getWeapon());
+			window.draw(*weapon->getWeapon().get());
 		}
 
-		window.draw(player->getSprite());
+		window.draw(*player->getSprite().get());
 		for (auto e : enemies_manager->getEnemies()) {
-			window.draw(e->getSprite());
+			window.draw(*e->getSprite().get());
 		}
 
 		player->getHealthBar()->Draw(window);

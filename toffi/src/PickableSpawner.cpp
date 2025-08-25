@@ -38,7 +38,7 @@ void PickableSpawner::addPickableTexture(PickableType type, const sf::Texture& t
 
 void PickableSpawner::checkCollisionsWithPlayer() {
 	for (auto pickable : m_pickables) {
-		if (m_player->getSprite().getGlobalBounds().intersects(pickable->getSprite().getGlobalBounds())) {
+		if (m_player->getSprite()->getGlobalBounds().findIntersection(pickable->getSprite()->getGlobalBounds())) {
 			pickable->onPicked();
 		}
 	}
