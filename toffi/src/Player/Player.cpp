@@ -6,6 +6,8 @@
 #include "Weapon/RangeWeapon.h"
 #include "Weapon/MeleeWeapon.h"
 
+#include <cmath>
+
 inline float distance(sf::Vector2f v1, sf::Vector2f v2) {
     return std::sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
 }
