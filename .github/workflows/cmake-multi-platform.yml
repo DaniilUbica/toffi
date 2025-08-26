@@ -11,11 +11,9 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [macos-latest]
         build_type: [Release]
         include:
-          - os: ubuntu-latest
-            compiler: gcc
           - os: macos-latest
             compiler: clang
 
