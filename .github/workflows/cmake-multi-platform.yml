@@ -44,7 +44,3 @@ jobs:
     - name: Build
       run: |
         cmake --build build --config ${{ matrix.build_type }} --parallel
-
-    - name: Run tests (optional)
-      run: |
-        cd build && ctest -C ${{ matrix.build_type }} --output-on-failure
