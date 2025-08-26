@@ -78,16 +78,16 @@ install(TARGETS ${CMAKE_PROJECT_NAME})
 if(WIN32)
     add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:../ubica_engine>/sfml-system-2.dll
+            $<TARGET_FILE_DIR:UbicaEngine>/sfml-system-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:../ubica_engine>/sfml-window-2.dll
+            $<TARGET_FILE_DIR:UbicaEngine>/sfml-window-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:../ubica_engine>/sfml-graphics-2.dll
+            $<TARGET_FILE_DIR:UbicaEngine>/sfml-graphics-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:../ubica_engine>/sfml-audio-2.dll
+            $<TARGET_FILE_DIR:UbicaEngine>/sfml-audio-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
     )
 endif()
