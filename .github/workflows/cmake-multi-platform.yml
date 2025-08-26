@@ -36,7 +36,6 @@ jobs:
       if: matrix.os == 'macos-latest'
       run: |
         brew update
-        brew install cmake openssl
 
     - name: Configure CMake
       run: |
