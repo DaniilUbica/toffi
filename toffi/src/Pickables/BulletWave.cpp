@@ -7,7 +7,8 @@
 
 BulletWave::BulletWave(const sf::Texture& texture, sf::Vector2f pos) {
 	m_pos = pos;
-    m_sprite = std::make_shared<sf::Sprite>(texture);
+    m_texture = texture;
+    m_sprite = std::make_shared<sf::Sprite>(m_texture);
 
 	m_sprite->setPosition(m_pos);
 }

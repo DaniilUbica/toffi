@@ -15,17 +15,21 @@ TextureHolder* TextureHolder::instance() {
 }
 
 void TextureHolder::setTextures() {
-	m_player_textures[State::IDLE].loadFromFile("idle.png");
-	m_player_textures[State::RUN].loadFromFile("run.png");
+    bool textures_load_result = false;
 
-	m_lvl1_border_texture.loadFromFile("border.png");
-	m_lvl1_background_texture.loadFromFile("background.png");
+    textures_load_result = m_player_textures[State::IDLE].loadFromFile("idle.png");
+    textures_load_result = m_player_textures[State::RUN].loadFromFile("run.png");
 
-	m_flying_eye_texture.loadFromFile("eye_flight.png");
-	m_spider_texture.loadFromFile("spider.png");
+    textures_load_result = m_lvl1_border_texture.loadFromFile("border.png");
+    textures_load_result = m_lvl1_background_texture.loadFromFile("background.png");
 
-	m_bullet_texture.loadFromFile("bullet.png");
-    m_sword_texture.loadFromFile("sword.png");
+    textures_load_result = m_flying_eye_texture.loadFromFile("eye_flight.png");
+    textures_load_result = m_spider_texture.loadFromFile("spider.png");
 
-	m_heal_texture.loadFromFile("heart.png");
+    textures_load_result = m_bullet_texture.loadFromFile("bullet.png");
+    textures_load_result = m_sword_texture.loadFromFile("sword.png");
+
+    textures_load_result = m_heal_texture.loadFromFile("heart.png");
+
+    assert(textures_load_result);
 }

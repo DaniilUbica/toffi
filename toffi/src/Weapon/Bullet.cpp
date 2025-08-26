@@ -3,7 +3,8 @@
 #include "Engine/Base/Character.h"
 
 Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
-    m_sprite = std::make_shared<sf::Sprite>(texture);
+    m_texture = texture;
+    m_sprite = std::make_shared<sf::Sprite>(m_texture);
     m_pos = pos;
     m_size = sf::Vector2f(BULLET_DEFAULT_SIZE, BULLET_DEFAULT_SIZE);
     m_direction = direction;
