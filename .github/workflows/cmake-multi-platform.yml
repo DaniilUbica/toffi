@@ -12,14 +12,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         build_type: [Release]
-        compiler: [gcc, clang, msvc]
-        exclude:
-          - os: windows-latest
-            compiler: [gcc, clang]
-          - os: macos-latest
-            compiler: [gcc, msvc]
+        include:
           - os: ubuntu-latest
-            compiler: [clang, msvc]
+            compiler: gcc
+          - os: windows-latest
+            compiler: msvc
+          - os: macos-latest
+            compiler: clang
 
     runs-on: ${{ matrix.os }}
 
