@@ -66,20 +66,3 @@ foreach(Assets ${RESOURCES})
 endforeach()
 
 install(TARGETS ${CMAKE_PROJECT_NAME})
-
-if(WIN32)
-    add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-system-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-window-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-graphics-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-audio-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-    )
-endif()
