@@ -10,17 +10,16 @@ jobs:
   toffi-build:
     strategy:
       matrix:
-        os: ubuntu-latest
+        os: ubuntu-latest, windows-latest, macos-latest]
         build_type: Release
-        compiler: gcc
-
-        os: macos-latest
-        build_type: Release
-        compiler: clang
-
-        os: windows-latest
-        build_type: Release
-        compiler: msvc
+        compiler: [gcc, clang, msvc]
+        exclude:
+          - os: windows-latest
+            compiler: [gcc, clang]
+          - os: macos-latest
+            compiler: [gcc, msvc]
+          - os: ubuntu-latest
+            compiler: [clang, msvc]
 
     runs-on: ${{ matrix.os }}
 
