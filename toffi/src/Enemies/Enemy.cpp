@@ -8,7 +8,7 @@ void Enemy::followPlayer(float time) {
     if (!m_sprite->getGlobalBounds().findIntersection(m_player->getSprite()->getGlobalBounds())) {
         sf::Vector2f player_pos = m_player->getPosition();
         sf::Vector2f direction = player_pos - m_pos;
-        direction /= sqrt(direction.x * direction.x + direction.y * direction.y);
+        direction /= static_cast<float>(sqrt(direction.x * direction.x + direction.y * direction.y));
         m_pos.x += direction.x * m_speed * time;
         m_pos.y += direction.y * m_speed * time;
     }
