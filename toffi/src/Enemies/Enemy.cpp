@@ -4,8 +4,6 @@
 #include "Engine/Core/Timer.h"
 #include "Player/Player.h"
 
-#include <cmath>
-
 void Enemy::followPlayer(float time) {
     if (!m_sprite->getGlobalBounds().findIntersection(m_player->getSprite()->getGlobalBounds())) {
         sf::Vector2f player_pos = m_player->getPosition();

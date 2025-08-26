@@ -3,6 +3,8 @@
 #include "Engine/Base/Character.h"
 #include "Engine/Core/Timer.h"
 
+#include <cmath>
+
 class Player;
 class Timer;
 
