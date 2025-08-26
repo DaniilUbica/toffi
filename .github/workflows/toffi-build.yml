@@ -1,0 +1,80 @@
+name: Toffi Build
+
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+    branches: [ master ]
+
+jobs:
+  build-ubuntu:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          libx11-dev \
+          libxrandr-dev \
+          libxcursor-dev \
+          libxi-dev \
+          libudev-dev \
+          libgl1-mesa-dev \
+          libfreetype6-dev \
+          libopenal-dev \
+          libflac-dev \
+          libvorbis-dev \
+          libglu1-mesa-dev \
+          libharfbuzz-dev \
+          libfontconfig-dev
+
+    - name: cmake config
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: build
+      run: |
+        cmake --build build --config Release --parallel $(nproc)
+        
+  build-macos:
+    timeout-minutes: 10
+    runs-on: macos-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: cmake config
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: build
+      run: |
+        cmake --build build --config Release --parallel $(sysctl -n hw.ncpu)
+        
+  build-windows:
+    timeout-minutes: 10
+    runs-on: windows-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: cmake config
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: build
+      run: |
+        cmake --build build --config Release -- /m

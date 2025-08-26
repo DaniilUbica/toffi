@@ -10,7 +10,7 @@ void RangeEnemy::followPlayer(float time) {
 	if (diff.x >= ENEMY_ATTACK_RANGE || diff.y >= ENEMY_ATTACK_RANGE) {
 		sf::Vector2f player_pos = m_player->getPosition();
 		sf::Vector2f direction = player_pos - m_pos;
-		direction /= sqrt(direction.x * direction.x + direction.y * direction.y);
+		direction /= static_cast<float>(sqrt(direction.x * direction.x + direction.y * direction.y));
 		m_pos.x += direction.x * m_speed * time;
 		m_pos.y += direction.y * m_speed * time;
 	}
@@ -31,7 +31,7 @@ void RangeEnemy::attackIfCanAttack() {
 		sf::Vector2f player_pos = m_player->getPosition();
 		sf::Vector2f direction = player_pos - m_pos;
 
-		direction /= sqrt(direction.x * direction.x + direction.y * direction.y);
+		direction /= static_cast<float>(sqrt(direction.x * direction.x + direction.y * direction.y));
 		auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, direction);
 		new_bullet->updateDamage(ENEMY_BULLET_DAMAGE / BULLET_DEFAULT_DAMAGE);
 		m_bullets.push_back(new_bullet);

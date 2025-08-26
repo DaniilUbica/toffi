@@ -47,4 +47,6 @@ bool Bullet::checkCollisionWithCharacter(std::shared_ptr<game_engine::Character>
 		character->takeDamage(m_damage);
 		return true;
 	}
+
+    return false;
 }

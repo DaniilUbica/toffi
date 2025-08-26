@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(toffi LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+set(ENGINE_UNIT_NAME UbicaEngine)
 
 add_subdirectory(ubica_engine)
 
@@ -40,7 +40,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Constants.h
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE UbicaEngine)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/src PRIVATE ubica_engine)
 
 set(RESOURCES
@@ -65,29 +65,4 @@ foreach(Assets ${RESOURCES})
     )
 endforeach()
 
-if(WIN32)
-    add_custom_command(
-        TARGET ${CMAKE_PROJECT_NAME}
-        COMMENT "Copy OpenAL DLL"
-        PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-        VERBATIM)
-endif()
-
 install(TARGETS ${CMAKE_PROJECT_NAME})
-
-if(WIN32)
-    add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:ubica_engine>/sfml-system-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:ubica_engine>/sfml-window-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:ubica_engine>/sfml-graphics-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:ubica_engine>/sfml-audio-2.dll
-            $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
-    )
-endif()

@@ -2,6 +2,8 @@
 
 #include "Engine/Base/Pickable.h"
 
+#include <cmath>
+
 class Player;
 class Bullet;
 

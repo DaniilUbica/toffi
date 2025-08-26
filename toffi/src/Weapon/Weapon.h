@@ -2,6 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <cmath>
+
 #include "Engine/Core/Timer.h"
 
 class Bullet;
