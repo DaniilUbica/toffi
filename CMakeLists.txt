@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(toffi LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
+set(ENGINE_UNIT_NAME UbicaEngine)
 
 add_subdirectory(ubica_engine)
 
@@ -40,7 +40,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Constants.h
 )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE UbicaEngine)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/src PRIVATE ubica_engine)
 
 set(RESOURCES
@@ -78,16 +78,16 @@ install(TARGETS ${CMAKE_PROJECT_NAME})
 if(WIN32)
     add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:UbicaEngine>/sfml-system-2.dll
+            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-system-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:UbicaEngine>/sfml-window-2.dll
+            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-window-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:UbicaEngine>/sfml-graphics-2.dll
+            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-graphics-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            $<TARGET_FILE_DIR:UbicaEngine>/sfml-audio-2.dll
+            $<TARGET_FILE_DIR:${ENGINE_UNIT_NAME}>/sfml-audio-2.dll
             $<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>
     )
 endif()
