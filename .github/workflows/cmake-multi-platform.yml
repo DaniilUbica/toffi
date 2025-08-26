@@ -7,16 +7,20 @@ on:
     branches: [ master ]
 
 jobs:
-  build-test:
+  toffi-build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        build_type: [Release, Debug]
-        exclude:
-          - os: windows-latest
-            build_type: Debug
-          - os: macos-latest
-            build_type: Debug
+        os: ubuntu-latest
+        build_type: Release
+        compiler: gcc
+
+        os: macos-latest
+        build_type: Release
+        compiler: clang
+
+        os: windows-latest
+        build_type: Release
+        compiler: msvc
 
     runs-on: ${{ matrix.os }}
 
@@ -25,17 +29,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: recursive
-
-    - name: Install dependencies (Ubuntu)
-      if: matrix.os == 'ubuntu-latest'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential cmake libssl-dev
-
-    - name: Install dependencies (macOS)
-      if: matrix.os == 'macos-latest'
-      run: |
-        brew update
 
     - name: Configure CMake
       run: |
