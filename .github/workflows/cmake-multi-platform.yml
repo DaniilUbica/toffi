@@ -7,17 +7,9 @@ on:
     branches: [ master ]
 
 jobs:
-  toffi-build:
-    timeout-minutes: 30
-    strategy:
-      matrix:
-        os: [macos-latest]
-        build_type: [Release]
-        include:
-          - os: macos-latest
-            compiler: clang
-
-    runs-on: ${{ matrix.os }}
+  build-ubuntu:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
 
     steps:
     - name: checkout
@@ -25,8 +17,7 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Install Ubuntu dependencies
-      if: matrix.os == 'ubuntu-latest'
+    - name: install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y \
@@ -44,12 +35,46 @@ jobs:
           libharfbuzz-dev \
           libfontconfig-dev
 
-
     - name: cmake config
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
 
     - name: build
       run: |
-        cmake --build build --config ${{ matrix.build_type }} --parallel
+        cmake --build build --config Release --parallel $(nproc)
         
+  build-macos:
+    timeout-minutes: 10
+    runs-on: macos-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: cmake config
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: build
+      run: |
+        cmake --build build --config Release --parallel $(sysctl -n hw.ncpu)
+        
+  build-windows:
+    timeout-minutes: 10
+    runs-on: windows-latest
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: cmake config
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: build
+      run: |
+        cmake --build build --config Release -- /m
