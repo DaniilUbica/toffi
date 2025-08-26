@@ -24,18 +24,16 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Checkout code
+    - name: checkout
       uses: actions/checkout@v4
       with:
         submodules: recursive
 
-    - name: Configure CMake
+    - name: cmake config
       run: |
         cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
 
-    - name: Build
+    - name: build
       run: |
         cmake --build build --config ${{ matrix.build_type }} --parallel
-
-# asdasdasdasdadasda
         
