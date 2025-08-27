@@ -41,7 +41,7 @@ void MeleeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_p
 
 	Weapon::commonUpdate(m_pos, characters, m_sprite->getGlobalBounds().size.x);
 
-    if (const auto nearest = getNearestCharacter(characters)) {
+    if (const auto nearest = getNearestCharacter(characters, parent_direction)) {
         sf::Vector2f nearest_character_pos = nearest->getPosition();
 
         m_direction = nearest_character_pos - m_pos;

@@ -6,7 +6,7 @@ float Weapon::distance(sf::Vector2f v1, sf::Vector2f v2) const {
 	return std::sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
 }
 
-bool Weapon::compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f target, std::optional<game_engine::Direction> direction) const {
+bool Weapon::compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f target) const {
 	return distance(v1, target) < distance(v2, target);
 }
 
