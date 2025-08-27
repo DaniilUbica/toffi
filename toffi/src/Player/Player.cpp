@@ -69,7 +69,8 @@ void Player::addHP(float health) {
 void Player::attackEnemies(float time, std::vector<std::shared_ptr<game_engine::Character>>& characters) {
     if (m_weapon) {
         m_weapon->updateAttackSpeed(m_attack_speed_scale);
-		m_weapon->Update(time, m_pos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
+        const sf::Vector2<float> weaponPos = { m_pos.x, m_pos.y + m_size.y / 2 };
+		m_weapon->Update(time, weaponPos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
 		m_weapon->Attack();
     }
     else {
@@ -84,7 +85,7 @@ void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Te
         m_weapon = std::make_shared<RangeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
     }
     else {
-		m_weapon = std::make_shared<MeleeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
+        m_weapon = std::make_shared<MeleeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED, shared_from_this());
     }
 }
 

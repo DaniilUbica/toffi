@@ -31,7 +31,6 @@ protected:
     WeaponType                          m_weapon_type;
     float                               m_damage_scale = 1.f;
     float                               m_reload_time = 1.f;
-	float				                m_angle = 1.f;
 	bool				                m_gotEnemyInAttackRange = false;
 
 	void commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range);

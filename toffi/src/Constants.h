@@ -34,9 +34,11 @@ constexpr float BULLET_DEFAULT_SIZE   = 24.0;
 constexpr float BULLET_DEFAULT_SPEED  = 0.2;
 constexpr float BULLET_DEFAULT_DAMAGE = 20.0;
 
+constexpr float MELEE_WEAPON_DEFAULT_DAMAGE = 40.0;
+
 constexpr float HEAL_DEFAULT_VALUE = 1.0;
 constexpr float HEAL_SPAWN_CHANCE  = 20.0;
 
 constexpr int BULLET_WAVE_BULLETS_SPACING = 15;
 constexpr int BULLET_WAVE_SPAWN_CHANCE    = 10;
-constexpr float BULLET_WAVE_DAMAGE        = 40;
+constexpr float BULLET_WAVE_DAMAGE        = 40.0;

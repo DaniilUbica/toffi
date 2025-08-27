@@ -30,7 +30,7 @@ int main() {
 	auto particle_system = game_engine::ParticleSystem::instance();
 
 	auto player = std::make_shared<Player>(player_texture, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
-	player->initWeapon(WeaponType::RANGE, 1.0, texture_holder->bullet_texture());
+	player->initWeapon(WeaponType::MELEE, 1.0, texture_holder->sword_texture());
 
 	pickable_spawner->setPlayer(player);
 

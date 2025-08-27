@@ -30,7 +30,6 @@ void Weapon::commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_eng
 			sf::Vector2f nearest_character_pos = (*nearest)->getPosition();
 
 			m_direction = nearest_character_pos - m_pos;
-			m_angle = std::atan2(m_direction.y, m_direction.x) * 180 / game_engine::PI;
 			m_direction /= static_cast<float>(sqrt(m_direction.x * m_direction.x + m_direction.y * m_direction.y));
 			m_gotEnemyInAttackRange = isInAttackRange(m_pos, *nearest, attack_range);
 		}
