@@ -17,7 +17,8 @@ private:
     float                       m_return_speed = 0.2f;
     float                       m_attack_progress = 0.f;
     float                       m_attack_distance = 30.f;
-    
+    bool                        m_returning_weapon_to_start = false;
+
     std::weak_ptr<game_engine::Character> m_parent;
 
     std::shared_ptr<game_engine::Character> checkCollisionWithCharacters(std::vector<std::shared_ptr<game_engine::Character>>& characters);

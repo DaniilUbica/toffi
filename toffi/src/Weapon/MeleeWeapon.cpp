@@ -29,27 +29,44 @@ MeleeWeapon::MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float dam
 }
 
 void MeleeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
-	Weapon::commonUpdate(pos, characters, attack_range);
 
-	m_pos = pos;
-
+    game_engine::Direction parent_direction = game_engine::Direction::RIGHT;
     if (const auto sp = m_parent.lock()) {
-        const auto parentDirection = sp->getDirection();
-        if (parentDirection == game_engine::Direction::LEFT) {
-            if (m_direction.x <= 0) {
-                m_angle = std::atan2(m_direction.y, m_direction.x) * 180 / game_engine::PI;
-            }
-            else {
-                m_angle = -180.f;
+        parent_direction = sp->getDirection();
+        m_pos = { pos.x + sp->getSize().x, pos.y };
+    }
+    else {
+        m_pos = pos;
+    }
+
+	Weapon::commonUpdate(m_pos, characters, m_sprite->getGlobalBounds().size.x);
+
+    if (const auto nearest = getNearestCharacter(characters)) {
+        sf::Vector2f nearest_character_pos = nearest->getPosition();
+
+        m_direction = nearest_character_pos - m_pos;
+        m_direction /= static_cast<float>(sqrt(m_direction.x * m_direction.x + m_direction.y * m_direction.y));
+    }
+
+    if (parent_direction == game_engine::Direction::LEFT) {
+        if (m_direction.x <= 0.2f) {
+            m_angle = std::atan2(m_direction.y, m_direction.x) * 180 / game_engine::PI;
+        }
+        else {
+            const int angle_return_coeff = m_angle > -180.f ? -1 : 1;
+            if (static_cast<int>(m_angle) != -180) {
+                m_angle += angle_return_coeff * m_return_speed * time;
             }
         }
-        else if (parentDirection == game_engine::Direction::RIGHT) {
-            m_pos = { m_pos.x + sp->getSize().x, m_pos.y };
-            if (m_direction.x >= 0) {
-                m_angle = std::atan2(m_direction.y, m_direction.x) * 180 / game_engine::PI;
-            }
-            else {
-                m_angle = 0.f;
+    }
+    else if (parent_direction == game_engine::Direction::RIGHT) {
+        if (m_direction.x >= -0.2f) {
+            m_angle = std::atan2(m_direction.y, m_direction.x) * 180 / game_engine::PI;
+        }
+        else {
+            const int angle_return_coeff = m_angle > 0.f ? -1 : 1;
+            if (static_cast<int>(m_angle) != 0) {
+                m_angle += angle_return_coeff * m_return_speed * time;
             }
         }
     }
