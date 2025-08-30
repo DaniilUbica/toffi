@@ -5,6 +5,7 @@
 #include "UI/HealthBar.h"
 #include "Weapon/RangeWeapon.h"
 #include "Weapon/MeleeWeapon.h"
+#include "Weapon/BulletWaveWeapon.h"
 
 #include <cmath>
 
@@ -67,13 +68,14 @@ void Player::addHP(float health) {
 }
 
 void Player::attackEnemies(float time, std::vector<std::shared_ptr<game_engine::Character>>& characters) {
-    if (m_weapon) {
-        m_weapon->updateAttackSpeed(m_attack_speed_scale);
-		m_weapon->Update(time, m_pos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
-		m_weapon->Attack();
-    }
-    else {
-        throw std::logic_error("m_weapon is NULL, maybe you didn't call 'initWeapon()'?");
+    for (const auto weapon : m_weapons) {
+        if (weapon) {
+            weapon->updateAttackSpeed(m_attack_speed_scale);
+            weapon->Update(time, m_pos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
+        }
+        else {
+            throw std::logic_error("m_weapon is NULL, maybe you didn't call 'initWeapon()'?");
+        }
     }
 }
 
@@ -81,10 +83,13 @@ void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Te
 	// todo: mulptiple weapons
 	
     if (weapon_type == WeaponType::RANGE) {
-        m_weapon = std::make_shared<RangeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
+        m_weapons.push_back(std::make_shared<RangeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED));
     }
-    else {
-		m_weapon = std::make_shared<MeleeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED);
+    else if (weapon_type == WeaponType::MELEE) {
+        m_weapons.push_back(std::make_shared<MeleeWeapon>(texture, m_pos, damage_scale, PLAYER_START_ATTACK_SPEED, shared_from_this()));
+    }
+    else if (weapon_type == WeaponType::BULLET_WAVE) {
+        m_weapons.push_back(std::make_shared<BulletWaveWeapon>(m_pos, damage_scale));
     }
 }
 
@@ -101,12 +106,4 @@ void Player::checkCollisionWithMapBorders() {
     if (m_pos.x <= game_engine::SPRITE_SIZE) {
         m_pos.x = game_engine::SPRITE_SIZE;
     }
-}
-
-void Player::setState(State state) {
-    m_state = state;
-}
-
-std::shared_ptr<Weapon> Player::getWeapon() const {
-    return m_weapon;
 }

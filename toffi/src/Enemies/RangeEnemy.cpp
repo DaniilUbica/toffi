@@ -56,8 +56,8 @@ void RangeEnemy::Update(float time) {
 	m_sprite->setColor(sf::Color::Green);
 
 	for (auto bullet : m_bullets) {
-		bullet->Update(time);
-		if (bullet->checkCollisionWithCharacter(m_player) || bullet->checkCollisionWithMapBorders()) {
+		bullet->Update(m_player, time);
+		if (bullet->getCollided()) {
 			m_bullets.erase(std::find(m_bullets.begin(), m_bullets.end(), bullet));
 			break;
 		}

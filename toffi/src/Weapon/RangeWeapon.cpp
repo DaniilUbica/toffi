@@ -23,17 +23,19 @@ void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_p
             auto bullet = *iter;
 
             if (bullet) {
-                bullet->Update(time);
-                if (bullet->checkCollisionWithCharacters(characters) || bullet->checkCollisionWithMapBorders()) {
+                bullet->Update(characters, time);
+                if (bullet->getCollided()) {
                     m_bullets.erase(iter);
                     break;
                 }
             }
         }
     }
+
+    attackIfCanAttack();
 }
 
-void RangeWeapon::Attack() {
+void RangeWeapon::attackIfCanAttack() {
     if (m_gotEnemyInAttackRange && !m_reload_timer->isRunning()) {
         auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, m_direction);
         new_bullet->updateDamage(m_damage_scale);

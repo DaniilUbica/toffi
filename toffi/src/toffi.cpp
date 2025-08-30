@@ -12,6 +12,7 @@
 #include "Textures/Textures.h"
 #include "Weapon/RangeWeapon.h"
 #include "Weapon/MeleeWeapon.h"
+#include "Weapon/BulletWaveWeapon.h"
 #include "Weapon/Bullet.h"
 
 int main() {
@@ -30,7 +31,8 @@ int main() {
 	auto particle_system = game_engine::ParticleSystem::instance();
 
 	auto player = std::make_shared<Player>(player_texture, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
-	player->initWeapon(WeaponType::RANGE, 1.0, texture_holder->bullet_texture());
+	player->initWeapon(WeaponType::MELEE, 1.0, texture_holder->sword_texture());
+    player->initWeapon(WeaponType::BULLET_WAVE, 1.0, {});
 
 	pickable_spawner->setPlayer(player);
 
@@ -78,19 +80,31 @@ int main() {
 		particle_system->drawParticles(window);
 		enemies_manager->drawBullets(window);
 
-		if (player->getWeapon()->getWeaponType() == WeaponType::RANGE) {
-			auto weapon = std::dynamic_pointer_cast<RangeWeapon>(player->getWeapon());
-			if (weapon) {
-				auto bullets = weapon->getBullets();
-				for (auto b : bullets) {
-					window.draw(*b->getSprite().get());
-				}
-			}
-		}
-		else {
-			auto weapon = std::dynamic_pointer_cast<MeleeWeapon>(player->getWeapon());
-			window.draw(*weapon->getWeapon().get());
-		}
+        const auto weapons = player->getWeapons();
+        for (const auto weapon : weapons) {
+            if (weapon->getWeaponType() == WeaponType::RANGE) {
+                auto range_weapon = std::dynamic_pointer_cast<RangeWeapon>(weapon);
+                if (range_weapon) {
+                    const auto bullets = range_weapon->getBullets();
+                    for (auto b : bullets) {
+                        window.draw(*b->getSprite().get());
+                    }
+                }
+            }
+            else if (weapon->getWeaponType() == WeaponType::MELEE) {
+                auto melee_weapon = std::dynamic_pointer_cast<MeleeWeapon>(weapon);
+                if (melee_weapon) {
+                    window.draw(*melee_weapon->getWeapon().get());
+                }
+            }
+            else if (weapon->getWeaponType() == WeaponType::BULLET_WAVE) {
+                auto bullet_wave_weapon = std::dynamic_pointer_cast<BulletWaveWeapon>(weapon);
+                const auto bullets = bullet_wave_weapon->getBullets();
+                for (auto b : bullets) {
+                    window.draw(*b->getSprite().get());
+                }
+            }
+        }
 
 		window.draw(*player->getSprite().get());
 		for (auto e : enemies_manager->getEnemies()) {

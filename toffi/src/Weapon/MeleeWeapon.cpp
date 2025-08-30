@@ -1,38 +1,140 @@
 #include "Weapon/MeleeWeapon.h"
 #include "Engine/Base/Character.h"
+#include "Engine/Constants.h"
+#include "Constants.h"
 
-MeleeWeapon::MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float damage_scale, float reload_time) {
+std::shared_ptr<game_engine::Character> MeleeWeapon::checkCollisionWithCharacters(std::vector<std::shared_ptr<game_engine::Character>>& characters) {
+    for (const auto character : characters) {
+        if (character->getSprite()->getGlobalBounds().findIntersection(m_sprite->getGlobalBounds())) {
+            return character;
+        }
+    }
+
+    return nullptr;
+}
+
+std::pair<sf::Vector2f, float> MeleeWeapon::calculateTargetPositionAndAngle(const sf::Vector2f& parent_center, float parent_offset, std::shared_ptr<game_engine::Character> nearest_character) {
+
+    sf::Vector2f target_pos = parent_center + sf::Vector2f(parent_offset, 0.0);
+    float target_angle = 0.f;
+
+    if (nearest_character) {
+        target_angle = std::atan2(m_direction.y, m_direction.x) * 180 / game_engine::PI;
+        target_pos = parent_center + m_direction * parent_offset;
+    }
+
+    return { target_pos, target_angle };
+}
+
+void MeleeWeapon::moveToTarget(const sf::Vector2f& target_pos, float delta_time) {
+    sf::Vector2f direction_to_target = target_pos - m_pos;
+    float distance_to_target = static_cast<float>(sqrt(direction_to_target.x * direction_to_target.x + direction_to_target.y * direction_to_target.y));
+
+    if (distance_to_target > 0) {
+        direction_to_target /= distance_to_target;
+        if (distance_to_target <= m_weapon_move_to_pos_speed * delta_time) {
+            m_pos = target_pos;
+        }
+        else {
+            m_pos += direction_to_target * m_weapon_move_to_pos_speed * delta_time;
+        }
+    }
+}
+
+void MeleeWeapon::rotateToTarget(float target_angle, float delta_time) {
+    float angle_diff = target_angle - m_angle;
+
+    if (angle_diff > 180.f) {
+        angle_diff -= 360.f;
+    }
+    if (angle_diff < -180.f) {
+        angle_diff += 360.f;
+    }
+
+    if (std::abs(angle_diff) <= m_weapon_move_to_pos_speed * delta_time) {
+        m_angle = target_angle;
+    }
+    else {
+        m_angle += (angle_diff > 0 ? 1 : -1) * m_weapon_move_to_pos_speed * delta_time;
+    }
+}
+
+void MeleeWeapon::handleAttackState(std::vector<std::shared_ptr<game_engine::Character>>& characters, float delta_time) {
+    if (m_attack_state == AttackState::Attack) {
+        m_attack_progress += m_attack_speed * delta_time;
+        if (const auto character = checkCollisionWithCharacters(characters)) {
+            character->takeDamage(m_damage);
+        }
+
+        if (m_attack_progress >= 1.f) {
+            m_attack_state = AttackState::Return;
+        }
+    }
+    else if (m_attack_state == AttackState::Return) {
+        m_attack_progress += m_weapon_move_to_pos_speed * delta_time;
+
+        if (m_attack_progress <= 0.f) {
+            m_attack_state = AttackState::None;
+            m_attack_progress = 0.f;
+        }
+    }
+}
+
+MeleeWeapon::MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent) {
 	m_texture = texture;
 	m_pos = pos;
+    m_damage = MELEE_WEAPON_DEFAULT_DAMAGE;
 	m_damage_scale = damage_scale;
 	m_reload_time = reload_time;
 	m_weapon_type = WeaponType::MELEE;
 	m_reload_timer = std::make_unique<game_engine::Timer>(m_reload_time);
     m_sprite = std::make_shared<sf::Sprite>(m_texture);
+    m_parent = parent;
 
-    m_sprite->setScale({ 0.1, 0.1 });
+    m_sprite->setOrigin({ 0, static_cast<float>(texture.getSize().y / 2) });
+    m_sprite->setScale({ 0.05, 0.05 });
 }
 
 void MeleeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
-	Weapon::commonUpdate(pos, characters, attack_range);
 
-	m_pos = pos;
+    const auto parent = m_parent.lock();
+    if (!parent) {
+        return;
+    }
 
-	int attack_progress_coeff = m_attack_state == AttackState::Attack ? 1 : -1;
-	if (m_attack_state == AttackState::Attack && m_attack_progress < m_attack_distance) {
-		m_attack_progress += m_attack_speed * time;
-	}
-	else if (m_attack_state == AttackState::Return) {
-		m_attack_progress += m_return_speed * time;
-	}
+    Weapon::commonUpdate(pos, characters, m_sprite->getGlobalBounds().size.x);
+
+    const auto parent_center_pos = parent->getPosition() + parent->getSprite()->getGlobalBounds().size / 2.f;
+    const auto parent_bounds = parent->getSprite()->getGlobalBounds();
+    const auto parent_radius = std::max(parent_bounds.size.x, parent_bounds.size.y) / 2.0f;
+
+    const float offset_distance = parent_radius + 20.0f;
+    const auto nearest = getNearestCharacter(characters);
+
+    if (nearest) {
+        const auto nearest_character_pos = nearest->getPosition();
+        m_direction = nearest_character_pos - parent_center_pos;
+        m_direction /= static_cast<float>(sqrt(m_direction.x * m_direction.x + m_direction.y * m_direction.y));
+    }
+
+    const auto [target_pos, target_angle] = calculateTargetPositionAndAngle(parent_center_pos, offset_distance, nearest);
+
+    moveToTarget(target_pos, time);
+    rotateToTarget(target_angle, time);
 
     m_sprite->setPosition({ m_pos.x, m_pos.y });
-    m_sprite->setRotation(sf::radians(m_angle));
+    m_sprite->setRotation(sf::degrees(m_angle));
+
+    handleAttackState(characters, time);
+
+    attackIfCanAttack();
 }
 
-void MeleeWeapon::Attack() {
-	if (m_gotEnemyInAttackRange) {
+void MeleeWeapon::attackIfCanAttack() {
+	if (m_gotEnemyInAttackRange && !m_reload_timer->isRunning()) {
 		m_attack_state = AttackState::Attack;
+        m_attack_progress = 0.f;
+        m_reload_timer->Start();
 	}
 	else {
 		m_attack_state = AttackState::None;

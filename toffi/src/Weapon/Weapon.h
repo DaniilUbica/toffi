@@ -15,14 +15,15 @@ namespace game_engine {
 
 enum class WeaponType {
     RANGE,
-    MELEE
+    MELEE,
+    BULLET_WAVE
 };
 
 class Weapon {
 private:
-	float distance(sf::Vector2f v1, sf::Vector2f v2);
-	bool compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f target);
-	bool isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Character> character, float range);
+	float distance(sf::Vector2f v1, sf::Vector2f v2) const;
+	bool compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f target) const;
+	bool isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Character> character, float range) const;
 
 protected:
     sf::Vector2f                        m_pos;
@@ -31,16 +32,16 @@ protected:
     WeaponType                          m_weapon_type;
     float                               m_damage_scale = 1.f;
     float                               m_reload_time = 1.f;
-	float				                m_angle = 1.f;
 	bool				                m_gotEnemyInAttackRange = false;
 
 	void commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range);
+    std::shared_ptr<game_engine::Character> getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters) const;
+    virtual void attackIfCanAttack() = 0;
 
 public:
     virtual ~Weapon() = default;
 
     virtual void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) = 0;
-    virtual void Attack() = 0;
     virtual void updateAttackSpeed(float scale);
 
 
