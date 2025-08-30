@@ -1,10 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
 #include <cmath>
 
 #include "Engine/Core/Timer.h"
+#include "Engine/Base/GameObject.h"
 
 class Bullet;
 
@@ -19,7 +18,7 @@ enum class WeaponType {
     BULLET_WAVE
 };
 
-class Weapon {
+class Weapon : public game_engine::GameObject {
 private:
 	float distance(sf::Vector2f v1, sf::Vector2f v2) const;
 	bool compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f target) const;
@@ -37,6 +36,9 @@ protected:
 	void commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range);
     std::shared_ptr<game_engine::Character> getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters) const;
     virtual void attackIfCanAttack() = 0;
+
+    Weapon(const sf::Texture& texture) : game_engine::GameObject(texture) {};
+    Weapon() {};
 
 public:
     virtual ~Weapon() = default;

@@ -15,8 +15,8 @@ protected:
     float                               m_speed;
     float                               m_damage;
 
-	Enemy() = default;
-	
+    Enemy(const sf::Texture& texture) : game_engine::Character(texture) {};
+
     virtual void followPlayer(float time);
 	virtual void updateDirection();
 	virtual void attackIfCanAttack();

@@ -39,7 +39,7 @@ void RangeEnemy::attackIfCanAttack() {
 	}
 }
 
-RangeEnemy::RangeEnemy(const sf::Texture& textures, const sf::Texture& bullet_texture, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health) {
+RangeEnemy::RangeEnemy(const sf::Texture& textures, const sf::Texture& bullet_texture, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health) : Enemy(textures) {
 	m_pos = pos;
 	m_speed = speed;
 	m_damage = damage;

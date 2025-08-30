@@ -80,15 +80,13 @@ void MeleeWeapon::handleAttackState(std::vector<std::shared_ptr<game_engine::Cha
     }
 }
 
-MeleeWeapon::MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent) {
-	m_texture = texture;
+MeleeWeapon::MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent) : Weapon(texture) {
 	m_pos = pos;
     m_damage = MELEE_WEAPON_DEFAULT_DAMAGE;
 	m_damage_scale = damage_scale;
 	m_reload_time = reload_time;
 	m_weapon_type = WeaponType::MELEE;
 	m_reload_timer = std::make_unique<game_engine::Timer>(m_reload_time);
-    m_sprite = std::make_shared<sf::Sprite>(m_texture);
     m_parent = parent;
 
     m_sprite->setOrigin({ 0, static_cast<float>(texture.getSize().y / 2) });
@@ -141,6 +139,3 @@ void MeleeWeapon::attackIfCanAttack() {
 	}
 }
 
-std::shared_ptr<sf::Sprite> MeleeWeapon::getWeapon() const {
-	return m_sprite;
-}

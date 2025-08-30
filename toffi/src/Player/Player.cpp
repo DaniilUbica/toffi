@@ -27,7 +27,7 @@ inline bool isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Chara
     return false;
 }
 
-Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) {
+Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) : game_engine::Character({}) {
     m_pos = start_pos;
     m_health = health;
 

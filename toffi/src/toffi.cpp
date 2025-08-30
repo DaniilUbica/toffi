@@ -73,43 +73,9 @@ int main() {
 			window.draw(world->getBorderSprites()[i]);
 		}
 
-		for (auto pickable : pickable_spawner->getPickables()) {
-			window.draw(*pickable->getSprite().get());
-		}
-
 		particle_system->drawParticles(window);
-		enemies_manager->drawBullets(window);
 
-        const auto weapons = player->getWeapons();
-        for (const auto weapon : weapons) {
-            if (weapon->getWeaponType() == WeaponType::RANGE) {
-                auto range_weapon = std::dynamic_pointer_cast<RangeWeapon>(weapon);
-                if (range_weapon) {
-                    const auto bullets = range_weapon->getBullets();
-                    for (auto b : bullets) {
-                        window.draw(*b->getSprite().get());
-                    }
-                }
-            }
-            else if (weapon->getWeaponType() == WeaponType::MELEE) {
-                auto melee_weapon = std::dynamic_pointer_cast<MeleeWeapon>(weapon);
-                if (melee_weapon) {
-                    window.draw(*melee_weapon->getWeapon().get());
-                }
-            }
-            else if (weapon->getWeaponType() == WeaponType::BULLET_WAVE) {
-                auto bullet_wave_weapon = std::dynamic_pointer_cast<BulletWaveWeapon>(weapon);
-                const auto bullets = bullet_wave_weapon->getBullets();
-                for (auto b : bullets) {
-                    window.draw(*b->getSprite().get());
-                }
-            }
-        }
-
-		window.draw(*player->getSprite().get());
-		for (auto e : enemies_manager->getEnemies()) {
-			window.draw(*e->getSprite().get());
-		}
+        game_engine::Drawable::drawAllDrawableObjects(window);
 
 		player->getHealthBar()->Draw(window);
 		
