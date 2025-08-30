@@ -3,8 +3,6 @@
 #include "Enemies/RangeEnemy.h"
 #include "Constants.h"
 #include "Engine/Core/Timer.h"
-#include "Pickables/PickableSpawner.h"
-#include "Engine/Particles/ParticleSystem.h"
 #include "Player/Player.h"
 #include "Weapon/Bullet.h"
 
@@ -48,12 +46,6 @@ void EnemiesManager::removeEnemy() {
     });
 
     if (dead_enemy_iter != m_enemies.end()) {
-		PickableSpawner::instance()->spawnPickable(dead_enemy_iter->get()->getPosition(), PickableType::HEAL);
-		PickableSpawner::instance()->spawnPickable(dead_enemy_iter->get()->getPosition(), PickableType::BULLET_WAVE);
-		auto pos = dead_enemy_iter->get()->getPosition();
-		pos.x += game_engine::SPRITE_SIZE / 2;
-		pos.y += game_engine::SPRITE_SIZE / 2;
-        game_engine::ParticleSystem::instance()->burstingBubble(pos, dead_enemy_iter->get()->getSprite()->getTexture());
 		*dead_enemy_iter = nullptr;
         m_enemies.erase(dead_enemy_iter);
     }

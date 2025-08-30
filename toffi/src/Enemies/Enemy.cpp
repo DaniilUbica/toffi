@@ -1,5 +1,7 @@
 #include "Enemies/Enemy.h"
 #include "Engine/Animation/Animation.h"
+#include "Engine/Particles/ParticleSystem.h"
+#include "Pickables/PickableSpawner.h"
 #include "Constants.h"
 #include "Engine/Core/Timer.h"
 #include "Player/Player.h"
@@ -39,6 +41,12 @@ Enemy::Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldow
 
     m_attack_cooldown = std::make_unique<game_engine::Timer>(attack_cooldown);
     m_run_animation = std::make_unique<game_engine::Animation>(textures, 57, 61, 42, 31, 8, ANIMATION_SPEED, 150);
+}
+
+Enemy::~Enemy() {
+    PickableSpawner::instance()->spawnPickable(m_pos, PickableType::HEAL);
+    PickableSpawner::instance()->spawnPickable(m_pos, PickableType::BULLET_WAVE);
+    game_engine::ParticleSystem::instance()->burstingBubble(m_pos + m_size / 2.f, m_texture);
 }
 
 void Enemy::Update(float time) {

@@ -23,7 +23,7 @@ protected:
 
 public:
     Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health);
-    ~Enemy() = default;
+    ~Enemy();
 
     void Update(float time);
 
