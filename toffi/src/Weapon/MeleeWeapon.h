@@ -27,12 +27,13 @@ private:
     void rotateToTarget(float target_angle, float delta_time);
     void handleAttackState(std::vector<std::shared_ptr<game_engine::Character>>& characters, float delta_time);
 
+    void attackIfCanAttack() override;
+
 public:
 	MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent);
 	~MeleeWeapon() = default;
 
 	void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) override;
-	void Attack() override;
 
     std::shared_ptr<sf::Sprite> getWeapon() const;
 };

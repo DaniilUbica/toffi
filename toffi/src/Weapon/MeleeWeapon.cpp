@@ -121,13 +121,16 @@ void MeleeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_p
 
     moveToTarget(target_pos, time);
     rotateToTarget(target_angle, time);
-    handleAttackState(characters, time);
 
     m_sprite->setPosition({ m_pos.x, m_pos.y });
     m_sprite->setRotation(sf::degrees(m_angle));
+
+    handleAttackState(characters, time);
+
+    attackIfCanAttack();
 }
 
-void MeleeWeapon::Attack() {
+void MeleeWeapon::attackIfCanAttack() {
 	if (m_gotEnemyInAttackRange && !m_reload_timer->isRunning()) {
 		m_attack_state = AttackState::Attack;
         m_attack_progress = 0.f;

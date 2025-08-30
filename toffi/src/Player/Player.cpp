@@ -69,8 +69,7 @@ void Player::addHP(float health) {
 void Player::attackEnemies(float time, std::vector<std::shared_ptr<game_engine::Character>>& characters) {
     if (m_weapon) {
         m_weapon->updateAttackSpeed(m_attack_speed_scale);
-		m_weapon->Update(time, m_pos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
-		m_weapon->Attack();
+        m_weapon->Update(time, m_pos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
     }
     else {
         throw std::logic_error("m_weapon is NULL, maybe you didn't call 'initWeapon()'?");

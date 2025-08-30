@@ -35,12 +35,12 @@ protected:
 
 	void commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range);
     std::shared_ptr<game_engine::Character> getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters) const;
+    virtual void attackIfCanAttack() = 0;
 
 public:
     virtual ~Weapon() = default;
 
     virtual void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) = 0;
-    virtual void Attack() = 0;
     virtual void updateAttackSpeed(float scale);
 
 
