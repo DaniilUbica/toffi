@@ -69,8 +69,7 @@ void Player::addHP(float health) {
 void Player::attackEnemies(float time, std::vector<std::shared_ptr<game_engine::Character>>& characters) {
     if (m_weapon) {
         m_weapon->updateAttackSpeed(m_attack_speed_scale);
-        const sf::Vector2<float> weaponPos = { m_pos.x, m_pos.y + m_size.y / 2 };
-		m_weapon->Update(time, weaponPos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
+		m_weapon->Update(time, m_pos, characters, PLAYER_START_ATTACK_RANGE * m_attack_range_scale);
 		m_weapon->Attack();
     }
     else {

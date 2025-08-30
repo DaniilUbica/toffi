@@ -22,7 +22,7 @@ bool Weapon::isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Char
 
 void Weapon::commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
 	if (!characters.empty()) {
-		if (const auto nearest = getNearestCharacter(characters, std::nullopt)) {
+		if (const auto nearest = getNearestCharacter(characters)) {
 			sf::Vector2f nearest_character_pos = nearest->getPosition();
 
 			m_direction = nearest_character_pos - m_pos;
@@ -32,7 +32,7 @@ void Weapon::commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_eng
 	}
 }
 
-std::shared_ptr<game_engine::Character> Weapon::getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters, std::optional<game_engine::Direction> direction) const {
+std::shared_ptr<game_engine::Character> Weapon::getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters) const {
     auto nearest = std::min_element(characters.begin(), characters.end(), [this](std::shared_ptr<game_engine::Character> c1, std::shared_ptr<game_engine::Character> c2) {
         return compareDistance(c1->getPosition(), c2->getPosition(), m_pos);
     });

@@ -5,7 +5,6 @@
 #include <cmath>
 
 #include "Engine/Core/Timer.h"
-#include "Engine/Base/Character.h"
 
 class Bullet;
 
@@ -35,7 +34,7 @@ protected:
 	bool				                m_gotEnemyInAttackRange = false;
 
 	void commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range);
-    std::shared_ptr<game_engine::Character> getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters, std::optional<game_engine::Direction> direction) const;
+    std::shared_ptr<game_engine::Character> getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters) const;
 
 public:
     virtual ~Weapon() = default;
