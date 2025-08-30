@@ -15,7 +15,8 @@ namespace game_engine {
 
 enum class WeaponType {
     RANGE,
-    MELEE
+    MELEE,
+    BULLET_WAVE
 };
 
 class Weapon {

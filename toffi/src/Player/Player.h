@@ -19,7 +19,7 @@ class Player : public game_engine::Character {
 private:
 	std::unique_ptr<PlayerController>       m_controller;
     std::unique_ptr<game_engine::Animation> m_idle_animation;
-	std::shared_ptr<Weapon>                 m_weapon;
+    std::vector<std::shared_ptr<Weapon>>    m_weapons;
     State                                   m_state;
     float                                   m_attack_speed_scale = 1.0;
     float                                   m_attack_range_scale = 1.0;
@@ -37,7 +37,7 @@ public:
     void attackEnemies(float time, std::vector<std::shared_ptr<game_engine::Character>>& characters);
     void initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& texture = sf::Texture());
 
-    void setState(State state);
+    void setState(State state) { m_state = state; };
 
-    std::shared_ptr<Weapon> getWeapon() const;
+    std::vector<std::shared_ptr<Weapon>> getWeapons() const { return m_weapons; };
 };

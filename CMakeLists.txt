@@ -16,6 +16,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Weapon/RangeWeapon.cpp
 	toffi/src/Weapon/MeleeWeapon.cpp
     toffi/src/Weapon/Weapon.cpp
+    toffi/src/Weapon/BulletWaveWeapon.cpp
     toffi/src/Textures/Textures.cpp
     toffi/src/Pickables/Heal.cpp
     toffi/src/Pickables/BulletWave.cpp
@@ -31,6 +32,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Weapon/RangeWeapon.h
 	toffi/src/Weapon/MeleeWeapon.h
     toffi/src/Weapon/Weapon.h
+    toffi/src/Weapon/BulletWaveWeapon.h
     toffi/src/Textures/Textures.h
     toffi/src/Pickables/Heal.h
     toffi/src/Pickables/BulletWave.h

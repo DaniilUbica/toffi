@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Weapon.h"
 
 class RangeWeapon : public Weapon {
