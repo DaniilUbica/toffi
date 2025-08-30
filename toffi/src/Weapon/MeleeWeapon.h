@@ -10,9 +10,7 @@ enum class AttackState {
 
 class MeleeWeapon : public Weapon {
 private:
-    sf::Texture                 m_texture;
     AttackState                 m_attack_state;
-    std::shared_ptr<sf::Sprite> m_sprite;
     float                       m_damage;
     float                       m_angle = 1.f;
     float                       m_attack_speed = 0.005f;
@@ -36,6 +34,4 @@ public:
 	~MeleeWeapon() = default;
 
 	void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) override;
-
-    std::shared_ptr<sf::Sprite> getWeapon() const;
 };

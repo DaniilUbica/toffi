@@ -30,7 +30,7 @@ void Enemy::attackIfCanAttack() {
     }
 }
 
-Enemy::Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health) {
+Enemy::Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health) : game_engine::Character(textures) {
     m_pos = pos;
     m_speed = speed;
     m_damage = damage;

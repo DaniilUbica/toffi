@@ -1,7 +1,7 @@
 #include "BulletWaveWeapon.h"
 #include "Bullet.h"
 
-BulletWaveWeapon::BulletWaveWeapon(sf::Vector2f pos, float damage_scale) {
+BulletWaveWeapon::BulletWaveWeapon(sf::Vector2f pos, float damage_scale) : Weapon() {
     m_pos = pos;
     m_damage_scale = damage_scale;
     m_weapon_type = WeaponType::BULLET_WAVE;
