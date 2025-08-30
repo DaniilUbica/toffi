@@ -24,6 +24,9 @@ int main() {
 	texture_holder->setTextures();
 	auto player_texture = texture_holder->player_textures();
 
+    game_engine::World* world = game_engine::World::getWorld();
+    world->initWorld(texture_holder->lvl1_background_texture(), texture_holder->lvl1_border_texture());
+
 	auto pickable_spawner = PickableSpawner::instance();
 	pickable_spawner->addPickableTexture(PickableType::HEAL, texture_holder->heal_texture());
 	pickable_spawner->addPickableTexture(PickableType::BULLET_WAVE, texture_holder->bullet_texture());
@@ -40,9 +43,6 @@ int main() {
 	enemies_manager->setPlayer(player);
 	enemies_manager->setBulletTexture(texture_holder->bullet_texture());
 	enemies_manager->addTexture(texture_holder->flying_eye_texture());
-
-    game_engine::World* world = game_engine::World::getWorld();
-	world->initWorld(texture_holder->lvl1_background_texture(), texture_holder->lvl1_border_texture());
 
 	ViewController view_controller(player);
 
@@ -68,16 +68,8 @@ int main() {
 
 		window.clear(sf::Color::White);
 
-		window.draw(*world->getBackgroundSprite().get());
-		for (int i = 0; i < world->getBorderVecSize(); i++) {
-			window.draw(world->getBorderSprites()[i]);
-		}
-
-		particle_system->drawParticles(window);
-
         game_engine::Drawable::drawAllDrawableObjects(window);
-
-		player->getHealthBar()->Draw(window);
+		particle_system->drawParticles(window);
 		
 		window.display();
 	}
