@@ -3,47 +3,59 @@ project(toffi LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(ENGINE_UNIT_NAME UbicaEngine)
+set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(ubica_engine)
+option(USE_SFML "Use SFML as engine's graphic lib" ON)
+
+set(DEFINES)
+
+if(USE_SFML)
+    set(DEFINES ${DEFINES} -DUSE_SFML)
+endif()
+
+# add_subdirectory(ubica_engine)
+add_subdirectory(ubica_engine/Primitives)
 
 add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/toffi.cpp
-    toffi/src/Weapon/Bullet.cpp
-    toffi/src/Enemies/EnemiesManager.cpp
-    toffi/src/Enemies/Enemy.cpp
-    toffi/src/Enemies/RangeEnemy.cpp
-    toffi/src/Player/Player.cpp
-    toffi/src/Weapon/RangeWeapon.cpp
-	toffi/src/Weapon/MeleeWeapon.cpp
-    toffi/src/Weapon/Weapon.cpp
-    toffi/src/Weapon/BulletWaveWeapon.cpp
-    toffi/src/Textures/Textures.cpp
-    toffi/src/Pickables/Heal.cpp
-    toffi/src/Pickables/BulletWave.cpp
-    toffi/src/Pickables/PickableSpawner.cpp
-    toffi/src/Controllers/PlayerController.cpp
-    toffi/src/Controllers/ViewController.cpp
+    # toffi/src/Weapon/Bullet.cpp
+    # toffi/src/Enemies/EnemiesManager.cpp
+    # toffi/src/Enemies/Enemy.cpp
+    # toffi/src/Enemies/RangeEnemy.cpp
+    # toffi/src/Player/Player.cpp
+    # toffi/src/Weapon/RangeWeapon.cpp
+	# toffi/src/Weapon/MeleeWeapon.cpp
+    # toffi/src/Weapon/Weapon.cpp
+    # toffi/src/Weapon/BulletWaveWeapon.cpp
+    # toffi/src/Textures/Textures.cpp
+    # toffi/src/Pickables/Heal.cpp
+    # toffi/src/Pickables/BulletWave.cpp
+    # toffi/src/Pickables/PickableSpawner.cpp
+    # toffi/src/Controllers/PlayerController.cpp
+    # toffi/src/Controllers/ViewController.cpp
 
-    toffi/src/Weapon/Bullet.h
-    toffi/src/Enemies/EnemiesManager.h
-    toffi/src/Enemies/Enemy.h
-    toffi/src/Enemies/RangeEnemy.h
-    toffi/src/Player/Player.h
-    toffi/src/Weapon/RangeWeapon.h
-	toffi/src/Weapon/MeleeWeapon.h
-    toffi/src/Weapon/Weapon.h
-    toffi/src/Weapon/BulletWaveWeapon.h
-    toffi/src/Textures/Textures.h
-    toffi/src/Pickables/Heal.h
-    toffi/src/Pickables/BulletWave.h
-    toffi/src/Pickables/PickableSpawner.h
-    toffi/src/Controllers/PlayerController.h
-    toffi/src/Controllers/ViewController.h
-    toffi/src/Constants.h
+    # toffi/src/Weapon/Bullet.h
+    # toffi/src/Enemies/EnemiesManager.h
+    # toffi/src/Enemies/Enemy.h
+    # toffi/src/Enemies/RangeEnemy.h
+    # toffi/src/Player/Player.h
+    # toffi/src/Weapon/RangeWeapon.h
+	# toffi/src/Weapon/MeleeWeapon.h
+    # toffi/src/Weapon/Weapon.h
+    # toffi/src/Weapon/BulletWaveWeapon.h
+    # toffi/src/Textures/Textures.h
+    # toffi/src/Pickables/Heal.h
+    # toffi/src/Pickables/BulletWave.h
+    # toffi/src/Pickables/PickableSpawner.h
+    # toffi/src/Controllers/PlayerController.h
+    # toffi/src/Controllers/ViewController.h
+    # toffi/src/Constants.h
 )
-
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/src PRIVATE ubica_engine)
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE ${DEFINES})
+# target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Primitives)
+target_include_directories(${CMAKE_PROJECT_NAME}  PRIVATE ubica_engine)
+target_include_directories(${CMAKE_PROJECT_NAME}  PRIVATE ubica_engine/Primitives)
 
 set(RESOURCES
     ${CMAKE_SOURCE_DIR}/toffi/Assets/enemies/eye_flight.png
