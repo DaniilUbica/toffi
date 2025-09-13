@@ -1,13 +1,13 @@
 #include "BulletWaveWeapon.h"
 #include "Bullet.h"
 
-BulletWaveWeapon::BulletWaveWeapon(sf::Vector2f pos, float damage_scale) : Weapon() {
+BulletWaveWeapon::BulletWaveWeapon(game_engine::primitives::Vector2f pos, float damage_scale) : Weapon() {
     m_pos = pos;
     m_damage_scale = damage_scale;
     m_weapon_type = WeaponType::BULLET_WAVE;
 }
 
-void BulletWaveWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
+void BulletWaveWeapon::Update(float time, game_engine::primitives::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
     m_pos = pos;
 
     if (!m_bullets.empty()) {

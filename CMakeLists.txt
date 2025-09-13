@@ -4,6 +4,8 @@ project(toffi LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(ENGINE_UNIT_NAME UbicaEngine)
 
+option(USE_SFML "Use SFML as engine's graphic lib" ON)
+
 add_subdirectory(ubica_engine)
 
 add_executable(${CMAKE_PROJECT_NAME}
@@ -43,7 +45,10 @@ add_executable(${CMAKE_PROJECT_NAME}
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE toffi/src PRIVATE ubica_engine)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Primitives)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/toffi/src)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ubica_engine)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ubica_engine/Primitives)
 
 set(RESOURCES
     ${CMAKE_SOURCE_DIR}/toffi/Assets/enemies/eye_flight.png

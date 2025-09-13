@@ -11,11 +11,11 @@ void Bullet::commonUpdate(float time) {
     m_collided = checkCollisionWithMapBorders();
 }
 
-Bullet::Bullet(const sf::Texture& texture, sf::Vector2f pos, sf::Vector2f direction) {
+Bullet::Bullet(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos, game_engine::primitives::Vector2f direction) {
     m_texture = texture;
-    m_sprite = std::make_shared<sf::Sprite>(m_texture);
+    m_sprite = std::make_shared<game_engine::primitives::Sprite>(m_texture);
     m_pos = pos;
-    m_size = sf::Vector2f(BULLET_DEFAULT_SIZE, BULLET_DEFAULT_SIZE);
+    m_size = game_engine::primitives::Vector2f(BULLET_DEFAULT_SIZE, BULLET_DEFAULT_SIZE);
     m_direction = direction;
     m_damage = BULLET_DEFAULT_DAMAGE;
 
@@ -49,7 +49,7 @@ void Bullet::updateDamage(float scale) {
 
 bool Bullet::checkCollisionWithCharacters(std::vector<std::shared_ptr<game_engine::Character>>& characters) {
     for (auto c : characters) {
-        if (m_sprite->getGlobalBounds().findIntersection(c->getSprite()->getGlobalBounds())) {
+        if (m_sprite->getGlobalBounds().intersects(c->getSprite()->getGlobalBounds())) {
             c->takeDamage(m_damage);
             return true;
         }
@@ -59,7 +59,7 @@ bool Bullet::checkCollisionWithCharacters(std::vector<std::shared_ptr<game_engin
 }
 
 bool Bullet::checkCollisionWithCharacter(std::shared_ptr<game_engine::Character> character) {
-	if (m_sprite->getGlobalBounds().findIntersection(character->getSprite()->getGlobalBounds())) {
+	if (m_sprite->getGlobalBounds().intersects(character->getSprite()->getGlobalBounds())) {
 		character->takeDamage(m_damage);
 		return true;
 	}

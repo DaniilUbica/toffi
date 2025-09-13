@@ -15,14 +15,14 @@ protected:
     float                               m_speed;
     float                               m_damage;
 
-    Enemy(const sf::Texture& texture) : game_engine::Character(texture) {};
+    Enemy(const game_engine::primitives::Texture& texture) : game_engine::Character(texture) {};
 
     virtual void followPlayer(float time);
 	virtual void updateDirection();
 	virtual void attackIfCanAttack();
 
 public:
-    Enemy(const sf::Texture& textures, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health);
+    Enemy(const game_engine::primitives::Texture& textures, game_engine::primitives::Vector2f pos, float attack_cooldown, float speed, float damage, float health);
     ~Enemy();
 
     void Update(float time);

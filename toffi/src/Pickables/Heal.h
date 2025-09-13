@@ -9,7 +9,7 @@ private:
     std::shared_ptr<Player> m_player;
 
 public:
-    Heal(const sf::Texture& texture, sf::Vector2f pos);
+    Heal(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos);
 
     virtual void onPicked() override;
 

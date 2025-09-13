@@ -2,10 +2,10 @@
 #include "Player/Player.h"
 #include "Constants.h"
 
-Heal::Heal(const sf::Texture& texture, sf::Vector2f pos) {
+Heal::Heal(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos) {
     m_pos = pos;
     m_texture = texture;
-    m_sprite = std::make_shared<sf::Sprite>(m_texture);
+    m_sprite = std::make_shared<game_engine::primitives::Sprite>(m_texture);
 
     m_sprite->setPosition(m_pos);
 }

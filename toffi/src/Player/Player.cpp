@@ -9,16 +9,16 @@
 
 #include <cmath>
 
-inline float distance(sf::Vector2f v1, sf::Vector2f v2) {
+inline float distance(game_engine::primitives::Vector2f v1, game_engine::primitives::Vector2f v2) {
     return std::sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
 }
 
-inline bool compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f target) {
+inline bool compareDistance(game_engine::primitives::Vector2f v1, game_engine::primitives::Vector2f v2, game_engine::primitives::Vector2f target) {
     return distance(v1, target) < distance(v2, target);
 }
 
-inline bool isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Character> character, float range) {
-    sf::Vector2f char_pos = character->getPosition();
+inline bool isInAttackRange(game_engine::primitives::Vector2f pos, std::shared_ptr<game_engine::Character> character, float range) {
+    game_engine::primitives::Vector2f char_pos = character->getPosition();
 
     if (abs(char_pos.x - pos.x) <= range || abs(char_pos.y - pos.y) <= range) {
         return true;
@@ -27,7 +27,7 @@ inline bool isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Chara
     return false;
 }
 
-Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) : game_engine::Character({}) {
+Player::Player(const textures_t& texture, game_engine::primitives::Vector2f start_pos, float health) : game_engine::Character({}) {
     m_pos = start_pos;
     m_health = health;
 
@@ -36,12 +36,12 @@ Player::Player(const textures_t& texture, sf::Vector2f start_pos, float health) 
     m_run_animation = std::make_unique<game_engine::Animation>(texture.at(State::RUN), 66, 0, 58, 53, 6, ANIMATION_SPEED, 193);
 
     m_sprite = m_idle_animation->Tick(1, m_direction != game_engine::Direction::RIGHT);
-    m_size = sf::Vector2f(m_sprite->getTextureRect().size.x, m_sprite->getTextureRect().size.y);
+    m_size = game_engine::primitives::Vector2f(m_sprite->getTextureRect().getSize().x, m_sprite->getTextureRect().getSize().y);
 
-    sf::Color health_color(103, 191, 109);
-    sf::Color border_color(96, 127, 97);
-    sf::Color background_color(196, 97, 86);
-    m_health_bar = std::make_unique<game_engine::ui::HealthBar>(sf::Vector2f(30.0, 9.0), m_pos, m_health, border_color, background_color, health_color, false, m_size);
+    game_engine::primitives::Color health_color(103, 191, 109);
+    game_engine::primitives::Color border_color(96, 127, 97);
+    game_engine::primitives::Color background_color(196, 97, 86);
+    m_health_bar = std::make_unique<game_engine::ui::HealthBar>(game_engine::primitives::Vector2f(30.0, 9.0), m_pos, m_health, border_color, background_color, health_color, false, m_size);
 }
 
 void Player::Update(float time) {
@@ -59,7 +59,7 @@ void Player::Update(float time) {
         m_sprite = m_idle_animation->Tick(time, m_direction != game_engine::Direction::RIGHT);
     }
 
-    m_size = sf::Vector2f(m_sprite->getTextureRect().size.x, m_sprite->getTextureRect().size.y);
+    m_size = game_engine::primitives::Vector2f(m_sprite->getTextureRect().getSize().x, m_sprite->getTextureRect().getSize().y);
     m_sprite->setPosition(m_pos);
 }
 
@@ -79,7 +79,7 @@ void Player::attackEnemies(float time, std::vector<std::shared_ptr<game_engine::
     }
 }
 
-void Player::initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& texture) {
+void Player::initWeapon(WeaponType weapon_type, float damage_scale, const game_engine::primitives::Texture& texture) {
 	// todo: mulptiple weapons
 	
     if (weapon_type == WeaponType::RANGE) {
