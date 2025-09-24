@@ -31,7 +31,7 @@ Player::Player(const textures_t& texture, game_engine::primitives::Vector2f star
     m_pos = start_pos;
     m_health = health;
 
-    m_controller = std::make_unique<PlayerController>();
+    m_controller = std::make_unique<PlayerController>(this);
     m_idle_animation = std::make_unique<game_engine::Animation>(texture.at(State::IDLE), 66, 0, 58, 53, 6, ANIMATION_SPEED, 192);
     m_run_animation = std::make_unique<game_engine::Animation>(texture.at(State::RUN), 66, 0, 58, 53, 6, ANIMATION_SPEED, 193);
 
@@ -46,7 +46,7 @@ Player::Player(const textures_t& texture, game_engine::primitives::Vector2f star
 
 void Player::Update(float time) {
     m_state = State::IDLE;
-    m_controller->controllPlayer(this, time);
+    m_controller->controllPlayer(time);
 
     checkCollisionWithMapBorders();
 

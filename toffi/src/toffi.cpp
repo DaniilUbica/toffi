@@ -1,15 +1,24 @@
 #include <SFML/Graphics.hpp>
 
 #include "Constants.h"
+
 #include "Engine/World.h"
-#include "Controllers/ViewController.h"
-#include "Pickables/PickableSpawner.h"
 #include "Engine/Base/Pickable.h"
 #include "Engine/Particles/ParticleSystem.h"
+#include "Engine/UI/HealthBar.h"
+
+#include "Primitives/Clock.hpp"
+
+#include "Controllers/ViewController.h"
+#include "Controllers/PlayerController.h"
+
+#include "Pickables/PickableSpawner.h"
+
 #include "Enemies/EnemiesManager.h"
 #include "Enemies/Enemy.h"
-#include "Engine/UI/HealthBar.h"
+
 #include "Textures/Textures.h"
+
 #include "Weapon/RangeWeapon.h"
 #include "Weapon/MeleeWeapon.h"
 #include "Weapon/BulletWaveWeapon.h"
@@ -46,20 +55,24 @@ int main() {
 
 	ViewController view_controller(player);
 
-//	game_engine::primitives::Clock clock;
+	game_engine::primitives::Clock clock;
 
 	while (window.isOpen()) {
-		float time = 0.3;
-//		clock.restart();
-//		time /= 300;
+        float time = clock.getElapsedTime();
+        clock.restart();
+        time /= 300;
 
-        while (const auto event = window.pollEvent()) {
+        const auto event = window.pollEvent();
+        const auto key_event = event && event->type() == game_engine::primitives::Event::Type::Keyboard ?
+            event->as<game_engine::primitives::KeyEvent>() : nullptr;
+        if (event) {
             if (event->type() == game_engine::primitives::Event::Type::Close) {
                 window.close();
             }
         }
 
 		auto characters = enemies_manager->getCharacters();
+
 		pickable_spawner->Update();
 		particle_system->Update(time / 1000);
 		player->Update(time);
@@ -69,7 +82,7 @@ int main() {
 
 		window.clear(game_engine::primitives::colors::White);
 
-        game_engine::Drawable::drawAllDrawableObjects(window);
+        game_engine::DrawableObject::drawAllDrawableObjects(window);
 		particle_system->drawParticles(window);
 		
 		window.display();

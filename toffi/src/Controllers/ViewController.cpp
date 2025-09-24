@@ -8,7 +8,7 @@ ViewController::ViewController(std::shared_ptr<Player> player) {
 }
 
 void ViewController::Update(float time, game_engine::primitives::RenderWindow& window) {
-    game_engine::primitives::Vector2f player_pos = m_player->getPosition();
+    const game_engine::primitives::Vector2f player_pos = m_player->getPosition();
     game_engine::primitives::Vector2f view_pos = { player_pos.x - VIEW_WIDTH / 2, player_pos.y - VIEW_HEIGHT / 2 };
 
     if (player_pos.x - VIEW_WIDTH / 2 <= 0) {
