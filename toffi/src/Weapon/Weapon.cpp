@@ -2,16 +2,16 @@
 #include "Engine/Base/Character.h"
 #include "Constants.h"
 
-float Weapon::distance(sf::Vector2f v1, sf::Vector2f v2) const {
+float Weapon::distance(game_engine::primitives::Vector2f v1, game_engine::primitives::Vector2f v2) const {
 	return std::sqrt((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y));
 }
 
-bool Weapon::compareDistance(sf::Vector2f v1, sf::Vector2f v2, sf::Vector2f target) const {
+bool Weapon::compareDistance(game_engine::primitives::Vector2f v1, game_engine::primitives::Vector2f v2, game_engine::primitives::Vector2f target) const {
 	return distance(v1, target) < distance(v2, target);
 }
 
-bool Weapon::isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Character> character, float range) const {
-	sf::Vector2f char_pos = character->getPosition();
+bool Weapon::isInAttackRange(game_engine::primitives::Vector2f pos, std::shared_ptr<game_engine::Character> character, float range) const {
+	game_engine::primitives::Vector2f char_pos = character->getPosition();
 
 	if (abs(char_pos.x - pos.x) <= range || abs(char_pos.y - pos.y) <= range) {
 		return true;
@@ -20,10 +20,10 @@ bool Weapon::isInAttackRange(sf::Vector2f pos, std::shared_ptr<game_engine::Char
 	return false;
 }
 
-void Weapon::commonUpdate(sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
+void Weapon::commonUpdate(game_engine::primitives::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
 	if (!characters.empty()) {
 		if (const auto nearest = getNearestCharacter(characters)) {
-			sf::Vector2f nearest_character_pos = nearest->getPosition();
+			game_engine::primitives::Vector2f nearest_character_pos = nearest->getPosition();
 
 			m_direction = nearest_character_pos - m_pos;
 			m_direction /= static_cast<float>(sqrt(m_direction.x * m_direction.x + m_direction.y * m_direction.y));

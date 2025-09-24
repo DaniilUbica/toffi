@@ -1,39 +1,40 @@
 #include "PlayerController.h"
+#include "Primitives/Event.hpp"
 #include "Constants.h"
 #include "Player/Player.h"
 
-#include <SFML/Graphics.hpp>
-
 bool PlayerController::controller_created = false;
 
-PlayerController::PlayerController() {
+PlayerController::PlayerController(Player* player) : m_player(player) {
     if (controller_created) {
         throw std::logic_error("Only one instance of PlayerController is allowed.");
     }
     controller_created = true;
 }
 
-void PlayerController::controllPlayer(Player* player, float time) {
-    sf::Vector2f updated_pos = player->getPosition();
+void PlayerController::controllPlayer(float time) {
+    using namespace game_engine::primitives;
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+    Vector2f updated_pos = m_player->getPosition();
+
+    if (KeyEvent::isKeyPressed(KeyEvent::Key::A)) {
         updated_pos.x -= PLAYER_SPEED * time;
-        player->setState(State::RUN);
-        player->setDirection(game_engine::Direction::LEFT);
+        m_player->setState(State::RUN);
+        m_player->setDirection(game_engine::Direction::LEFT);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+    else if (KeyEvent::isKeyPressed(KeyEvent::Key::D)) {
         updated_pos.x += PLAYER_SPEED * time;
-        player->setState(State::RUN);
-        player->setDirection(game_engine::Direction::RIGHT);
+        m_player->setState(State::RUN);
+        m_player->setDirection(game_engine::Direction::RIGHT);
     }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+    if (KeyEvent::isKeyPressed(KeyEvent::Key::W)) {
         updated_pos.y -= PLAYER_SPEED * time;
-        player->setState(State::RUN);
+        m_player->setState(State::RUN);
     }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+    else if (KeyEvent::isKeyPressed(KeyEvent::Key::S)) {
         updated_pos.y += PLAYER_SPEED * time;
-        player->setState(State::RUN);
+        m_player->setState(State::RUN);
     }
 
-    player->setPosition(updated_pos);
+    m_player->setPosition(updated_pos);
 }

@@ -13,7 +13,7 @@ enum class State {
     RUN
 };
 
-using textures_t = std::map<State, sf::Texture>;
+using textures_t = std::map<State, game_engine::primitives::Texture>;
 
 class Player : public game_engine::Character {
 private:
@@ -29,13 +29,13 @@ private:
 
 public:
     Player() = delete;
-    Player(const textures_t& textures, sf::Vector2f start_pos, float health);
+    Player(const textures_t& textures, game_engine::primitives::Vector2f start_pos, float health);
     ~Player() = default;
 
     void Update(float time) override;
     void addHP(float health) override;
     void attackEnemies(float time, std::vector<std::shared_ptr<game_engine::Character>>& characters);
-    void initWeapon(WeaponType weapon_type, float damage_scale, const sf::Texture& texture = sf::Texture());
+    void initWeapon(WeaponType weapon_type, float damage_scale, const game_engine::primitives::Texture& texture = game_engine::primitives::Texture());
 
     void setState(State state) { m_state = state; };
 

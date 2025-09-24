@@ -1,15 +1,22 @@
-#include <SFML/Graphics.hpp>
-
 #include "Constants.h"
+
 #include "Engine/World.h"
-#include "Controllers/ViewController.h"
-#include "Pickables/PickableSpawner.h"
 #include "Engine/Base/Pickable.h"
 #include "Engine/Particles/ParticleSystem.h"
+#include "Engine/UI/HealthBar.h"
+
+#include "Primitives/Clock.hpp"
+
+#include "Controllers/ViewController.h"
+#include "Controllers/PlayerController.h"
+
+#include "Pickables/PickableSpawner.h"
+
 #include "Enemies/EnemiesManager.h"
 #include "Enemies/Enemy.h"
-#include "Engine/UI/HealthBar.h"
+
 #include "Textures/Textures.h"
+
 #include "Weapon/RangeWeapon.h"
 #include "Weapon/MeleeWeapon.h"
 #include "Weapon/BulletWaveWeapon.h"
@@ -18,7 +25,7 @@
 int main() {
 	srand(time(NULL));
 
-    sf::RenderWindow window(sf::VideoMode({ WINDOW_WIDTH, WINDOW_HEIGHT }), "Toffi Adventure");
+    game_engine::primitives::RenderWindow window({ WINDOW_WIDTH, WINDOW_HEIGHT }, "Toffi Adventure");
 
 	auto texture_holder = TextureHolder::instance();
 	texture_holder->setTextures();
@@ -33,7 +40,7 @@ int main() {
 
 	auto particle_system = game_engine::ParticleSystem::instance();
 
-	auto player = std::make_shared<Player>(player_texture, sf::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
+	auto player = std::make_shared<Player>(player_texture, game_engine::primitives::Vector2f(PLAYER_START_X, PLAYER_START_Y), PLAYER_START_HP);
 	player->initWeapon(WeaponType::MELEE, 1.0, texture_holder->sword_texture());
     player->initWeapon(WeaponType::BULLET_WAVE, 1.0, {});
 
@@ -46,19 +53,24 @@ int main() {
 
 	ViewController view_controller(player);
 
-	sf::Clock clock;
+	game_engine::primitives::Clock clock;
 
 	while (window.isOpen()) {
-		float time = clock.getElapsedTime().asMicroseconds();
-		clock.restart();
-		time /= 300;
+        float time = clock.getElapsedTime();
+        clock.restart();
+        time /= 300;
 
-        while (const std::optional event = window.pollEvent()) {
-        if (event->is<sf::Event::Closed>())
-            window.close();
+        const auto event = window.pollEvent();
+        const auto key_event = event && event->type() == game_engine::primitives::Event::Type::Keyboard ?
+            event->as<game_engine::primitives::KeyEvent>() : nullptr;
+        if (event) {
+            if (event->type() == game_engine::primitives::Event::Type::Close) {
+                window.close();
+            }
         }
 
 		auto characters = enemies_manager->getCharacters();
+
 		pickable_spawner->Update();
 		particle_system->Update(time / 1000);
 		player->Update(time);
@@ -66,9 +78,9 @@ int main() {
 		enemies_manager->Update(time);
 		view_controller.Update(time, window);
 
-		window.clear(sf::Color::White);
+		window.clear(game_engine::primitives::colors::White);
 
-        game_engine::Drawable::drawAllDrawableObjects(window);
+        game_engine::DrawableObject::drawAllDrawableObjects(window);
 		particle_system->drawParticles(window);
 		
 		window.display();

@@ -22,16 +22,16 @@ private:
     std::weak_ptr<game_engine::Character> m_parent;
 
     std::shared_ptr<game_engine::Character> checkCollisionWithCharacters(std::vector<std::shared_ptr<game_engine::Character>>& characters);
-    std::pair<sf::Vector2f, float> calculateTargetPositionAndAngle(const sf::Vector2f& parent_center, float parent_offset, std::shared_ptr<game_engine::Character> nearest_character);
-    void moveToTarget(const sf::Vector2f& target_pos, float delta_time);
+    std::pair<game_engine::primitives::Vector2f, float> calculateTargetPositionAndAngle(const game_engine::primitives::Vector2f& parent_center, float parent_offset, std::shared_ptr<game_engine::Character> nearest_character);
+    void moveToTarget(const game_engine::primitives::Vector2f& target_pos, float delta_time);
     void rotateToTarget(float target_angle, float delta_time);
     void handleAttackState(std::vector<std::shared_ptr<game_engine::Character>>& characters, float delta_time);
 
     void attackIfCanAttack() override;
 
 public:
-	MeleeWeapon(const sf::Texture& texture, sf::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent);
+	MeleeWeapon(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent);
 	~MeleeWeapon() = default;
 
-	void Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) override;
+	void Update(float time, game_engine::primitives::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) override;
 };

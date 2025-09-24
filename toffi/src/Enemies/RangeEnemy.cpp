@@ -6,10 +6,10 @@
 #include "Player/Player.h"
 
 void RangeEnemy::followPlayer(float time) {
-	sf::Vector2f diff = { abs(m_player->getPosition().x - m_pos.x), abs(m_player->getPosition().y - m_pos.y) };
+	game_engine::primitives::Vector2f diff = { abs(m_player->getPosition().x - m_pos.x), abs(m_player->getPosition().y - m_pos.y) };
 	if (diff.x >= ENEMY_ATTACK_RANGE || diff.y >= ENEMY_ATTACK_RANGE) {
-		sf::Vector2f player_pos = m_player->getPosition();
-		sf::Vector2f direction = player_pos - m_pos;
+		game_engine::primitives::Vector2f player_pos = m_player->getPosition();
+		game_engine::primitives::Vector2f direction = player_pos - m_pos;
 		direction /= static_cast<float>(sqrt(direction.x * direction.x + direction.y * direction.y));
 		m_pos.x += direction.x * m_speed * time;
 		m_pos.y += direction.y * m_speed * time;
@@ -26,10 +26,10 @@ void RangeEnemy::updateDirection() {
 }
 
 void RangeEnemy::attackIfCanAttack() {
-	sf::Vector2f diff = { abs(m_player->getPosition().x - m_pos.x), abs(m_player->getPosition().y - m_pos.y) };
+	game_engine::primitives::Vector2f diff = { abs(m_player->getPosition().x - m_pos.x), abs(m_player->getPosition().y - m_pos.y) };
 	if ((diff.x <= ENEMY_ATTACK_RANGE && diff.y <= ENEMY_ATTACK_RANGE) && !m_attack_cooldown->isRunning()) {
-		sf::Vector2f player_pos = m_player->getPosition();
-		sf::Vector2f direction = player_pos - m_pos;
+		game_engine::primitives::Vector2f player_pos = m_player->getPosition();
+		game_engine::primitives::Vector2f direction = player_pos - m_pos;
 
 		direction /= static_cast<float>(sqrt(direction.x * direction.x + direction.y * direction.y));
 		auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, direction);
@@ -39,7 +39,7 @@ void RangeEnemy::attackIfCanAttack() {
 	}
 }
 
-RangeEnemy::RangeEnemy(const sf::Texture& textures, const sf::Texture& bullet_texture, sf::Vector2f pos, float attack_cooldown, float speed, float damage, float health) : Enemy(textures) {
+RangeEnemy::RangeEnemy(const game_engine::primitives::Texture& textures, const game_engine::primitives::Texture& bullet_texture, game_engine::primitives::Vector2f pos, float attack_cooldown, float speed, float damage, float health) : Enemy(textures) {
 	m_pos = pos;
 	m_speed = speed;
 	m_damage = damage;
@@ -53,7 +53,7 @@ RangeEnemy::RangeEnemy(const sf::Texture& textures, const sf::Texture& bullet_te
 void RangeEnemy::Update(float time) {
 	Enemy::Update(time);
 
-	m_sprite->setColor(sf::Color::Green);
+	m_sprite->setColor(game_engine::primitives::colors::Green);
 
 	for (auto bullet : m_bullets) {
 		bullet->Update(m_player, time);

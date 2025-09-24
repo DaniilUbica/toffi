@@ -28,8 +28,8 @@ void EnemiesManager::spawnEnemy() {
 
     if ((abs(start_x - m_player->getPosition().x) > ENEMY_SPAWN_RANGE ||
         abs(start_y - m_player->getPosition().y) > ENEMY_SPAWN_RANGE) && !m_respawn_timer->isRunning()) {
-		auto enemy = spawn_range_enemy ? std::make_shared<RangeEnemy>(m_enemies_textures[texture_index], m_bullet_texture, sf::Vector2f(start_x, start_y),
-            ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE, ENEMY_START_HP * m_enemies_hp_scale) : std::make_shared<Enemy>(m_enemies_textures[texture_index], sf::Vector2f(start_x, start_y),
+		auto enemy = spawn_range_enemy ? std::make_shared<RangeEnemy>(m_enemies_textures[texture_index], m_bullet_texture, game_engine::primitives::Vector2f(start_x, start_y),
+            ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE, ENEMY_START_HP * m_enemies_hp_scale) : std::make_shared<Enemy>(m_enemies_textures[texture_index], game_engine::primitives::Vector2f(start_x, start_y),
 																																  ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE, ENEMY_START_HP * m_enemies_hp_scale);
         enemy->setPlayer(m_player);
         m_enemies.push_back(enemy);
@@ -55,15 +55,15 @@ void EnemiesManager::setPlayer(std::shared_ptr<Player> player) {
     m_player = player;
 }
 
-void EnemiesManager::setBulletTexture(const sf::Texture& bullet_texture) {
+void EnemiesManager::setBulletTexture(const game_engine::primitives::Texture& bullet_texture) {
 	m_bullet_texture = bullet_texture;
 }
 
-void EnemiesManager::addTexture(const sf::Texture& texture) {
+void EnemiesManager::addTexture(const game_engine::primitives::Texture& texture) {
     m_enemies_textures.push_back(texture);
 }
 
-void EnemiesManager::drawBullets(sf::RenderWindow& window) {
+void EnemiesManager::drawBullets(game_engine::primitives::RenderWindow& window) {
 	for (auto enemy : m_enemies) {
 		if (auto range_enemy = std::dynamic_pointer_cast<RangeEnemy>(enemy)) {
 			for (auto bullet : range_enemy->getBullets()) {

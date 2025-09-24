@@ -3,7 +3,7 @@
 #include "Engine/Base/Character.h"
 #include "Bullet.h"
 
-RangeWeapon::RangeWeapon(const sf::Texture& bullet_texture, sf::Vector2f pos, float damage_scale, float reload_time) {
+RangeWeapon::RangeWeapon(const game_engine::primitives::Texture& bullet_texture, game_engine::primitives::Vector2f pos, float damage_scale, float reload_time) {
     m_bullet_texture = bullet_texture;
     m_pos = pos;
     m_damage_scale = damage_scale;
@@ -13,7 +13,7 @@ RangeWeapon::RangeWeapon(const sf::Texture& bullet_texture, sf::Vector2f pos, fl
     m_reload_timer = std::make_unique<game_engine::Timer>(m_reload_time);
 }
 
-void RangeWeapon::Update(float time, sf::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
+void RangeWeapon::Update(float time, game_engine::primitives::Vector2f pos, std::vector<std::shared_ptr<game_engine::Character>>& characters, float attack_range) {
 	Weapon::commonUpdate(pos, characters, attack_range);
 	
     m_pos = pos;

@@ -5,10 +5,10 @@
 #include "Constants.h"
 #include "Weapon/BulletWaveWeapon.h"
 
-BulletWave::BulletWave(const sf::Texture& texture, sf::Vector2f pos) {
+BulletWave::BulletWave(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos) {
 	m_pos = pos;
     m_texture = texture;
-    m_sprite = std::make_shared<sf::Sprite>(m_texture);
+    m_sprite = std::make_shared<game_engine::primitives::Sprite>(m_texture);
 
 	m_sprite->setPosition(m_pos);
 }
@@ -23,7 +23,7 @@ void BulletWave::onPicked() {
     std::vector<std::shared_ptr<Bullet>> bullets;
     for (int angle = 0; angle < 360; angle += BULLET_WAVE_BULLETS_SPACING) {
         float radians = float(angle) * game_engine::PI / 180.f;
-        sf::Vector2f direction = { std::cos(radians), std::sin(radians) };
+        game_engine::primitives::Vector2f direction = { std::cos(radians), std::sin(radians) };
 
         auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_player->getPosition(), direction);
         new_bullet->updateDamage(BULLET_WAVE_DAMAGE / BULLET_DEFAULT_DAMAGE);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SFML/Graphics.hpp"
+#include "Primitives/Texture/Texture.hpp"
 
 #include <map>
 
@@ -18,7 +18,7 @@ enum class PickableType {
 class PickableSpawner {
 private:
 	static PickableSpawner*                             m_instance;
-	std::map<PickableType, sf::Texture>                 m_pickable_textures;
+	std::map<PickableType, game_engine::primitives::Texture> m_pickable_textures;
 	std::vector<std::shared_ptr<game_engine::Pickable>> m_pickables;
 	std::shared_ptr<Player>                             m_player;
 
@@ -32,8 +32,8 @@ public:
 
 	static PickableSpawner* instance();
 	void Update();
-	void spawnPickable(sf::Vector2f pos, PickableType type);
-	void addPickableTexture(PickableType type, const sf::Texture& texture);
+	void spawnPickable(game_engine::primitives::Vector2f pos, PickableType type);
+	void addPickableTexture(PickableType type, const game_engine::primitives::Texture& texture);
 
 	std::vector<std::shared_ptr<game_engine::Pickable>> getPickables() const { return m_pickables; };
 

@@ -31,20 +31,20 @@ void PickableSpawner::Update() {
 	checkCollisionsWithPlayer();
 }
 
-void PickableSpawner::addPickableTexture(PickableType type, const sf::Texture& texture) {
+void PickableSpawner::addPickableTexture(PickableType type, const game_engine::primitives::Texture& texture) {
 	auto t = texture;
 	m_pickable_textures[type] = t;
 }
 
 void PickableSpawner::checkCollisionsWithPlayer() {
 	for (auto pickable : m_pickables) {
-		if (m_player->getSprite()->getGlobalBounds().findIntersection(pickable->getSprite()->getGlobalBounds())) {
+		if (m_player->getSprite()->getGlobalBounds().intersects(pickable->getSprite()->getGlobalBounds())) {
 			pickable->onPicked();
 		}
 	}
 }
 
-void PickableSpawner::spawnPickable(sf::Vector2f pos, PickableType type) {
+void PickableSpawner::spawnPickable(game_engine::primitives::Vector2f pos, PickableType type) {
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
 	switch (type) {
