@@ -1,7 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
 #include "Player/Player.h"
 
 class TextureHolder {
