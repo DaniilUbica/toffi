@@ -4,6 +4,7 @@
 #include "Engine/Base/Pickable.h"
 #include "Engine/Particles/ParticleSystem.h"
 #include "Engine/UI/HealthBar.h"
+#include "Engine/UI/DamageIndicator.h"
 
 #include "Primitives/Clock.hpp"
 
@@ -77,6 +78,8 @@ int main() {
 		player->attackEnemies(time, characters);
 		enemies_manager->Update(time);
 		view_controller.Update(time, window);
+
+        game_engine::ui::DamageIndicatorsHolder::Update(time);
 
 		window.clear(game_engine::primitives::colors::White);
 

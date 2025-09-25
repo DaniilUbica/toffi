@@ -60,6 +60,7 @@ set(RESOURCES
     ${CMAKE_SOURCE_DIR}/toffi/Assets/bullet.png
     ${CMAKE_SOURCE_DIR}/toffi/Assets/sword.png
 	${CMAKE_SOURCE_DIR}/toffi/Assets/heart.png
+    ${CMAKE_SOURCE_DIR}/toffi/Assets/fonts/ByteBounce.ttf
 )
 
 foreach(Assets ${RESOURCES})
