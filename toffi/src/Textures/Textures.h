@@ -13,6 +13,7 @@ private:
 	game_engine::primitives::Texture m_bullet_texture;
     game_engine::primitives::Texture m_sword_texture;
 	game_engine::primitives::Texture m_heal_texture;
+    game_engine::primitives::Texture m_coin_texture;
 	static TextureHolder* m_texture_holder;
 
 	TextureHolder() = default;
@@ -32,4 +33,5 @@ public:
 	game_engine::primitives::Texture bullet_texture() const { return m_bullet_texture; };
     game_engine::primitives::Texture sword_texture() const { return m_sword_texture; };
 	game_engine::primitives::Texture heal_texture() const { return m_heal_texture; };
+    game_engine::primitives::Texture coin_texture() const { return m_coin_texture; };
 };

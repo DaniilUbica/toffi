@@ -9,6 +9,10 @@
 
 PickableSpawner* PickableSpawner::m_instance = nullptr;
 
+PickableSpawner::PickableSpawner() {
+    m_attractionsManager = std::make_unique<game_engine::physics::ObjectsAttractionManager>();
+}
+
 PickableSpawner::~PickableSpawner() {
 	m_instance = nullptr;
 }
@@ -21,13 +25,19 @@ PickableSpawner* PickableSpawner::instance() {
 	return m_instance;
 }
 
-void PickableSpawner::Update() {
+void PickableSpawner::Update(float time) {
+    for (auto pickable : m_pickables) {
+        pickable->Update(time);
+    }
+
 	for (auto pickable : m_pickables) {
 		if (pickable && pickable->getPicked()) {
 			m_pickables.erase(std::find(m_pickables.begin(), m_pickables.end(), pickable));
+            m_attractionsManager->removeAttractionObject(pickable);
 		}
 	}
 
+    m_attractionsManager->Update(time);
 	checkCollisionsWithPlayer();
 }
 
@@ -68,7 +78,26 @@ void PickableSpawner::spawnPickable(game_engine::primitives::Vector2f pos, Picka
 				m_pickables.push_back(std::dynamic_pointer_cast<game_engine::Pickable>(new_pickable));
 			}
 		}
+        case PickableType::VALUTE:
+        {
+            int value = std::rand() % 100;
+            if (value < VALUTE_SPAWN_CHANCE) {
+                auto new_pickable = std::make_shared<BulletWave>(m_pickable_textures[PickableType::VALUTE], pos);
+//                new_pickable->setBulletTexture(TextureHolder::instance()->coin_texture());
+//                new_pickable->setPlayer(m_player);
+//                m_pickables.push_back(std::dynamic_pointer_cast<game_engine::Pickable>(new_pickable));
+            }
+        }
 		default:
 			break;
 	}
+
+    if (!m_pickables.empty()) {
+        m_attractionsManager->addAttractionObject(m_pickables.back());
+    }
+}
+
+void PickableSpawner::setPlayer(std::shared_ptr<Player> player) {
+    m_player = player;
+    m_attractionsManager->setTarget(m_player);
 }
