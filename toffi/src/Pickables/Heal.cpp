@@ -2,11 +2,7 @@
 #include "Player/Player.h"
 #include "Constants.h"
 
-Heal::Heal(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos) {
-    m_pos = pos;
-    m_texture = texture;
-    m_sprite = std::make_shared<game_engine::primitives::Sprite>(m_texture);
-
+Heal::Heal(std::shared_ptr<game_engine::Character> character, const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos) : game_engine::Pickable(character, texture, pos) {
     m_sprite->setPosition(m_pos);
 }
 
@@ -17,9 +13,5 @@ void Heal::onPicked() {
 
 	Pickable::commonPicked();
 
-    m_player->addHP(HEAL_DEFAULT_VALUE);
-}
-
-void Heal::setPlayer(std::shared_ptr<Player> player) { 
-    m_player = player;
+    m_character->addHP(HEAL_DEFAULT_VALUE);
 }

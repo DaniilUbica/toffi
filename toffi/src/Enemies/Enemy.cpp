@@ -46,6 +46,7 @@ Enemy::Enemy(const game_engine::primitives::Texture& textures, game_engine::prim
 Enemy::~Enemy() {
     PickableSpawner::instance()->spawnPickable(m_pos, PickableType::HEAL);
     PickableSpawner::instance()->spawnPickable(m_pos, PickableType::BULLET_WAVE);
+    PickableSpawner::instance()->spawnPickable(m_pos, PickableType::CURRENCY);
     game_engine::ParticleSystem::instance()->burstingBubble(m_pos + m_size / 2.f, m_texture);
 }
 
@@ -60,6 +61,7 @@ void Enemy::Update(float time) {
 
     m_sprite->setScale({ 1.3, 1.3 });
     m_sprite->setPosition(m_pos);
+    m_size = game_engine::primitives::Vector2f(m_sprite->getTextureRect().getSize().x, m_sprite->getTextureRect().getSize().y);
 }
 
 void Enemy::setPlayer(std::shared_ptr<Player> player) {
