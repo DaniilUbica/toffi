@@ -3,6 +3,5 @@
 **demo video** 
 
 
-
-Uploading Запись экрана 2025-09-29 в 22.59.59.mov…
+https://github.com/user-attachments/assets/a69ab9d1-bbee-4506-8851-b36a446ef57b
 
