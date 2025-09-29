@@ -38,7 +38,7 @@ int main() {
     auto pickable_spawner = PickableSpawner::instance();
     pickable_spawner->addPickableTexture(PickableType::HEAL, texture_holder->heal_texture());
     pickable_spawner->addPickableTexture(PickableType::BULLET_WAVE, texture_holder->bullet_texture());
-    pickable_spawner->addPickableTexture(PickableType::VALUTE, texture_holder->coin_texture());
+    pickable_spawner->addPickableTexture(PickableType::CURRENCY, texture_holder->coin_texture());
 
     auto particle_system = game_engine::ParticleSystem::instance();
 

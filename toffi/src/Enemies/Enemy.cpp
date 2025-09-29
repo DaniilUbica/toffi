@@ -46,7 +46,7 @@ Enemy::Enemy(const game_engine::primitives::Texture& textures, game_engine::prim
 Enemy::~Enemy() {
     PickableSpawner::instance()->spawnPickable(m_pos, PickableType::HEAL);
     PickableSpawner::instance()->spawnPickable(m_pos, PickableType::BULLET_WAVE);
-    PickableSpawner::instance()->spawnPickable(m_pos, PickableType::VALUTE);
+    PickableSpawner::instance()->spawnPickable(m_pos, PickableType::CURRENCY);
     game_engine::ParticleSystem::instance()->burstingBubble(m_pos + m_size / 2.f, m_texture);
 }
 

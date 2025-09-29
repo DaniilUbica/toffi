@@ -22,7 +22,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Textures/Textures.cpp
     toffi/src/Pickables/Heal.cpp
     toffi/src/Pickables/BulletWave.cpp
-    toffi/src/Pickables/Valute.cpp
+    toffi/src/Pickables/Currency.cpp
     toffi/src/Pickables/PickableSpawner.cpp
     toffi/src/Controllers/PlayerController.cpp
     toffi/src/Controllers/ViewController.cpp
@@ -39,7 +39,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Textures/Textures.h
     toffi/src/Pickables/Heal.h
     toffi/src/Pickables/BulletWave.h
-    toffi/src/Pickables/Valute.h
+    toffi/src/Pickables/Currency.h
     toffi/src/Pickables/PickableSpawner.h
     toffi/src/Controllers/PlayerController.h
     toffi/src/Controllers/ViewController.h
