@@ -1,9 +1,11 @@
 #include "Enemies/Enemy.h"
+
 #include "Engine/Animation/Animation.h"
 #include "Engine/Particles/ParticleSystem.h"
+#include "Engine/TimersHolder.hpp"
+
 #include "Pickables/PickableSpawner.h"
 #include "Constants.h"
-#include "Engine/Core/Timer.h"
 #include "Player/Player.h"
 
 void Enemy::followPlayer(float time) {
@@ -39,7 +41,7 @@ Enemy::Enemy(const game_engine::primitives::Texture& textures, game_engine::prim
     m_health = health;
     m_sprite = std::make_shared<game_engine::primitives::Sprite>(textures);
 
-    m_attack_cooldown = std::make_unique<game_engine::Timer>(attack_cooldown);
+    m_attack_cooldown = game_engine::TimersHolder::createTimer(attack_cooldown);
     m_run_animation = std::make_unique<game_engine::Animation>(textures, 57, 61, 42, 31, 8, ANIMATION_SPEED, 150);
 }
 

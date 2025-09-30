@@ -16,7 +16,7 @@ namespace game_engine {
 class EnemiesManager {
 private:
     std::vector<std::shared_ptr<Enemy>>           m_enemies;
-	std::unique_ptr<game_engine::Timer>           m_respawn_timer;
+	std::shared_ptr<game_engine::Timer>           m_respawn_timer;
 	std::shared_ptr<Player>                       m_player;
     std::vector<game_engine::primitives::Texture> m_enemies_textures;
 	game_engine::primitives::Texture              m_bullet_texture;

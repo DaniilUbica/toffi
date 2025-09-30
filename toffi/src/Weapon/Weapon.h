@@ -2,14 +2,13 @@
 
 #include <cmath>
 
-#include "Engine/Core/Timer.h"
 #include "Engine/Base/GameObject.h"
+#include "Engine/Core/Timer.h"
 
 class Bullet;
 
 namespace game_engine {
     class Character;
-    class Timer;
 }
 
 enum class WeaponType {
@@ -25,9 +24,9 @@ private:
 	bool isInAttackRange(game_engine::primitives::Vector2f pos, std::shared_ptr<game_engine::Character> character, float range) const;
 
 protected:
-    game_engine::primitives::Vector2f                        m_pos;
-	game_engine::primitives::Vector2f 		                m_direction;
-    std::unique_ptr<game_engine::Timer> m_reload_timer;
+    game_engine::primitives::Vector2f   m_pos;
+	game_engine::primitives::Vector2f 	m_direction;
+    std::shared_ptr<game_engine::Timer> m_reload_timer;
     WeaponType                          m_weapon_type;
     float                               m_damage_scale = 1.f;
     float                               m_reload_time = 1.f;
@@ -37,7 +36,7 @@ protected:
     std::shared_ptr<game_engine::Character> getNearestCharacter(std::vector<std::shared_ptr<game_engine::Character>>& characters) const;
     virtual void attackIfCanAttack() = 0;
 
-    Weapon(const game_engine::primitives::Texture& texture) : game_engine::GameObject(texture) {};
+    Weapon(game_engine::primitives::Vector2f pos, float damage_scale, float reload_time, const game_engine::primitives::Texture& texture = {});
     Weapon() {};
 
 public:

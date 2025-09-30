@@ -80,13 +80,9 @@ void MeleeWeapon::handleAttackState(std::vector<std::shared_ptr<game_engine::Cha
     }
 }
 
-MeleeWeapon::MeleeWeapon(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent) : Weapon(texture) {
-	m_pos = pos;
+MeleeWeapon::MeleeWeapon(const game_engine::primitives::Texture& texture, game_engine::primitives::Vector2f pos, float damage_scale, float reload_time, std::weak_ptr<game_engine::Character> parent) : Weapon(pos, damage_scale, reload_time, texture) {
     m_damage = MELEE_WEAPON_DEFAULT_DAMAGE;
-	m_damage_scale = damage_scale;
-	m_reload_time = reload_time;
-	m_weapon_type = WeaponType::MELEE;
-	m_reload_timer = std::make_unique<game_engine::Timer>(m_reload_time);
+    m_weapon_type = WeaponType::MELEE;
     m_parent = parent;
 
     m_sprite->setOrigin({ 0, static_cast<float>(texture.getSize().y / 2) });

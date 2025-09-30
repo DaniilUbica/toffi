@@ -1,4 +1,5 @@
 #include "Enemies/EnemiesManager.h"
+
 #include "Enemies/Enemy.h"
 #include "Enemies/RangeEnemy.h"
 #include "Constants.h"
@@ -6,8 +7,10 @@
 #include "Player/Player.h"
 #include "Weapon/Bullet.h"
 
+#include "Engine/TimersHolder.hpp"
+
 EnemiesManager::EnemiesManager() {
-    m_respawn_timer = std::make_unique<game_engine::Timer>(ENEMY_RESPAWN_TIMER);
+    m_respawn_timer = game_engine::TimersHolder::createTimer(ENEMY_RESPAWN_TIMER);
 }
 
 void EnemiesManager::Update(float time) {
