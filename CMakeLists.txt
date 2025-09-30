@@ -3,7 +3,6 @@ project(toffi LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(ENGINE_UNIT_NAME UbicaEngine)
-set(CMAKE_CXX_STANDARD 20)
 
 option(USE_SFML "Use SFML as engine's graphic lib" ON)
 
