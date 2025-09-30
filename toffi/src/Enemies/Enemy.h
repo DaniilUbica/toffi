@@ -11,7 +11,7 @@ class Timer;
 class Enemy : public game_engine::Character {
 protected:
 	std::shared_ptr<Player>             m_player;
-	std::unique_ptr<game_engine::Timer> m_attack_cooldown;
+	std::shared_ptr<game_engine::Timer> m_attack_cooldown;
     float                               m_speed;
     float                               m_damage;
 

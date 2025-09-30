@@ -1,5 +1,8 @@
 #include "Weapon/Weapon.h"
+
 #include "Engine/Base/Character.h"
+#include "Engine/TimersHolder.hpp"
+
 #include "Constants.h"
 
 float Weapon::distance(game_engine::primitives::Vector2f v1, game_engine::primitives::Vector2f v2) const {
@@ -42,6 +45,14 @@ std::shared_ptr<game_engine::Character> Weapon::getNearestCharacter(std::vector<
     }
 
     return nullptr;
+}
+
+Weapon::Weapon(game_engine::primitives::Vector2f pos, float damage_scale, float reload_time, const game_engine::primitives::Texture& texture) : game_engine::GameObject(texture) {
+    m_pos = pos;
+    m_damage_scale = damage_scale;
+    m_reload_time = reload_time;
+
+    m_reload_timer = game_engine::TimersHolder::createTimer(m_reload_time);
 }
 
 void Weapon::updateAttackSpeed(float scale) {

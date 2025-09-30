@@ -1,6 +1,8 @@
 #include "Constants.h"
 
 #include "Engine/World.h"
+#include "Engine/TimersHolder.hpp"
+#include "Engine/GameStateMachine.h"
 #include "Engine/Base/Pickable.h"
 #include "Engine/Particles/ParticleSystem.h"
 #include "Engine/UI/HealthBar.h"
@@ -25,6 +27,17 @@
 
 int main() {
     srand(time(NULL));
+
+    game_engine::primitives::Clock clock;
+
+    const auto stateMachine = game_engine::GameStateMachine::instance();
+    stateMachine->fireGamePaused.connect([]() {
+        game_engine::TimersHolder::pauseAllTimers();
+    });
+    stateMachine->fireGameResumed.connect([clock]() mutable {
+        game_engine::TimersHolder::resumeAllTimers();
+        clock.reset();
+    });
 
     game_engine::primitives::RenderWindow window({ WINDOW_WIDTH, WINDOW_HEIGHT }, "Toffi Adventure");
 
@@ -56,12 +69,14 @@ int main() {
 
     ViewController view_controller(player);
 
-    game_engine::primitives::Clock clock;
+    stateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution
 
     while (window.isOpen()) {
         float time = clock.getElapsedTime();
-        clock.restart();
         time /= 300;
+        clock.restart();
+
+        game_engine::TimersHolder::deleteExpiredTimers();
 
         const auto event = window.pollEvent();
         const auto key_event = event && event->type() == game_engine::primitives::Event::Type::Keyboard ?
@@ -71,17 +86,27 @@ int main() {
                 window.close();
             }
         }
+        if (key_event && key_event->key() == game_engine::primitives::KeyEvent::Key::Escape && key_event->action() == game_engine::primitives::KeyEvent::Action::Press) {
+            if (stateMachine->currentState() == game_engine::GameState::RUNNING) {
+                stateMachine->setState(game_engine::GameState::PAUSED);
+            }
+            else if (stateMachine->currentState() == game_engine::GameState::PAUSED) {
+                stateMachine->setState(game_engine::GameState::RUNNING);
+            }
+        }
 
         auto characters = enemies_manager->getCharacters();
 
-        pickable_spawner->Update(time);
-        particle_system->Update(time / 1000);
-        player->Update(time);
-        player->attackEnemies(time, characters);
-        enemies_manager->Update(time);
-        view_controller.Update(time, window);
+        if (stateMachine->currentState() == game_engine::GameState::RUNNING) {
+            pickable_spawner->Update(time);
+            particle_system->Update(time / 1000);
+            player->Update(time);
+            player->attackEnemies(time, characters);
+            enemies_manager->Update(time);
+            view_controller.Update(time, window);
 
-        game_engine::ui::DamageIndicatorsHolder::Update(time);
+            game_engine::ui::DamageIndicatorsHolder::Update(time);
+        }
 
         window.clear(game_engine::primitives::colors::White);
 

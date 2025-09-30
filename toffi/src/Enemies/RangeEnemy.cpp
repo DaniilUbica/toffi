@@ -1,7 +1,6 @@
 #include "Enemies/RangeEnemy.h"
 #include "Engine/Animation/Animation.h"
 #include "Constants.h"
-#include "Engine/Core/Timer.h"
 #include "Weapon/Bullet.h"
 #include "Player/Player.h"
 
@@ -39,15 +38,8 @@ void RangeEnemy::attackIfCanAttack() {
 	}
 }
 
-RangeEnemy::RangeEnemy(const game_engine::primitives::Texture& textures, const game_engine::primitives::Texture& bullet_texture, game_engine::primitives::Vector2f pos, float attack_cooldown, float speed, float damage, float health) : Enemy(textures) {
-	m_pos = pos;
-	m_speed = speed;
-	m_damage = damage;
-	m_health = health;
+RangeEnemy::RangeEnemy(const game_engine::primitives::Texture& textures, const game_engine::primitives::Texture& bullet_texture, game_engine::primitives::Vector2f pos, float attack_cooldown, float speed, float damage, float health) : Enemy(textures, pos, attack_cooldown, speed, damage, health) {
 	m_bullet_texture = bullet_texture;
-
-	m_attack_cooldown = std::make_unique<game_engine::Timer>(attack_cooldown);
-	m_run_animation = std::make_unique<game_engine::Animation>(textures, 57, 61, 42, 31, 8, ANIMATION_SPEED, 150);
 }
 
 void RangeEnemy::Update(float time) {
