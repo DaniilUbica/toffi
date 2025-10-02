@@ -5,8 +5,11 @@
 #include "Engine/GameStateMachine.h"
 #include "Engine/Base/Pickable.h"
 #include "Engine/Particles/ParticleSystem.h"
-#include "Engine/UI/HealthBar.h"
-#include "Engine/UI/DamageIndicator.h"
+#include "Engine/UI/UIComponents/HealthBar.h"
+#include "Engine/UI/UIComponents/DamageIndicator.h"
+#include "Engine/UI/GameScreen/GameScreenManager.h"
+
+#include "GameScreens/GameOverScreen.h"
 
 #include "Primitives/Clock.hpp"
 
@@ -38,6 +41,9 @@ int main() {
         game_engine::TimersHolder::resumeAllTimers();
         clock.reset();
     });
+
+    const auto gameScreenManager = game_engine::ui::GameScreenManager::instance();
+    gameScreenManager->addGameScreen(game_engine::GameState::GAME_OVER, std::make_unique<GameOverScreen>());
 
     game_engine::primitives::RenderWindow window({ WINDOW_WIDTH, WINDOW_HEIGHT }, "Toffi Adventure");
 
@@ -106,6 +112,10 @@ int main() {
             view_controller.Update(time, window);
 
             game_engine::ui::DamageIndicatorsHolder::Update(time);
+
+            if (player->getHP() <= 0) {
+                stateMachine->setState(game_engine::GameState::GAME_OVER);
+            }
         }
 
         window.clear(game_engine::primitives::colors::White);
