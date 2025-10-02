@@ -2,7 +2,7 @@
 #include "Controllers/PlayerController.h"
 #include "Engine/Animation/Animation.h"
 #include "Constants.h"
-#include "UI/HealthBar.h"
+#include "UI/UIComponents/HealthBar.h"
 #include "Weapon/RangeWeapon.h"
 #include "Weapon/MeleeWeapon.h"
 #include "Weapon/BulletWaveWeapon.h"
