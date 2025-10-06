@@ -1,17 +1,14 @@
 #include "Textures.h"
 
-TextureHolder* TextureHolder::m_texture_holder = nullptr;
+std::shared_ptr<TextureHolder> TextureHolder::instance() {
+    if (const auto sp = m_texture_holder.lock()) {
+        return sp;
+    }
 
-TextureHolder::~TextureHolder() {
-	m_texture_holder = nullptr;
-}
+    const auto sp = std::shared_ptr<TextureHolder>(new TextureHolder());
+    m_texture_holder = sp;
 
-TextureHolder* TextureHolder::instance() {
-	if (m_texture_holder == nullptr) {
-		m_texture_holder = new TextureHolder();
-	}
-
-	return m_texture_holder;
+    return sp;
 }
 
 void TextureHolder::setTextures() {

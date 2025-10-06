@@ -9,6 +9,7 @@ public:
     static bool controller_created;
 
     PlayerController(Player* player);
+    ~PlayerController();
     void controllPlayer( float time);
 
 private:

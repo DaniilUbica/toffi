@@ -8,22 +8,19 @@
 #include "Player/Player.h"
 #include "Textures/Textures.h"
 
-PickableSpawner* PickableSpawner::m_instance = nullptr;
-
 PickableSpawner::PickableSpawner() {
     m_attractionsManager = std::make_unique<game_engine::physics::ObjectsAttractionManager>();
 }
 
-PickableSpawner::~PickableSpawner() {
-	m_instance = nullptr;
-}
+std::shared_ptr<PickableSpawner> PickableSpawner::instance() {
+    if (const auto sp = m_instance.lock()) {
+        return sp;
+    }
 
-PickableSpawner* PickableSpawner::instance() {
-	if (!m_instance) {
-		m_instance = new PickableSpawner();
-	}
+    const auto sp = std::shared_ptr<PickableSpawner>(new PickableSpawner());
+    m_instance = sp;
 
-	return m_instance;
+    return sp;
 }
 
 void PickableSpawner::Update(float time) {
