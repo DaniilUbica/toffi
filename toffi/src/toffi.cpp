@@ -73,9 +73,10 @@ int main() {
     enemies_manager->setBulletTexture(texture_holder->bullet_texture());
     enemies_manager->addTexture(texture_holder->flying_eye_texture());
 
-    ViewController view_controller(player);
+    auto view_controller = ViewController::instance();
+    view_controller->setPlayer(player);
 
-    stateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution
+    stateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution. Remove after main menu impl
 
     while (window.isOpen()) {
         float time = clock.getElapsedTime();
@@ -92,11 +93,16 @@ int main() {
                 window.close();
             }
         }
-        if (key_event && key_event->key() == game_engine::primitives::KeyEvent::Key::Escape && key_event->action() == game_engine::primitives::KeyEvent::Action::Press) {
-            if (stateMachine->currentState() == game_engine::GameState::RUNNING) {
-                stateMachine->setState(game_engine::GameState::PAUSED);
+        if (key_event && key_event->action() == game_engine::primitives::KeyEvent::Action::Press) {
+            if (key_event->key() == game_engine::primitives::KeyEvent::Key::Escape) {
+                if (stateMachine->currentState() == game_engine::GameState::RUNNING) {
+                    stateMachine->setState(game_engine::GameState::PAUSED);
+                }
+                else if (stateMachine->currentState() == game_engine::GameState::PAUSED) {
+                    stateMachine->setState(game_engine::GameState::RUNNING);
+                }
             }
-            else if (stateMachine->currentState() == game_engine::GameState::PAUSED) {
+            else if (key_event->key() == game_engine::primitives::KeyEvent::Key::R) {
                 stateMachine->setState(game_engine::GameState::RUNNING);
             }
         }
@@ -109,7 +115,7 @@ int main() {
             player->Update(time);
             player->attackEnemies(time, characters);
             enemies_manager->Update(time);
-            view_controller.Update(time, window);
+            view_controller->Update(time, window);
 
             game_engine::ui::DamageIndicatorsHolder::Update(time);
 

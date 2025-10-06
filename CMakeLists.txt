@@ -27,6 +27,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Controllers/PlayerController.cpp
     toffi/src/Controllers/ViewController.cpp
     toffi/src/GameScreens/GameOverScreen.cpp
+    toffi/src/GameManager.cpp
 
     toffi/src/Weapon/Bullet.h
     toffi/src/Enemies/EnemiesManager.h
@@ -46,6 +47,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Controllers/ViewController.h
     toffi/src/GameScreens/GameOverScreen.h
     toffi/src/Constants.h
+    toffi/src/GameManager.h
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})

@@ -4,5 +4,5 @@
 
 class GameOverScreen : public game_engine::ui::GameScreenBase {
 public:
-    GameOverScreen();
+    virtual void constructScreen() override;
 };
