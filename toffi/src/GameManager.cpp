@@ -72,6 +72,7 @@ void GameManager::initGame() {
     m_viewController->setPlayer(m_player);
 
     m_gameStateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution. Remove after main menu impl
+    m_gameOverAtNextIter = false;
 }
 
 void GameManager::deinitGame() {

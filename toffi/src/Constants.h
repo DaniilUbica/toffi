@@ -13,7 +13,7 @@ constexpr float PLAYER_START_X            = game_engine::WORLD_WIDTH / 2.0 - gam
 constexpr float PLAYER_START_Y            = game_engine::WORLD_HEIGHT / 2.0 - game_engine::SPRITE_SIZE;
 constexpr float PLAYER_START_ATTACK_SPEED = 1.0;
 constexpr float PLAYER_START_ATTACK_RANGE = 200.0;
-constexpr float PLAYER_START_HP           = 1.0;
+constexpr float PLAYER_START_HP           = 15.0;
 
 constexpr float ANIMATION_SPEED = 0.002;
 
