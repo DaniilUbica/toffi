@@ -12,6 +12,10 @@ PlayerController::PlayerController(Player* player) : m_player(player) {
     controller_created = true;
 }
 
+PlayerController::~PlayerController() {
+    controller_created = false;
+}
+
 void PlayerController::controllPlayer(float time) {
     using namespace game_engine::primitives;
 

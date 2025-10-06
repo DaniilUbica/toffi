@@ -46,3 +46,10 @@ constexpr float BULLET_WAVE_DAMAGE        = 40.0;
 constexpr int CURRENCY_SPAWN_CHANCE    = 100;
 constexpr int CURRENCY_SPAWN_MIN_VALUE = 1;
 constexpr int CURRENCY_SPAWN_MAX_VALUE = 5;
+
+const std::string GAME_OVER_TEXT                   = "GAME OVER";
+const std::string GAME_OVER_RESTART_TEXT           = "Press 'R' to restart";
+constexpr unsigned int GAME_OVER_TEXT_SIZE         = 72;
+constexpr unsigned int GAME_OVER_RESTART_TEXT_SIZE = 56;
+constexpr float GAME_OVER_TEXT_Y_OFFSET            = 100;
+constexpr float GAME_OVER_RESTART_TEXT_Y_OFFSET    = 50;

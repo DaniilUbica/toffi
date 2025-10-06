@@ -2,9 +2,19 @@
 #include "Constants.h"
 #include "Player/Player.h"
 
-ViewController::ViewController(std::shared_ptr<Player> player) {
-    m_player = player;
+ViewController::ViewController() {
     m_view = std::make_unique<game_engine::primitives::View>(game_engine::primitives::FloatRect({0.f, 0.f}, {1.f, 1.f}));
+}
+
+std::shared_ptr<ViewController> ViewController::instance() {
+    if (const auto sp = s_instance.lock()) {
+        return sp;
+    }
+
+    const auto sp = std::shared_ptr<ViewController>(new ViewController());
+    s_instance = sp;
+    
+    return sp;
 }
 
 void ViewController::Update(float time, game_engine::primitives::RenderWindow& window) {

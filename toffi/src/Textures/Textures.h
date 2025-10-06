@@ -14,14 +14,14 @@ private:
     game_engine::primitives::Texture m_sword_texture;
 	game_engine::primitives::Texture m_heal_texture;
     game_engine::primitives::Texture m_coin_texture;
-	static TextureHolder* m_texture_holder;
+
+	inline static std::weak_ptr<TextureHolder> m_texture_holder;
 
 	TextureHolder() = default;
 	TextureHolder(const TextureHolder&);
 
 public:
-	~TextureHolder();
-	static TextureHolder* instance();
+	static std::shared_ptr<TextureHolder> instance();
 
 	void setTextures();
 
