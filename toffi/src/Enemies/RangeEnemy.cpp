@@ -1,5 +1,7 @@
 #include "Enemies/RangeEnemy.h"
 #include "Engine/Animation/Animation.h"
+
+#include "Controllers/GamePointsController.h"
 #include "Constants.h"
 #include "Weapon/Bullet.h"
 #include "Player/Player.h"
@@ -40,6 +42,10 @@ void RangeEnemy::attackIfCanAttack() {
 
 RangeEnemy::RangeEnemy(const game_engine::primitives::Texture& textures, const game_engine::primitives::Texture& bullet_texture, game_engine::primitives::Vector2f pos, float attack_cooldown, float speed, float damage, float health) : Enemy(textures, pos, attack_cooldown, speed, damage, health) {
 	m_bullet_texture = bullet_texture;
+}
+
+RangeEnemy::~RangeEnemy() {
+    GamePointsController::instance()->addPoints(RANGE_ENEMY_KILL_POINTS);
 }
 
 void RangeEnemy::Update(float time) {

@@ -15,7 +15,7 @@ private:
 
 public:
 	RangeEnemy(const game_engine::primitives::Texture& textures, const game_engine::primitives::Texture& bullet_texture, game_engine::primitives::Vector2f pos, float attack_cooldown, float speed, float damage, float health);
-	~RangeEnemy() = default;
+	~RangeEnemy();
 
 	void Update(float time) override;
 

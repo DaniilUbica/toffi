@@ -12,8 +12,10 @@
 #include "Constants.h"
 
 #include "GameScreens/GameOverScreen.h"
+#include "GameScreens/GameInterfaceScreen.h"
 
 #include "Controllers/ViewController.h"
+#include "Controllers/GamePointsController.h"
 
 #include "Pickables/PickableSpawner.h"
 
@@ -43,6 +45,7 @@ void GameManager::initGame() {
 
     m_gameScreenManager = game_engine::ui::GameScreenManager::instance();
     m_gameScreenManager->addGameScreen(game_engine::GameState::GAME_OVER, std::make_unique<GameOverScreen>());
+    m_gameScreenManager->addGameScreen(game_engine::GameState::RUNNING, std::make_unique<GameInterfaceScreen>());
 
     m_textureHolder = TextureHolder::instance();
     m_textureHolder->setTextures();
@@ -70,6 +73,8 @@ void GameManager::initGame() {
 
     m_viewController = ViewController::instance();
     m_viewController->setPlayer(m_player);
+
+    m_gamePointsController = GamePointsController::instance();
 
     m_gameStateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution. Remove after main menu impl
     m_gameOverAtNextIter = false;
@@ -109,6 +114,7 @@ void GameManager::Update(float time) {
         m_player->attackEnemies(time, characters);
         m_enemiesManager->Update(time);
         m_viewController->Update(time, m_window);
+        m_gameScreenManager->Update(time);
 
         game_engine::ui::DamageIndicatorsHolder::Update(time);
 

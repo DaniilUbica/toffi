@@ -26,7 +26,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Pickables/PickableSpawner.cpp
     toffi/src/Controllers/PlayerController.cpp
     toffi/src/Controllers/ViewController.cpp
+    toffi/src/Controllers/GamePointsController.cpp
     toffi/src/GameScreens/GameOverScreen.cpp
+    toffi/src/GameScreens/GameInterfaceScreen.cpp
     toffi/src/GameManager.cpp
 
     toffi/src/Weapon/Bullet.h
@@ -45,7 +47,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Pickables/PickableSpawner.h
     toffi/src/Controllers/PlayerController.h
     toffi/src/Controllers/ViewController.h
+    toffi/src/Controllers/GamePointsController.h
     toffi/src/GameScreens/GameOverScreen.h
+    toffi/src/GameScreens/GameInterfaceScreen.h
     toffi/src/Constants.h
     toffi/src/GameManager.h
 )
