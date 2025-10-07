@@ -11,6 +11,8 @@
 #include "Enemies/EnemiesManager.h"
 #include "GameManager.h"
 
+#include <sqlite3.h>
+
 int main() {
     srand(time(NULL));
 
