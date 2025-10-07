@@ -71,18 +71,18 @@ jobs:
       with:
         submodules: recursive
 
-    - name: install vcpkg and dependencies
+    - name: Install sqlite3
       run: |
         git clone https://github.com/Microsoft/vcpkg.git
-        .\vcpkg\bootstrap-vcpkg.bat
-        
-        .\vcpkg\vcpkg install sfml:x64-windows
-        .\vcpkg\vcpkg integrate install
+        cd vcpkg
+        .\bootstrap-vcpkg.bat
+        .\vcpkg integrate install
+        .\vcpkg install sqlite3
 
     - name: cmake config
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
 
     - name: build
       run: |
-        cmake --build build --config Release --parallel
+        cmake --build build --config Release -- /m
