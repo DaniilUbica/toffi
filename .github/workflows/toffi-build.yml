@@ -71,10 +71,18 @@ jobs:
       with:
         submodules: recursive
 
+    - name: install vcpkg and dependencies
+      run: |
+        git clone https://github.com/Microsoft/vcpkg.git
+        .\vcpkg\bootstrap-vcpkg.bat
+        
+        .\vcpkg\vcpkg install sfml:x64-windows
+        .\vcpkg\vcpkg integrate install
+
     - name: cmake config
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE="${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
     - name: build
       run: |
-        cmake --build build --config Release -- /m
+        cmake --build build --config Release --parallel
