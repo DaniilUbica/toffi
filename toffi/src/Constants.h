@@ -60,3 +60,8 @@ constexpr unsigned int GAME_POINTS_FROM_LEFT_OFFSET = 72;
 
 constexpr int MELEE_ENEMY_KILL_POINTS = 20;
 constexpr int RANGE_ENEMY_KILL_POINTS = 10;
+
+const std::string DB_GAME_DATA_DB_NAME       = "game_data";
+const std::string DB_GAME_DATA_RELATION_NAME = "game_data";
+
+const std::pair<std::string, std::string> DB_GAME_POINTS_RECORD_FIELD_DATA = { "best_score", "INT" };

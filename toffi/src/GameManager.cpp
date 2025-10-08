@@ -29,6 +29,8 @@
 
 #include "Textures/Textures.h"
 
+#include <iostream>
+
 GameManager::GameManager(const game_engine::primitives::RenderWindow& window) : m_window(window) {}
 
 void GameManager::initGame() {
@@ -42,6 +44,25 @@ void GameManager::initGame() {
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGameRestarted.connect([this]() {
         restartGame();
     }));
+    m_stateMachineConnections.push_back(m_gameStateMachine->fireGameOver.connect([this]() {
+        game_engine::database::DBInsertData<int> insertRequestData;
+        insertRequestData.databaseName = DB_GAME_DATA_DB_NAME;
+        insertRequestData.relationName = DB_GAME_DATA_RELATION_NAME;
+        insertRequestData.fieldName = DB_GAME_POINTS_RECORD_FIELD_DATA.first;
+        insertRequestData.value = GamePointsController::instance()->points();
+        assert(m_dbManager->insertValue(insertRequestData));
+
+        game_engine::database::DBSingleSelectData selectRequestData;
+        selectRequestData.fieldToSelect = DB_GAME_POINTS_RECORD_FIELD_DATA.first;
+        std::cout << m_dbManager->getValue<int>(selectRequestData).value();
+    }));
+
+    m_dbManager = std::make_unique<game_engine::database::DataBaseManager>();
+    assert(m_dbManager->openDatabase(DB_GAME_DATA_DB_NAME));
+    game_engine::database::DBCreateRelationData relationRequestData;
+    relationRequestData.relationName = DB_GAME_DATA_RELATION_NAME;
+    relationRequestData.attributes = { DB_GAME_POINTS_RECORD_FIELD_DATA };
+    assert(m_dbManager->createRelation(relationRequestData));
 
     m_gameScreenManager = game_engine::ui::GameScreenManager::instance();
     m_gameScreenManager->addGameScreen(game_engine::GameState::GAME_OVER, std::make_unique<GameOverScreen>());

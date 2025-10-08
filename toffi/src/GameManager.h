@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine/IGameManager.h"
+#include "Engine/DataBase/DataBaseManager.h"
 
 #include <nod/nod.hpp>
 
@@ -53,6 +54,8 @@ private:
     std::shared_ptr<game_engine::GameStateMachine> m_gameStateMachine;
     std::shared_ptr<game_engine::World> m_world;
     std::shared_ptr<game_engine::ParticleSystem> m_particleSystem;
+
+    std::unique_ptr<game_engine::database::DataBaseManager> m_dbManager;
 
     game_engine::primitives::RenderWindow m_window;
 };
