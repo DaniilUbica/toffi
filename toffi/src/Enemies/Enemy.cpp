@@ -5,6 +5,7 @@
 #include "Engine/TimersHolder.hpp"
 
 #include "Pickables/PickableSpawner.h"
+#include "Controllers/GamePointsController.h"
 #include "Constants.h"
 #include "Player/Player.h"
 
@@ -49,6 +50,9 @@ Enemy::~Enemy() {
     PickableSpawner::instance()->spawnPickable(m_pos, PickableType::HEAL);
     PickableSpawner::instance()->spawnPickable(m_pos, PickableType::BULLET_WAVE);
     PickableSpawner::instance()->spawnPickable(m_pos, PickableType::CURRENCY);
+
+    GamePointsController::instance()->addPoints(MELEE_ENEMY_KILL_POINTS);
+
     game_engine::ParticleSystem::instance()->burstingBubble(m_pos + m_size / 2.f, m_texture);
 }
 

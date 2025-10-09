@@ -12,8 +12,10 @@
 #include "Constants.h"
 
 #include "GameScreens/GameOverScreen.h"
+#include "GameScreens/GameInterfaceScreen.h"
 
 #include "Controllers/ViewController.h"
+#include "Controllers/GamePointsController.h"
 
 #include "Pickables/PickableSpawner.h"
 
@@ -26,6 +28,8 @@
 #include "Weapon/Bullet.h"
 
 #include "Textures/Textures.h"
+
+#include <iostream>
 
 GameManager::GameManager(const game_engine::primitives::RenderWindow& window) : m_window(window) {}
 
@@ -40,9 +44,39 @@ void GameManager::initGame() {
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGameRestarted.connect([this]() {
         restartGame();
     }));
+    m_stateMachineConnections.push_back(m_gameStateMachine->fireGameOver.connect([this]() {
+        game_engine::database::DBRequestData::databaseName = DB_GAME_DATA_DB_NAME;
+        game_engine::database::DBRequestData::relationName = DB_GAME_DATA_RELATION_NAME;
+
+        game_engine::database::DBSingleSelectData selectRequestData;
+        selectRequestData.attributeToSelect = DB_ATTRIBUTE_VALUE_DATA.first;
+        selectRequestData.whereAttributeName = DB_ATTRIBUTE_NAME_DATA.first;
+        selectRequestData.whereAttributeValue = DB_BEST_SCORE_FIELD_NAME;
+        const auto& value = m_dbManager->getValue<int>(selectRequestData);
+        if (value && value.value() < GamePointsController::instance()->points()) {
+            game_engine::database::DBMultiInsertData insertRequestData;
+            insertRequestData.attributesNames = { DB_ATTRIBUTE_NAME_DATA.first, DB_ATTRIBUTE_VALUE_DATA.first };
+            insertRequestData.values = { DB_BEST_SCORE_FIELD_NAME, GamePointsController::instance()->points() };
+            assert(m_dbManager->insertValues(insertRequestData));
+        }
+        else if (!value) {
+            game_engine::database::DBMultiInsertData insertRequestData;
+            insertRequestData.attributesNames = { DB_ATTRIBUTE_NAME_DATA.first, DB_ATTRIBUTE_VALUE_DATA.first };
+            insertRequestData.values = { DB_BEST_SCORE_FIELD_NAME, GamePointsController::instance()->points() };
+            assert(m_dbManager->insertValues(insertRequestData));
+        }
+    }));
+
+    m_dbManager = std::make_unique<game_engine::database::DataBaseManager>();
+    assert(m_dbManager->openDatabase(DB_GAME_DATA_DB_NAME));
+    game_engine::database::DBCreateRelationData relationRequestData;
+    relationRequestData.relationName = DB_GAME_DATA_RELATION_NAME;
+    relationRequestData.attributes = { DB_ATTRIBUTE_NAME_DATA, DB_ATTRIBUTE_VALUE_DATA };
+    assert(m_dbManager->createRelation(relationRequestData));
 
     m_gameScreenManager = game_engine::ui::GameScreenManager::instance();
     m_gameScreenManager->addGameScreen(game_engine::GameState::GAME_OVER, std::make_unique<GameOverScreen>());
+    m_gameScreenManager->addGameScreen(game_engine::GameState::RUNNING, std::make_unique<GameInterfaceScreen>());
 
     m_textureHolder = TextureHolder::instance();
     m_textureHolder->setTextures();
@@ -71,6 +105,8 @@ void GameManager::initGame() {
     m_viewController = ViewController::instance();
     m_viewController->setPlayer(m_player);
 
+    m_gamePointsController = GamePointsController::instance();
+
     m_gameStateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution. Remove after main menu impl
     m_gameOverAtNextIter = false;
 }
@@ -89,6 +125,7 @@ void GameManager::deinitGame() {
     m_world = nullptr;
     m_gameStateMachine = nullptr;
     m_gameScreenManager = nullptr;
+    m_gamePointsController = nullptr;
 
     game_engine::DrawableObject::deleteAllDrawableObjects();
 }
@@ -109,6 +146,7 @@ void GameManager::Update(float time) {
         m_player->attackEnemies(time, characters);
         m_enemiesManager->Update(time);
         m_viewController->Update(time, m_window);
+        m_gameScreenManager->Update(time);
 
         game_engine::ui::DamageIndicatorsHolder::Update(time);
 
