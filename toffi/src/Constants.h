@@ -64,4 +64,6 @@ constexpr int RANGE_ENEMY_KILL_POINTS = 10;
 const std::string DB_GAME_DATA_DB_NAME       = "game_data";
 const std::string DB_GAME_DATA_RELATION_NAME = "game_data";
 
-const std::pair<std::string, std::string> DB_GAME_POINTS_RECORD_FIELD_DATA = { "best_score", "INT" };
+const std::pair<std::string, std::string> DB_ATTRIBUTE_NAME_DATA = { "attribute_name", "TEXT UNIQUE" };
+const std::pair<std::string, std::string> DB_ATTRIBUTE_VALUE_DATA = { "attribute_value", "" };
+const std::string DB_BEST_SCORE_FIELD_NAME = "best_score";
