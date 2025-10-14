@@ -31,6 +31,8 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/GameScreens/GameOverScreen.cpp
     toffi/src/GameScreens/GameInterfaceScreen.cpp
     toffi/src/GameManager.cpp
+    toffi/src/Database/GameDataDBWrapper.cpp
+    toffi/src/Database/DataBaseWrapperBase.cpp
 
     toffi/src/Weapon/Bullet.h
     toffi/src/Enemies/EnemiesManager.h
@@ -53,6 +55,8 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/GameScreens/GameInterfaceScreen.h
     toffi/src/Constants.h
     toffi/src/GameManager.h
+    toffi/src/Database/GameDataDBWrapper.h
+    toffi/src/Database/DataBaseWrapperBase.h
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})

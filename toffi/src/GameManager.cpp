@@ -29,8 +29,6 @@
 
 #include "Textures/Textures.h"
 
-#include <iostream>
-
 GameManager::GameManager(const game_engine::primitives::RenderWindow& window) : m_window(window) {}
 
 void GameManager::initGame() {
@@ -45,34 +43,15 @@ void GameManager::initGame() {
         restartGame();
     }));
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGameOver.connect([this]() {
-        game_engine::database::DBRequestData::databaseName = DB_GAME_DATA_DB_NAME;
-        game_engine::database::DBRequestData::relationName = DB_GAME_DATA_RELATION_NAME;
-
-        game_engine::database::DBSingleSelectData selectRequestData;
-        selectRequestData.attributeToSelect = DB_ATTRIBUTE_VALUE_DATA.first;
-        selectRequestData.whereAttributeName = DB_ATTRIBUTE_NAME_DATA.first;
-        selectRequestData.whereAttributeValue = DB_BEST_SCORE_FIELD_NAME;
-        const auto& value = m_dbManager->getValue<int>(selectRequestData);
-        if (value && value.value() < GamePointsController::instance()->points()) {
-            game_engine::database::DBMultiInsertData insertRequestData;
-            insertRequestData.attributesNames = { DB_ATTRIBUTE_NAME_DATA.first, DB_ATTRIBUTE_VALUE_DATA.first };
-            insertRequestData.values = { DB_BEST_SCORE_FIELD_NAME, GamePointsController::instance()->points() };
-            assert(m_dbManager->insertValues(insertRequestData));
-        }
-        else if (!value) {
-            game_engine::database::DBMultiInsertData insertRequestData;
-            insertRequestData.attributesNames = { DB_ATTRIBUTE_NAME_DATA.first, DB_ATTRIBUTE_VALUE_DATA.first };
-            insertRequestData.values = { DB_BEST_SCORE_FIELD_NAME, GamePointsController::instance()->points() };
-            assert(m_dbManager->insertValues(insertRequestData));
+        const auto& value = m_gameDataDB->getBestScore();
+        if ((value && value.value() < GamePointsController::instance()->points()) || !value) {
+            m_gameDataDB->setBestScore(GamePointsController::instance()->points());
         }
     }));
 
-    m_dbManager = std::make_unique<game_engine::database::DataBaseManager>();
-    assert(m_dbManager->openDatabase(DB_GAME_DATA_DB_NAME));
-    game_engine::database::DBCreateRelationData relationRequestData;
-    relationRequestData.relationName = DB_GAME_DATA_RELATION_NAME;
-    relationRequestData.attributes = { DB_ATTRIBUTE_NAME_DATA, DB_ATTRIBUTE_VALUE_DATA };
-    assert(m_dbManager->createRelation(relationRequestData));
+    m_dbManager = std::make_shared<game_engine::database::DataBaseManager>();
+    m_gameDataDB = std::make_unique<GameDataDBWrapper>(m_dbManager);
+    m_gameDataDB->init();
 
     m_gameScreenManager = game_engine::ui::GameScreenManager::instance();
     m_gameScreenManager->addGameScreen(game_engine::GameState::GAME_OVER, std::make_unique<GameOverScreen>());

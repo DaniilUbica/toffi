@@ -3,6 +3,8 @@
 #include "Engine/IGameManager.h"
 #include "Engine/DataBase/DataBaseManager.h"
 
+#include "Database/GameDataDBWrapper.h"
+
 #include <nod/nod.hpp>
 
 #include <memory>
@@ -48,6 +50,7 @@ private:
     std::shared_ptr<TextureHolder> m_textureHolder;
     std::shared_ptr<PickableSpawner> m_pickableSpawner;
     std::shared_ptr<GamePointsController> m_gamePointsController;
+    std::unique_ptr<GameDataDBWrapper> m_gameDataDB;
 
     std::shared_ptr<game_engine::ui::GameScreenManager> m_gameScreenManager;
 
@@ -55,7 +58,7 @@ private:
     std::shared_ptr<game_engine::World> m_world;
     std::shared_ptr<game_engine::ParticleSystem> m_particleSystem;
 
-    std::unique_ptr<game_engine::database::DataBaseManager> m_dbManager;
+    std::shared_ptr<game_engine::database::DataBaseManager> m_dbManager;
 
     game_engine::primitives::RenderWindow m_window;
 };
