@@ -12,17 +12,6 @@ PickableSpawner::PickableSpawner() {
     m_attractionsManager = std::make_unique<game_engine::physics::ObjectsAttractionManager>();
 }
 
-std::shared_ptr<PickableSpawner> PickableSpawner::instance() {
-    if (const auto sp = m_instance.lock()) {
-        return sp;
-    }
-
-    const auto sp = std::shared_ptr<PickableSpawner>(new PickableSpawner());
-    m_instance = sp;
-
-    return sp;
-}
-
 void PickableSpawner::Update(float time) {
     for (auto pickable : m_pickables) {
         pickable->Update(time);
