@@ -32,16 +32,3 @@ void GameOverScreen::constructScreen() {
     m_primitivesDrawableObjects.push_back(std::make_pair(gameOverText, false));
     m_primitivesDrawableObjects.push_back(std::make_pair(gameOverRestartText, false));
 }
-
-void GameOverScreen::setAllScreenObjectsVisible(bool visible) {
-    for (auto& pair : m_primitivesDrawableObjects) {
-        pair.second = visible;
-    }
-}
-
-void GameOverScreen::draw(const game_engine::primitives::RenderWindow &window) {
-    for (auto& pair : m_primitivesDrawableObjects) {
-        pair.first->draw(window);
-    }
-}
-

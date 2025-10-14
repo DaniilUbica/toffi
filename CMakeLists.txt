@@ -3,6 +3,7 @@ project(toffi LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(ENGINE_UNIT_NAME UbicaEngine)
+set(CMAKE_CXX_STANDARD 20)
 
 option(USE_SFML "Use SFML as engine's graphic lib" ON)
 
@@ -26,8 +27,12 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Pickables/PickableSpawner.cpp
     toffi/src/Controllers/PlayerController.cpp
     toffi/src/Controllers/ViewController.cpp
+    toffi/src/Controllers/GamePointsController.cpp
     toffi/src/GameScreens/GameOverScreen.cpp
+    toffi/src/GameScreens/GameInterfaceScreen.cpp
     toffi/src/GameManager.cpp
+    toffi/src/Database/GameDataDBWrapper.cpp
+    toffi/src/Database/DataBaseWrapperBase.cpp
 
     toffi/src/Weapon/Bullet.h
     toffi/src/Enemies/EnemiesManager.h
@@ -45,9 +50,13 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Pickables/PickableSpawner.h
     toffi/src/Controllers/PlayerController.h
     toffi/src/Controllers/ViewController.h
+    toffi/src/Controllers/GamePointsController.h
     toffi/src/GameScreens/GameOverScreen.h
+    toffi/src/GameScreens/GameInterfaceScreen.h
     toffi/src/Constants.h
     toffi/src/GameManager.h
+    toffi/src/Database/GameDataDBWrapper.h
+    toffi/src/Database/DataBaseWrapperBase.h
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ${ENGINE_UNIT_NAME})

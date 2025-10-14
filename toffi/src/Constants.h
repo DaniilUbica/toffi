@@ -53,3 +53,10 @@ constexpr unsigned int GAME_OVER_TEXT_SIZE         = 72;
 constexpr unsigned int GAME_OVER_RESTART_TEXT_SIZE = 56;
 constexpr float GAME_OVER_TEXT_Y_OFFSET            = 100;
 constexpr float GAME_OVER_RESTART_TEXT_Y_OFFSET    = 50;
+
+constexpr unsigned int GAME_POINTS_TEXT_SIZE        = 56;
+constexpr unsigned int GAME_POINTS_FROM_TOP_OFFSET  = 46;
+constexpr unsigned int GAME_POINTS_FROM_LEFT_OFFSET = 72;
+
+constexpr int MELEE_ENEMY_KILL_POINTS = 20;
+constexpr int RANGE_ENEMY_KILL_POINTS = 10;
