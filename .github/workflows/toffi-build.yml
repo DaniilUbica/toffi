@@ -21,9 +21,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y \
-          clang \
-          libc++-dev \
-          libc++abi-dev \
           libx11-dev \
           libxrandr-dev \
           libxcursor-dev \
@@ -40,9 +37,7 @@ jobs:
 
     - name: cmake config
       run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_CXX_COMPILER=clang++ \
-          -DCMAKE_CXX_FLAGS="-stdlib=libc++" 
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
 
     - name: build
       run: |
