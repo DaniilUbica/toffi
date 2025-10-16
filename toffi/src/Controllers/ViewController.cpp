@@ -6,17 +6,6 @@ ViewController::ViewController() {
     m_view = std::make_unique<game_engine::primitives::View>(game_engine::primitives::FloatRect({0.f, 0.f}, {1.f, 1.f}));
 }
 
-std::shared_ptr<ViewController> ViewController::instance() {
-    if (const auto sp = s_instance.lock()) {
-        return sp;
-    }
-
-    const auto sp = std::shared_ptr<ViewController>(new ViewController());
-    s_instance = sp;
-    
-    return sp;
-}
-
 void ViewController::Update(float time, game_engine::primitives::RenderWindow& window) {
     const game_engine::primitives::Vector2f player_pos = m_player->getPosition();
     game_engine::primitives::Vector2f view_pos = { player_pos.x - VIEW_WIDTH / 2, player_pos.y - VIEW_HEIGHT / 2 };

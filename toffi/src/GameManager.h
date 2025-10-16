@@ -26,6 +26,7 @@ class Player;
 class EnemiesManager;
 class ViewController;
 class GamePointsController;
+class CashValueController;
 
 class GameManager : public game_engine::IGameManager {
 public:
@@ -50,6 +51,7 @@ private:
     std::shared_ptr<TextureHolder> m_textureHolder;
     std::shared_ptr<PickableSpawner> m_pickableSpawner;
     std::shared_ptr<GamePointsController> m_gamePointsController;
+    std::shared_ptr<CashValueController> m_cashValueController;
     std::unique_ptr<GameDataDBWrapper> m_gameDataDB;
 
     std::shared_ptr<game_engine::ui::GameScreenManager> m_gameScreenManager;

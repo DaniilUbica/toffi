@@ -12,17 +12,6 @@ PickableSpawner::PickableSpawner() {
     m_attractionsManager = std::make_unique<game_engine::physics::ObjectsAttractionManager>();
 }
 
-std::shared_ptr<PickableSpawner> PickableSpawner::instance() {
-    if (const auto sp = m_instance.lock()) {
-        return sp;
-    }
-
-    const auto sp = std::shared_ptr<PickableSpawner>(new PickableSpawner());
-    m_instance = sp;
-
-    return sp;
-}
-
 void PickableSpawner::Update(float time) {
     for (auto pickable : m_pickables) {
         pickable->Update(time);
@@ -81,7 +70,7 @@ void PickableSpawner::spawnPickable(game_engine::primitives::Vector2f pos, Picka
         {
             int value = std::rand() % 100;
             if (value < CURRENCY_SPAWN_CHANCE) {
-                const auto valueToAdd = CURRENCY_SPAWN_MIN_VALUE + std::rand() % (CURRENCY_SPAWN_MAX_VALUE - CURRENCY_SPAWN_MIN_VALUE + 1);
+                const auto valueToAdd = std::rand() % (CURRENCY_SPAWN_MAX_VALUE - CURRENCY_SPAWN_MIN_VALUE + 1);
                 const auto new_pickable = std::make_shared<Currency>(m_player, m_pickable_textures[PickableType::CURRENCY], pos, valueToAdd);
                 m_pickables.insert(std::dynamic_pointer_cast<game_engine::Pickable>(new_pickable));
             }

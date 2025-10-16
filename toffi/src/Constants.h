@@ -58,5 +58,10 @@ constexpr unsigned int GAME_POINTS_TEXT_SIZE        = 56;
 constexpr unsigned int GAME_POINTS_FROM_TOP_OFFSET  = 46;
 constexpr unsigned int GAME_POINTS_FROM_LEFT_OFFSET = 72;
 
+constexpr unsigned int CASH_TEXT_SIZE        = 56;
+constexpr unsigned int CASH_FROM_TOP_OFFSET  = 1.5f * GAME_POINTS_FROM_TOP_OFFSET + GAME_POINTS_TEXT_SIZE;
+constexpr unsigned int CASH_FROM_LEFT_OFFSET = 72;
+constexpr unsigned int CASH_TEXT_MARGIN = 16;
+
 constexpr int MELEE_ENEMY_KILL_POINTS = 20;
 constexpr int RANGE_ENEMY_KILL_POINTS = 10;

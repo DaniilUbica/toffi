@@ -1,16 +1,5 @@
 #include "Textures.h"
 
-std::shared_ptr<TextureHolder> TextureHolder::instance() {
-    if (const auto sp = m_texture_holder.lock()) {
-        return sp;
-    }
-
-    const auto sp = std::shared_ptr<TextureHolder>(new TextureHolder());
-    m_texture_holder = sp;
-
-    return sp;
-}
-
 void TextureHolder::setTextures() {
     assert(m_player_textures[State::IDLE].loadFromFile("idle.png"));
     assert(m_player_textures[State::RUN].loadFromFile("run.png"));

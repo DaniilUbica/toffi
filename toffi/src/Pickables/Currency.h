@@ -10,10 +10,6 @@ public:
 
     virtual void onPicked() override;
 
-    static unsigned int getCurrencyCount() { return s_currency_count; };
-
 private:
     unsigned int m_valueToAdd = 0;
-
-    inline static unsigned int s_currency_count = 0;
 };

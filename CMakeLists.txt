@@ -28,6 +28,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Controllers/PlayerController.cpp
     toffi/src/Controllers/ViewController.cpp
     toffi/src/Controllers/GamePointsController.cpp
+    toffi/src/Controllers/CashValueController.cpp
     toffi/src/GameScreens/GameOverScreen.cpp
     toffi/src/GameScreens/GameInterfaceScreen.cpp
     toffi/src/GameManager.cpp
@@ -51,6 +52,7 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Controllers/PlayerController.h
     toffi/src/Controllers/ViewController.h
     toffi/src/Controllers/GamePointsController.h
+    toffi/src/Controllers/CashValueController.h
     toffi/src/GameScreens/GameOverScreen.h
     toffi/src/GameScreens/GameInterfaceScreen.h
     toffi/src/Constants.h
