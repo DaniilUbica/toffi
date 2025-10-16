@@ -17,5 +17,6 @@ private:
     std::shared_ptr<game_engine::primitives::Text> m_pointsText;
     std::shared_ptr<game_engine::primitives::Sprite> m_currencySprite; // TODO: image could be animated, so have to use smth like GameObject here
     std::shared_ptr<game_engine::primitives::Text> m_currencyText;
-    nod::scoped_connection m_gamePointsConntection;
+    nod::scoped_connection m_gamePointsConnection;
+    nod::scoped_connection m_cashValueConnection;
 };
