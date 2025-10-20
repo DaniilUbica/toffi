@@ -16,6 +16,7 @@
 
 #include "Controllers/ViewController.h"
 #include "Controllers/GamePointsController.h"
+#include "Controllers/CashValueController.h"
 
 #include "Pickables/PickableSpawner.h"
 
@@ -85,6 +86,7 @@ void GameManager::initGame() {
     m_viewController->setPlayer(m_player);
 
     m_gamePointsController = GamePointsController::instance();
+    m_cashValueController = CashValueController::instance();
 
     m_gameStateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution. Remove after main menu impl
     m_gameOverAtNextIter = false;
@@ -105,6 +107,7 @@ void GameManager::deinitGame() {
     m_gameStateMachine = nullptr;
     m_gameScreenManager = nullptr;
     m_gamePointsController = nullptr;
+    m_cashValueController = nullptr;
 
     game_engine::DrawableObject::deleteAllDrawableObjects();
 }

@@ -8,19 +8,10 @@
 #include "Player/Player.h"
 #include "Textures/Textures.h"
 
+constexpr int CURRENCY_SPAWN_MARGIN = 15;
+
 PickableSpawner::PickableSpawner() {
     m_attractionsManager = std::make_unique<game_engine::physics::ObjectsAttractionManager>();
-}
-
-std::shared_ptr<PickableSpawner> PickableSpawner::instance() {
-    if (const auto sp = m_instance.lock()) {
-        return sp;
-    }
-
-    const auto sp = std::shared_ptr<PickableSpawner>(new PickableSpawner());
-    m_instance = sp;
-
-    return sp;
 }
 
 void PickableSpawner::Update(float time) {
@@ -76,14 +67,27 @@ void PickableSpawner::spawnPickable(game_engine::primitives::Vector2f pos, Picka
 				new_pickable->setBulletTexture(TextureHolder::instance()->bullet_texture());
 				m_pickables.insert(std::dynamic_pointer_cast<game_engine::Pickable>(new_pickable));
 			}
+            break;
 		}
         case PickableType::CURRENCY:
         {
             int value = std::rand() % 100;
             if (value < CURRENCY_SPAWN_CHANCE) {
-                const auto valueToAdd = CURRENCY_SPAWN_MIN_VALUE + std::rand() % (CURRENCY_SPAWN_MAX_VALUE - CURRENCY_SPAWN_MIN_VALUE + 1);
-                const auto new_pickable = std::make_shared<Currency>(m_player, m_pickable_textures[PickableType::CURRENCY], pos, valueToAdd);
-                m_pickables.insert(std::dynamic_pointer_cast<game_engine::Pickable>(new_pickable));
+                const auto valueToAdd = std::rand() % (CURRENCY_SPAWN_MAX_VALUE + 1 - CURRENCY_SPAWN_MIN_VALUE) + 1;
+                const auto lastPickableValueToAdd = valueToAdd > CURRENCY_SPAWN_MAX_ITEMS_COUNT ? valueToAdd - CURRENCY_SPAWN_MAX_ITEMS_COUNT : 1;
+                for (int i = 1; i <= valueToAdd; ++i) {
+                    if (i > CURRENCY_SPAWN_MAX_ITEMS_COUNT) {
+                        continue;
+                    }
+
+                    const auto offsetX = (std::rand() % CURRENCY_SPAWN_MARGIN * 2 + 1) - CURRENCY_SPAWN_MARGIN;
+                    const auto offsetY = (std::rand() % CURRENCY_SPAWN_MARGIN * 2 + 1) - CURRENCY_SPAWN_MARGIN;
+                    pos = { pos.x + offsetX, pos.y + offsetY };
+
+                    const auto new_pickable = std::make_shared<Currency>(m_player, m_pickable_textures[PickableType::CURRENCY],
+                                                                         pos, i == valueToAdd ? lastPickableValueToAdd : 1);
+                    m_pickables.insert(std::dynamic_pointer_cast<game_engine::Pickable>(new_pickable));
+                }
             }
         }
 		default:

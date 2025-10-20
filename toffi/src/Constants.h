@@ -43,9 +43,10 @@ constexpr int BULLET_WAVE_BULLETS_SPACING = 15;
 constexpr int BULLET_WAVE_SPAWN_CHANCE    = 10;
 constexpr float BULLET_WAVE_DAMAGE        = 40.0;
 
-constexpr int CURRENCY_SPAWN_CHANCE    = 100;
-constexpr int CURRENCY_SPAWN_MIN_VALUE = 1;
-constexpr int CURRENCY_SPAWN_MAX_VALUE = 5;
+constexpr int CURRENCY_SPAWN_CHANCE          = 100;
+constexpr int CURRENCY_SPAWN_MIN_VALUE       = 1;
+constexpr int CURRENCY_SPAWN_MAX_VALUE       = 5;
+constexpr int CURRENCY_SPAWN_MAX_ITEMS_COUNT = 5;
 
 const std::string GAME_OVER_TEXT                   = "GAME OVER";
 const std::string GAME_OVER_RESTART_TEXT           = "Press 'R' to restart";
@@ -57,6 +58,11 @@ constexpr float GAME_OVER_RESTART_TEXT_Y_OFFSET    = 50;
 constexpr unsigned int GAME_POINTS_TEXT_SIZE        = 56;
 constexpr unsigned int GAME_POINTS_FROM_TOP_OFFSET  = 46;
 constexpr unsigned int GAME_POINTS_FROM_LEFT_OFFSET = 72;
+
+constexpr unsigned int CASH_TEXT_SIZE        = 56;
+constexpr unsigned int CASH_FROM_TOP_OFFSET  = 1.5f * GAME_POINTS_FROM_TOP_OFFSET + GAME_POINTS_TEXT_SIZE;
+constexpr unsigned int CASH_FROM_LEFT_OFFSET = 72;
+constexpr unsigned int CASH_TEXT_MARGIN = 16;
 
 constexpr int MELEE_ENEMY_KILL_POINTS = 20;
 constexpr int RANGE_ENEMY_KILL_POINTS = 10;

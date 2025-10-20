@@ -1,9 +1,10 @@
 #pragma once
 
+#include "cpplib/singletone.hpp"
+
 #include "Player/Player.h"
 
-class TextureHolder {
-
+class TextureHolder : public game_engine::cpplib::singletone_from_this<TextureHolder> {
 private:
 	std::map<State, game_engine::primitives::Texture> m_player_textures;
 	game_engine::primitives::Texture m_lvl1_border_texture;
@@ -15,14 +16,7 @@ private:
 	game_engine::primitives::Texture m_heal_texture;
     game_engine::primitives::Texture m_coin_texture;
 
-	inline static std::weak_ptr<TextureHolder> m_texture_holder;
-
-	TextureHolder() = default;
-	TextureHolder(const TextureHolder&);
-
 public:
-	static std::shared_ptr<TextureHolder> instance();
-
 	void setTextures();
 
 	std::map<State, game_engine::primitives::Texture> player_textures() const { return m_player_textures; };
