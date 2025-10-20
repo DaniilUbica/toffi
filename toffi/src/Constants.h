@@ -43,9 +43,10 @@ constexpr int BULLET_WAVE_BULLETS_SPACING = 15;
 constexpr int BULLET_WAVE_SPAWN_CHANCE    = 10;
 constexpr float BULLET_WAVE_DAMAGE        = 40.0;
 
-constexpr int CURRENCY_SPAWN_CHANCE    = 100;
-constexpr int CURRENCY_SPAWN_MIN_VALUE = 1;
-constexpr int CURRENCY_SPAWN_MAX_VALUE = 5;
+constexpr int CURRENCY_SPAWN_CHANCE          = 100;
+constexpr int CURRENCY_SPAWN_MIN_VALUE       = 1;
+constexpr int CURRENCY_SPAWN_MAX_VALUE       = 5;
+constexpr int CURRENCY_SPAWN_MAX_ITEMS_COUNT = 5;
 
 const std::string GAME_OVER_TEXT                   = "GAME OVER";
 const std::string GAME_OVER_RESTART_TEXT           = "Press 'R' to restart";
