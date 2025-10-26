@@ -21,7 +21,7 @@ int main() {
     GameManager game_manager(window);
     game_manager.initGame();
 
-    game_engine::GameStateMachine::instance()->fireGameResumed.connect([clock]() mutable {
+    game_manager.gameStateMachine()->fireGameResumed.connect([clock]() mutable {
         clock.reset();
     });
 

@@ -30,11 +30,11 @@ void RangeWeapon::Update(float time, game_engine::primitives::Vector2f pos, std:
 }
 
 void RangeWeapon::attackIfCanAttack() {
-    if (m_gotEnemyInAttackRange && !m_reload_timer->isRunning()) {
+    if (m_gotEnemyInAttackRange && !m_reload_timer->running()) {
         auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, m_direction);
         new_bullet->updateDamage(m_damage_scale);
         m_bullets.push_back(new_bullet);
-        m_reload_timer->Start();
+        m_reload_timer->Restart();
     }
 }
 

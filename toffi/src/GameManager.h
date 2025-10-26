@@ -40,6 +40,8 @@ public:
     void handleEvent(std::unique_ptr<game_engine::primitives::Event> event) override;
     void drawGameObjects() override;
 
+    std::shared_ptr<game_engine::GameStateMachine> gameStateMachine() const { return m_gameStateMachine; };
+
 private:
     bool m_gameOverAtNextIter = false;
 

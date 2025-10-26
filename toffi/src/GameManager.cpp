@@ -33,7 +33,7 @@
 GameManager::GameManager(const game_engine::primitives::RenderWindow& window) : m_window(window) {}
 
 void GameManager::initGame() {
-    m_gameStateMachine = game_engine::GameStateMachine::instance();
+    m_gameStateMachine = std::make_shared<game_engine::GameStateMachine>();
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGamePaused.connect([]() {
         game_engine::TimersHolder::pauseAllTimers();
     }));
@@ -54,7 +54,7 @@ void GameManager::initGame() {
     m_gameDataDB = std::make_unique<GameDataDBWrapper>(m_dbManager);
     m_gameDataDB->init();
 
-    m_gameScreenManager = game_engine::ui::GameScreenManager::instance();
+    m_gameScreenManager = std::make_unique<game_engine::ui::GameScreenManager>(m_gameStateMachine);
     m_gameScreenManager->addGameScreen(game_engine::GameState::GAME_OVER, std::make_unique<GameOverScreen>());
     m_gameScreenManager->addGameScreen(game_engine::GameState::RUNNING, std::make_unique<GameInterfaceScreen>());
 
@@ -119,6 +119,7 @@ void GameManager::restartGame() {
 
 void GameManager::Update(float time) {
     game_engine::TimersHolder::deleteExpiredTimers();
+    game_engine::TimersHolder::Update();
     auto characters = m_enemiesManager->getCharacters();
 
     if (m_gameStateMachine->currentState() == game_engine::GameState::RUNNING) {

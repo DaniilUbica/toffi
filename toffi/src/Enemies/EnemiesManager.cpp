@@ -30,16 +30,13 @@ void EnemiesManager::spawnEnemy() {
 	int spawn_range_enemy = rand() % 2 - 0;
 
     if ((abs(start_x - m_player->getPosition().x) > ENEMY_SPAWN_RANGE ||
-        abs(start_y - m_player->getPosition().y) > ENEMY_SPAWN_RANGE) && !m_respawn_timer->isRunning()) {
+        abs(start_y - m_player->getPosition().y) > ENEMY_SPAWN_RANGE) && !m_respawn_timer->running()) {
 		auto enemy = spawn_range_enemy ? std::make_shared<RangeEnemy>(m_enemies_textures[texture_index], m_bullet_texture, game_engine::primitives::Vector2f(start_x, start_y),
             ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE, ENEMY_START_HP * m_enemies_hp_scale) : std::make_shared<Enemy>(m_enemies_textures[texture_index], game_engine::primitives::Vector2f(start_x, start_y),
 																																  ENEMY_ATTACK_COOLDOWN, ENEMY_SPEED, ENEMY_DAMAGE, ENEMY_START_HP * m_enemies_hp_scale);
         enemy->setPlayer(m_player);
         m_enemies.push_back(enemy);
-        m_respawn_timer->Start();
-    }
-    else if (!m_respawn_timer->isRunning()) {
-        return;
+        m_respawn_timer->Restart();
     }
 }
 
