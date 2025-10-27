@@ -28,7 +28,7 @@ void RangeEnemy::updateDirection() {
 
 void RangeEnemy::attackIfCanAttack() {
 	game_engine::primitives::Vector2f diff = { abs(m_player->getPosition().x - m_pos.x), abs(m_player->getPosition().y - m_pos.y) };
-	if ((diff.x <= ENEMY_ATTACK_RANGE && diff.y <= ENEMY_ATTACK_RANGE) && !m_attack_cooldown->isRunning()) {
+	if ((diff.x <= ENEMY_ATTACK_RANGE && diff.y <= ENEMY_ATTACK_RANGE) && !m_attack_cooldown->running()) {
 		game_engine::primitives::Vector2f player_pos = m_player->getPosition();
 		game_engine::primitives::Vector2f direction = player_pos - m_pos;
 
@@ -36,7 +36,7 @@ void RangeEnemy::attackIfCanAttack() {
 		auto new_bullet = std::make_shared<Bullet>(m_bullet_texture, m_pos, direction);
 		new_bullet->updateDamage(ENEMY_BULLET_DAMAGE / BULLET_DEFAULT_DAMAGE);
 		m_bullets.push_back(new_bullet);
-		m_attack_cooldown->Start();
+		m_attack_cooldown->Restart();
 	}
 }
 

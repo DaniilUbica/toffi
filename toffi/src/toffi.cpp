@@ -2,7 +2,6 @@
 
 #include "Engine/World.h"
 #include "Engine/TimersHolder.hpp"
-#include "Engine/GameStateMachine.h"
 
 #include "GameScreens/GameOverScreen.h"
 
@@ -10,6 +9,7 @@
 
 #include "Enemies/EnemiesManager.h"
 #include "GameManager.h"
+#include "StateMachine.h"
 
 int main() {
     srand(time(NULL));
@@ -21,7 +21,7 @@ int main() {
     GameManager game_manager(window);
     game_manager.initGame();
 
-    game_engine::GameStateMachine::instance()->fireGameResumed.connect([clock]() mutable {
+    game_manager.gameStateMachine()->fireGameResumed.connect([clock]() mutable {
         clock.reset();
     });
 

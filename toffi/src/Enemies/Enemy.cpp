@@ -29,9 +29,9 @@ void Enemy::updateDirection() {
 }
 
 void Enemy::attackIfCanAttack() {
-    if (m_sprite->getGlobalBounds().intersects(m_player->getSprite()->getGlobalBounds()) && !m_attack_cooldown->isRunning()) {
+    if (m_sprite->getGlobalBounds().intersects(m_player->getSprite()->getGlobalBounds()) && !m_attack_cooldown->running()) {
         m_player->takeDamage(m_damage);
-        m_attack_cooldown->Start();
+        m_attack_cooldown->Restart();
     }
 }
 

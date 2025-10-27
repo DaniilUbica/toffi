@@ -125,10 +125,10 @@ void MeleeWeapon::Update(float time, game_engine::primitives::Vector2f pos, std:
 }
 
 void MeleeWeapon::attackIfCanAttack() {
-	if (m_gotEnemyInAttackRange && !m_reload_timer->isRunning()) {
+	if (m_gotEnemyInAttackRange && !m_reload_timer->running()) {
 		m_attack_state = AttackState::Attack;
         m_attack_progress = 0.f;
-        m_reload_timer->Start();
+        m_reload_timer->Restart();
 	}
 	else {
 		m_attack_state = AttackState::None;

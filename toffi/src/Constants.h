@@ -64,5 +64,10 @@ constexpr unsigned int CASH_FROM_TOP_OFFSET  = 1.5f * GAME_POINTS_FROM_TOP_OFFSE
 constexpr unsigned int CASH_FROM_LEFT_OFFSET = 72;
 constexpr unsigned int CASH_TEXT_MARGIN = 16;
 
+constexpr unsigned int LEVEL_TIMER_TEXT_SIZE        = 56;
+constexpr unsigned int LEVEL_TIMER_FROM_TOP_OFFSET  = 46;
+
 constexpr int MELEE_ENEMY_KILL_POINTS = 20;
 constexpr int RANGE_ENEMY_KILL_POINTS = 10;
+
+constexpr unsigned int LEVEL_DURATION = 5;
