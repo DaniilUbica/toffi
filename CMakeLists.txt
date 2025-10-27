@@ -31,7 +31,10 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Controllers/CashValueController.cpp
     toffi/src/GameScreens/GameOverScreen.cpp
     toffi/src/GameScreens/GameInterfaceScreen.cpp
+    toffi/src/GameScreens/ScreenManager.cpp
+    toffi/src/GameScreens/UpgradesScreen.cpp
     toffi/src/GameManager.cpp
+    toffi/src/StateMachine.cpp
     toffi/src/Database/GameDataDBWrapper.cpp
     toffi/src/Database/DataBaseWrapperBase.cpp
 
@@ -55,8 +58,11 @@ add_executable(${CMAKE_PROJECT_NAME}
     toffi/src/Controllers/CashValueController.h
     toffi/src/GameScreens/GameOverScreen.h
     toffi/src/GameScreens/GameInterfaceScreen.h
+    toffi/src/GameScreens/ScreenManager.h
+    toffi/src/GameScreens/UpgradesScreen.h
     toffi/src/Constants.h
     toffi/src/GameManager.h
+    toffi/src/StateMachine.h
     toffi/src/Database/GameDataDBWrapper.h
     toffi/src/Database/DataBaseWrapperBase.h
 )

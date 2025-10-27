@@ -17,6 +17,8 @@ public:
     void constructScreen() override;
     void Update(float time) override;
 
+    void setLevelTimer(std::shared_ptr<game_engine::Timer> timer) { m_levelTimer = timer; };
+
 private:
     std::shared_ptr<game_engine::primitives::Text> m_pointsText;
     std::shared_ptr<game_engine::primitives::Sprite> m_currencySprite; // TODO: image could be animated, so have to use smth like GameObject here

@@ -1,18 +1,16 @@
 #include "GameManager.h"
 
 #include "Engine/World.h"
-#include "Engine/TimersHolder.hpp"
-#include "Engine/GameStateMachine.h"
 #include "Engine/Base/Pickable.h"
 #include "Engine/Particles/ParticleSystem.h"
 #include "Engine/UI/UIComponents/HealthBar.h"
 #include "Engine/UI/UIComponents/DamageIndicator.h"
-#include "Engine/UI/GameScreen/GameScreenManager.h"
 
 #include "Constants.h"
 
 #include "GameScreens/GameOverScreen.h"
 #include "GameScreens/GameInterfaceScreen.h"
+#include "GameScreens/UpgradesScreen.h"
 
 #include "Controllers/ViewController.h"
 #include "Controllers/GamePointsController.h"
@@ -30,11 +28,17 @@
 
 #include "Textures/Textures.h"
 
+#include "StateMachine.h"
+#include "GameScreens/ScreenManager.h"
+
 GameManager::GameManager(const game_engine::primitives::RenderWindow& window) : m_window(window) {}
 
 void GameManager::initGame() {
-    m_gameStateMachine = std::make_shared<game_engine::GameStateMachine>();
+    m_gameStateMachine = std::make_shared<StateMachine>();
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGamePaused.connect([]() {
+        game_engine::TimersHolder::pauseAllTimers();
+    }));
+    m_stateMachineConnections.push_back(m_gameStateMachine->fireUpgradeStage.connect([]() {
         game_engine::TimersHolder::pauseAllTimers();
     }));
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGameResumed.connect([]() mutable {
@@ -42,6 +46,9 @@ void GameManager::initGame() {
     }));
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGameRestarted.connect([this]() {
         restartGame();
+    }));
+    m_stateMachineConnections.push_back(m_gameStateMachine->fireNewLevel.connect([this]() {
+        startNewLevel();
     }));
     m_stateMachineConnections.push_back(m_gameStateMachine->fireGameOver.connect([this]() {
         const auto& value = m_gameDataDB->getBestScore();
@@ -54,9 +61,16 @@ void GameManager::initGame() {
     m_gameDataDB = std::make_unique<GameDataDBWrapper>(m_dbManager);
     m_gameDataDB->init();
 
-    m_gameScreenManager = std::make_unique<game_engine::ui::GameScreenManager>(m_gameStateMachine);
-    m_gameScreenManager->addGameScreen(game_engine::GameState::GAME_OVER, std::make_unique<GameOverScreen>());
-    m_gameScreenManager->addGameScreen(game_engine::GameState::RUNNING, std::make_unique<GameInterfaceScreen>());
+    m_levelTimer = game_engine::TimersHolder::createTimer(LEVEL_DURATION);
+    m_levelTimer->Start();
+
+    auto gameInterfaceScreen = std::make_unique<GameInterfaceScreen>();
+    gameInterfaceScreen->setLevelTimer(m_levelTimer);
+    
+    m_gameScreenManager = std::make_unique<ScreenManager>(m_gameStateMachine);
+    m_gameScreenManager->addGameScreen(static_cast<int>(game_engine::GameState::GAME_OVER), std::make_unique<GameOverScreen>());
+    m_gameScreenManager->addGameScreen(static_cast<int>(game_engine::GameState::RUNNING), std::move(gameInterfaceScreen));
+    m_gameScreenManager->addGameScreen(static_cast<int>(ToffiGameState::UPGRADE_STAGE), std::make_unique<UpgradesScreen>());
 
     m_textureHolder = TextureHolder::instance();
     m_textureHolder->setTextures();
@@ -88,7 +102,7 @@ void GameManager::initGame() {
     m_gamePointsController = GamePointsController::instance();
     m_cashValueController = CashValueController::instance();
 
-    m_gameStateMachine->setState(game_engine::GameState::RUNNING); // TODO: this is a temporary solution. Remove after main menu impl
+    m_gameStateMachine->setState(static_cast<int>(game_engine::GameState::RUNNING)); // TODO: this is a temporary solution. Remove after main menu impl
     m_gameOverAtNextIter = false;
 }
 
@@ -122,7 +136,11 @@ void GameManager::Update(float time) {
     game_engine::TimersHolder::Update();
     auto characters = m_enemiesManager->getCharacters();
 
-    if (m_gameStateMachine->currentState() == game_engine::GameState::RUNNING) {
+    if (m_levelTimer->finished()) {
+        m_gameStateMachine->setState(static_cast<int>(ToffiGameState::UPGRADE_STAGE));
+    }
+
+    if (m_gameStateMachine->currentState() == static_cast<int>(game_engine::GameState::RUNNING)) {
         m_pickableSpawner->Update(time);
         game_engine::ParticleSystem::instance()->Update(time / 1000);
         m_player->Update(time);
@@ -134,7 +152,7 @@ void GameManager::Update(float time) {
         game_engine::ui::DamageIndicatorsHolder::Update(time);
 
         if (m_gameOverAtNextIter) {
-            m_gameStateMachine->setState(game_engine::GameState::GAME_OVER);
+            m_gameStateMachine->setState(static_cast<int>(game_engine::GameState::GAME_OVER));
         }
         if (m_player->getHP() <= 0) {
             m_gameOverAtNextIter = true;
@@ -151,15 +169,15 @@ void GameManager::handleEvent(std::unique_ptr<game_engine::primitives::Event> ev
     }
     if (key_event && key_event->action() == game_engine::primitives::KeyEvent::Action::Press) {
         if (key_event->key() == game_engine::primitives::KeyEvent::Key::Escape) {
-            if (m_gameStateMachine->currentState() == game_engine::GameState::RUNNING) {
-                m_gameStateMachine->setState(game_engine::GameState::PAUSED);
+            if (m_gameStateMachine->currentState() == static_cast<int>(game_engine::GameState::RUNNING)) {
+                m_gameStateMachine->setState(static_cast<int>(game_engine::GameState::PAUSED));
             }
-            else if (m_gameStateMachine->currentState() == game_engine::GameState::PAUSED) {
-                m_gameStateMachine->setState(game_engine::GameState::RUNNING);
+            else if (m_gameStateMachine->currentState() == static_cast<int>(game_engine::GameState::PAUSED)) {
+                m_gameStateMachine->setState(static_cast<int>(game_engine::GameState::RUNNING));
             }
         }
         else if (key_event->key() == game_engine::primitives::KeyEvent::Key::R) {
-            m_gameStateMachine->setState(game_engine::GameState::RUNNING);
+            m_gameStateMachine->setState(static_cast<int>(game_engine::GameState::RUNNING));
         }
     }
 }
@@ -167,4 +185,8 @@ void GameManager::handleEvent(std::unique_ptr<game_engine::primitives::Event> ev
 void GameManager::drawGameObjects() {
     game_engine::DrawableObject::drawAllDrawableObjects(m_window);
     game_engine::ParticleSystem::instance()->drawParticles(m_window);
+}
+
+void GameManager::startNewLevel() {
+
 }

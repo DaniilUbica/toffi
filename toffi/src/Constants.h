@@ -69,3 +69,5 @@ constexpr unsigned int LEVEL_TIMER_FROM_TOP_OFFSET  = 46;
 
 constexpr int MELEE_ENEMY_KILL_POINTS = 20;
 constexpr int RANGE_ENEMY_KILL_POINTS = 10;
+
+constexpr unsigned int LEVEL_DURATION = 5;

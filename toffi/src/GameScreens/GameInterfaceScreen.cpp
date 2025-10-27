@@ -37,8 +37,6 @@ void GameInterfaceScreen::constructScreen() {
     m_pointsText->setFillColor(colors::White);
     m_pointsText->setPosition({ viewPos.x + GAME_POINTS_FROM_LEFT_OFFSET, viewPos.y + GAME_POINTS_FROM_TOP_OFFSET });
 
-    m_levelTimer = game_engine::TimersHolder::createTimer(60);
-    m_levelTimer->Start();
     m_levelTimerText = std::make_shared<Text>(game_engine::FONT, std::to_string(m_levelTimer->remainingTime()), LEVEL_TIMER_TEXT_SIZE);
     m_levelTimerText->setFillColor(colors::White);
     m_levelTimerText->setPosition({ viewPos.x + GAME_POINTS_FROM_LEFT_OFFSET, viewPos.y + GAME_POINTS_FROM_TOP_OFFSET });
